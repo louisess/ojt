@@ -1,0 +1,37 @@
+/*color schemes
+	pink - #e54572
+	lpink - #ebb6c5
+	purple - #8c6ebd
+	lpurple - #c3b5d9
+	grey - #e0e0e0;
+*/
+
+.active{
+	background-color: #e0e0e0 !important;
+	font-weight: bold;
+}
+
+.nav li:hover{
+	background-color: #e0e0e0;
+}
+
+.card{
+	font-family: Montserrat;
+}
+
+.card a{
+	background-color: #8c6ebd !important;
+}
+
+.card a:hover{
+	background-color: #ebb6c5 !important;
+}
+
+.formrow{
+	padding-left: 250px;
+	padding-right: 250px;
+}
+
+.bgbody{
+	background-color: #f4f3ef;
+}
