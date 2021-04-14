@@ -53,12 +53,6 @@ Coded by www.creative-tim.com
       </div>
       <div class="sidebar-wrapper">
         <ul class="nav">
-          <li>
-            <a href="../ojt/events.html">
-              <i class="far fa-calendar-alt"></i>
-              <p>Events/Seminars</p>
-            </a>
-          </li>
           <li class="active">
             <a href="../ojt/certs.html">
               <i class="fas fa-certificate"></i>
@@ -121,7 +115,7 @@ Coded by www.creative-tim.com
       <div class="content">
         <div class="row">
           <div class="col-md-12">
-            <h3 class="description">Certificate Templates</h3>
+            <h3 class="description">Certificates</h3>
           </div>
 
           <div class="row">
@@ -130,14 +124,83 @@ Coded by www.creative-tim.com
               <!-- events container -->
               <div class="card text-center">
                 <div class="card-header">
-                  
+                  <input type="button" href="#" class="btn btn-sm float-left smbtn" value="CREATE" name="answer" onclick="showDiv()"/>
+                  <input type="button" class="btn btn-sm float-left smbtn" value="MY CERTIFICATES" name="answer" onclick="showCerts()"/>
                 </div>
                 <div class="card-body">
-                  <h5 class="card-title">Please create an event or seminar first to see certificates templates!</h5>
                   
-                  <hr>
-                  <a href="#" class="btn btn-primary">+ Add an event/seminar</a>
-                </div>
+                 <div id="certlist"  style="display:none;" class="answer_list" >
+                  MY CERTIFICATES
+                 </div>
+
+                  <div id="createform"  style="display:none;" class="answer_list" >
+                    <h5> CREATE CERTIFICATE </h5>
+
+                    <div class="row">
+                      <div class="col-6">
+                        <form class="formrow">
+                        <div class="form-group">
+                          <h6>EVENT DETAILS</h6>
+
+                          <label for="formGroupExampleInput">EVENT NAME</label>
+                          <input type="text" class="form-control" id="formGroupExampleInput" placeholder="">
+                        </div>
+                        <div class="form-group">
+                          <label for="formGroupExampleInput2">DATE</label>
+                          <div class="md-form">
+                            <input type="date" id="inputMDEx" class="form-control">
+                            <label for="inputMDEx">Choose your date</label>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="formGroupExampleInput2">VENUE</label>
+                          <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="">
+                        </div>
+                        <div class="form-group">
+                          <label for="formGroupExampleInput2">HOSTS/ORGANIZERS</label>
+                          <input type="text" class="form-control mb-2" id="formGroupExampleInput2" placeholder="">
+                          <input type="text" class="form-control mb-2" id="formGroupExampleInput2" placeholder="">
+                          <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="">
+                        </div>
+                      </div>
+
+                      <div class="col-6">
+                        <div class="form-group">
+                          <h6>CERTIFICATE DETAILS</h6>
+                          <p>
+                            LOGO:
+                            <br>
+                            <label class="form-label" for="customFile"><i class="fas fa-upload"></i> CLICK HERE TO CHOOSE FILE</label>
+                            <input type="file" class="form-control" id="customFile" />
+                            <br>
+                          </p>
+                          <p>
+                            SIGNATORIES:
+                            <br>
+                            <label class="form-label" for="customFile"><i class="fas fa-upload"></i> CLICK HERE TO CHOOSE FILE</label>
+                            <input type="file" class="form-control" id="customFile" />
+                          </p>
+                          <p>
+                            IMAGES:
+                            <br>
+                            <label class="form-label" for="customFile"><i class="fas fa-upload"></i> CLICK HERE TO CHOOSE FILE</label>
+                            <input type="file" class="form-control" id="customFile" />
+                          </p>
+                        </div>
+
+                      
+                      </div>
+                                        
+                    </div>
+                    <!--- end of row --->
+                    </form>
+                        <input type="button" value="CREATE CERTIFICATE" class="btn btn-sm smbtn"/>
+                      </div>
+
+                  </div>
+
+                  
+
                 <div class="card-footer text-muted">
                   
                 </div>
@@ -147,24 +210,7 @@ Coded by www.creative-tim.com
           </div>
         </div>
       </div>
-      <footer class="footer" style="position: absolute; bottom: 0; width: -webkit-fill-available;">
-        <div class="container-fluid">
-          <div class="row">
-            <nav class="footer-nav">
-              <ul>
-                <li><a href="https://www.creative-tim.com" target="_blank">Creative Tim</a></li>
-                <li><a href="https://www.creative-tim.com/blog" target="_blank">Blog</a></li>
-                <li><a href="https://www.creative-tim.com/license" target="_blank">Licenses</a></li>
-              </ul>
-            </nav>
-            <div class="credits ml-auto">
-              <span class="copyright">
-                © 2020, made with <i class="fa fa-heart heart"></i> by Creative Tim
-              </span>
-            </div>
-          </div>
-        </div>
-      </footer>
+
     </div>
   </div>
   <!--   Core JS Files   -->
@@ -182,6 +228,17 @@ Coded by www.creative-tim.com
   <script src="./assets/js/plugins/bootstrap-notify.js"></script>
   <!-- Control Center for Now Ui Dashboard: parallax effects, scripts for the example pages etc -->
   <script src="./assets/js/paper-dashboard.min.js?v=2.0.1" type="text/javascript"></script>
+
+  <script type="text/javascript">
+    function showCerts() {
+       document.getElementById('certlist').style.display = "block";
+    }
+    function showDiv() {
+       document.getElementById('createform').style.display = "block";
+    }
+
+
+  </script>
 
 </body>
 

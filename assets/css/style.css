@@ -19,18 +19,30 @@
 	font-family: Montserrat;
 }
 
-.card a{
-	background-color: #8c6ebd !important;
+.card .smbtn{
+	color: black;
+	border:solid 1.5px black;
+	background: none;
 }
 
-.card a:hover{
+.card .smbtn:hover{
 	background-color: #ebb6c5 !important;
+	border: solid 1px #ebb6c5;
 }
 
-.formrow{
-	padding-left: 250px;
-	padding-right: 250px;
+
+.card .lgbtn{
+	color: black;
+	border:solid 1.5px black;
+	background: none;
 }
+
+.card .lgbtn:hover{
+	background-color: #ebb6c5 !important;
+	border: solid 1px #ebb6c5;
+}
+
+
 
 .bgbody{
 	background-color: #f4f3ef;
