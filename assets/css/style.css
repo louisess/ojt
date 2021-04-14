@@ -6,14 +6,14 @@
 	grey - #e0e0e0;
 */
 
-.active{
-	background-color: #e0e0e0 !important;
-	font-weight: bold;
+.active a, .active i{
+	color: #e54572 !important;
 }
 
 .nav li:hover{
 	background-color: #e0e0e0;
 }
+
 
 .card{
 	font-family: Montserrat;
@@ -26,8 +26,8 @@
 }
 
 .card .smbtn:hover{
-	background-color: #ebb6c5 !important;
-	border: solid 1px #ebb6c5;
+	background-color: #e54572 !important;
+	border: solid 1px #e54572;
 }
 
 
@@ -42,8 +42,15 @@
 	border: solid 1px #ebb6c5;
 }
 
+.text-custom{
+	color: #e54572;
+}
 
 
 .bgbody{
 	background-color: #f4f3ef;
 }
+
+.collapse-row.collapsed + tr {
+     display: none;
+  }

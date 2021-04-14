@@ -40,7 +40,7 @@ Coded by www.creative-tim.com
   <link href="./assets/demo/demo.css" rel="stylesheet" />
 </head>
 
-<body class="">
+<body class="bgbody">
   <div class="wrapper ">
     <div class="sidebar" data-color="white">
       <div class="logo">
@@ -59,6 +59,7 @@ Coded by www.creative-tim.com
               <p>Certificates</p>
             </a>
           </li>
+
           <li>
             <a href="../ojt/account.html">
               <i class="far fa-user-circle"></i>
@@ -66,6 +67,7 @@ Coded by www.creative-tim.com
 
             </a>
           </li>
+
           <li>
             <a href="../ojt/homepage/dist/index.html">
           <i class="fas fa-sign-out-alt"></i>
@@ -130,11 +132,81 @@ Coded by www.creative-tim.com
                 <div class="card-body">
                   
                  <div id="certlist"  style="display:none;" class="answer_list" >
-                  MY CERTIFICATES
+                  <h5>MY CERTIFICATES</h5>
+                  <p>
+                    <i class="fas fa-asterisk"></i> A list of your saved certificates for events.
+                  </p>
+                  <hr>
+
+                    <div id="accordion">
+                      <table class="table table-hover text-custom">
+                      <thead class="text-custom">
+                      <tr>
+                        <th scope="col">EVENT</th>
+                        <th scope="col">DATE</th>
+                        <th scope="col">NUMBER OF PARTICIPANTS</th>
+                        <th scope="col"></th>
+                      </tr>
+                    </thead>
+
+
+                    <tbody>
+                        <tr data-toggle="collapse" data-target="#collapse1" class="clickable hover collapse-row collapsed accordion-toggle" title="ℹ Click row for details">
+                          <td>Castle Black Seminar</td>
+                          <td>04/11/2020</td>
+                          <td>50</td>
+                          <td colspan="2">
+                            <a href="../ojt/participantsform.html" type="button" class="btn btn-success btn-sm">GENERATE PARTICIPANT FROM</a>
+                            <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#exampleModal">GENERATE CERTIFICATES</button>
+                            
+                          </td>
+                        </tr>
+                        <div id="collapse1" class="accordion-body collapse in">
+                        <tr>
+                          <!----------WHERE DETAILS APPEAR------------->
+                            <td colspan="4">
+                              <table class="table table-borderless">
+                                <tbody>
+                                  <tr>
+                                    <th scope="col">EVENT</th>
+                                    <td>Castle Black Seminar</td>
+                                  </tr>
+
+                                  <tr>
+                                    <th scope="row">DATE</th>
+                                    <td>04/11/2020</td>
+                                  </tr>
+
+                                  <tr>
+                                    <th scope="row">HOST</th>
+                                    <td>Jon Snow</td>
+                                  </tr>
+
+                                  <tr>
+                                    <th scope="row">VENUE</th>
+                                    <td>The Wall</td>
+                                  </tr>
+
+                                </tbody>
+                              </table>
+                                
+                            </td>
+                            <!----------END OF DETAILS------------->
+                        </tr>
+                        </div>
+
+                    </tbody>
+                    </table>
+                    </div>
+
                  </div>
 
                   <div id="createform"  style="display:none;" class="answer_list" >
                     <h5> CREATE CERTIFICATE </h5>
+                    <p>
+                      <i class="fas fa-asterisk"></i> Choose from certificate templates and create a certificate to be generated.
+                    </p>
+                    <hr>
 
                     <div class="row">
                       <div class="col-6">
@@ -194,7 +266,8 @@ Coded by www.creative-tim.com
                     </div>
                     <!--- end of row --->
                     </form>
-                        <input type="button" value="CREATE CERTIFICATE" class="btn btn-sm smbtn"/>
+                    <hr>
+                        <input type="button" value="SAVE CERTIFICATE" class="btn btn-sm smbtn"/>
                       </div>
 
                   </div>
@@ -230,11 +303,17 @@ Coded by www.creative-tim.com
   <script src="./assets/js/paper-dashboard.min.js?v=2.0.1" type="text/javascript"></script>
 
   <script type="text/javascript">
+    $('.collapse').on('show.bs.collapse', function () {
+      $('.collapse.in').collapse('hide');
+    });
+
     function showCerts() {
        document.getElementById('certlist').style.display = "block";
+       document.getElementById('createform').style.display = "none";
     }
     function showDiv() {
        document.getElementById('createform').style.display = "block";
+       document.getElementById('certlist').style.display = "none";
     }
 
 
