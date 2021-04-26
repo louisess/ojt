@@ -1,3 +1,9 @@
+<?php
+    include 'dbcon.php';
+    $conn = openCon();
+    echo "Connected Successfully";
+    closeCon($conn);
+?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
