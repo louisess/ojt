@@ -11,7 +11,7 @@ Coded by www.creative-tim.com
  =========================================================
 
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
--->
+
 <?php   
     include_once('dbFunction.php');  
     if($_POST['welcome']){  
@@ -25,7 +25,9 @@ Coded by www.creative-tim.com
         header("Location:index.php");  
     }  
 ?>  
-<!doctype html>
+-->
+
+
 <html lang="en">
 
 <head>

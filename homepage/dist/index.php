@@ -1,7 +1,7 @@
 <?php
     include 'dbcon.php';
     $conn = openCon();
-    echo "Connected Successfully";
+    echo '<script>console.log("connected")</script>';
     closeCon($conn);
 ?>
 <!DOCTYPE html>
