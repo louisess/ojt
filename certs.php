@@ -11,21 +11,31 @@ Coded by www.creative-tim.com
  =========================================================
 
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-<?php   
-    include_once('dbFunction.php');  
-    if($_POST['welcome']){  
-        // remove all session variables  
-        session_unset();   
-  
-        // destroy the session   
-        session_destroy();  
-    }  
-    if(!($_SESSION)){  
-        header("Location:index.php");  
-    }  
-?>  
+ 
 -->
+
+<?php
+include ('db/dbcon.php');
+include_once('db/dbFunction.php'); 
+
+
+if (!isset($_SESSION['user'])){
+  header('location:index.php');
+}
+
+$database = new Database();
+$db = $database->getConnection();
+
+//session_start();
+
+// check user login
+//$user = new User();
+$funObj = new dbFunction($db); 
+
+$sql = "SELECT * FROM organizers WHERE id = '".$_SESSION['user']."'";
+$row = $funObj->details($sql);
+
+?>
 
 
 <html lang="en">
@@ -84,7 +94,7 @@ Coded by www.creative-tim.com
           </li>
 
           <li>
-            <a href="../ojt/homepage/dist/index.html">
+            <a href="logout.php">
           <i class="fas fa-sign-out-alt"></i>
               <p>Log out</p>
             </a>
@@ -105,7 +115,7 @@ Coded by www.creative-tim.com
                 <span class="navbar-toggler-bar bar3"></span>
               </button>
             </div>
-            <a class="navbar-brand" href="javascript:;">Hi, Sainz!</a>
+            <a class="navbar-brand" href="javascript:;">Hi, <b><?php echo $row['fname']; ?></b> !</a>
           </div>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-bar navbar-kebab"></span>

@@ -27,9 +27,9 @@ session_start();
         $stmt->execute();
                     
         }  
-        public function loginUser(){  
+        function loginUser($email, $password){  
             $password = md5($password); 
-            $sql = "SELECT * FROM organizers where email=? AND password=?";
+            $sql = "SELECT * FROM organizers where email='$email' AND password='$password'";
             $stmt = $this->conn->prepare($sql);
 
             
@@ -38,10 +38,46 @@ session_start();
 
             $stmt->execute();
             
-            
+            $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-            return $stmt;
+            /*
+            if($stmt->rowCount() > 0){
+                $row = $stmt->fetch_array();
+                return $row['id'];
+            }
+            else{
+                return false;
+            }
+            */
         }  
+
+        public function check_login($email, $password){
+            $password = md5($password);
+            $sql = "SELECT * FROM organizers where email='$email' AND password='$password'";
+            //$query = $this->connection->query($sql);
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute();
+
+            if($stmt->rowCount() > 0){
+                $row = $stmt->fetch(PDO::FETCH_ASSOC);
+                return $row['id'];
+            }
+            else{
+                return false;
+            }
+        }
+
+        public function details($sql){
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute();
+            //$query = $this->connection->query($sql);
+     
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $row;       
+        }
+
+ 
+
         public function isUserExist($email){  
             $sql = "SELECT * FROM organizers WHERE email = '".$email."'";
 

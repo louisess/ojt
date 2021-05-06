@@ -1,23 +1,32 @@
 <?php 
     include ('db/dbcon.php');
     include_once('db/dbFunction.php');  
-    
+
     $database = new Database();
     $db = $database->getConnection();
     $funObj = new dbFunction($db);  
 
-    if($_POST['login']){  
+    if(isset($_POST['login'])){  
         $email = $_POST['email'];  
         $password = $_POST['password'];  
-        $user = $funObj->loginUser($email, $password);  
-        if($_POST['username'] == $username && $_POST['password'] == $password){
-            header( 'Location: certs.php' );
-        } else {  
-            // Registration Failed  
-            echo "<script>alert('Email/ Password Not Match')</script>";  
-        }  
+   
+        $auth = $funObj->check_login($email, $password);
+       
+        if(!$auth){
+            echo "<script>alert('Email/ Password Not Match')</script>";
+            echo '<script>console.log("failed wtf")</script>';
+            //header('location:index.php');
+            
+        }
+        else{
+            $_SESSION['user'] = $auth;
+            //$_SESSION['user'] = true;
+            
+            header('location:certs.php');
+        }
     }  
-    if($_POST['register']){  
+
+    if(isset($_POST['register'])){  
         $fname = $_POST['fname'];  
         $lname = $_POST['lname'];  
         $email = $_POST['email'];  
@@ -59,7 +68,7 @@
                     <a class="hiddenanchor" id="tologin"></a>  
                     <div id="wrapper">  
                         <div id="login" class="animate form">  
-                           <form name="login" method="post" action="">  
+                           <form name="login" method="post" action="index.php">  
                                 <h1>Log in</h1>   
                                 <p>   
                                     <label for="emaillogin" class="youmail" data-icon="e" > Your email</label>  
@@ -68,10 +77,6 @@
                                 <p>   
                                     <label for="password" class="youpasswd" data-icon="p"> Your password </label>  
                                     <input id="password" name="password" required="required" type="password" placeholder="eg. X8df!90EO" />   
-                                </p>  
-                                <p class="keeplogin">   
-                                    <input type="checkbox" name="loginkeeping" id="loginkeeping" value="loginkeeping" />   
-                                    <label for="loginkeeping">Keep me logged in</label>  
                                 </p>  
                                 <p class="login button">   
                                     <input type="submit" name="login" value="Login" />   
