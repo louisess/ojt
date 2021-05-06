@@ -24,10 +24,7 @@ if (!isset($_SESSION['user'])){
 $database = new Database();
 $db = $database->getConnection();
 
-//session_start();
 
-// check user login
-//$user = new User();
 $funObj = new dbFunction($db); 
 
 $sql = "SELECT * FROM organizers WHERE id = '".$_SESSION['user']."'";
@@ -76,20 +73,20 @@ $row = $funObj->details($sql);
       <div class="sidebar-wrapper">
         <ul class="nav">
           <li>
-            <a href="../ojt/certs.html">
+            <a href="../ojt/certs.php">
               <i class="fas fa-certificate"></i>
               <p>Certificates</p>
             </a>
           </li>
           <li class="active">
-            <a href="../ojt/account.html">
+            <a href="../ojt/account.php">
               <i class="far fa-user-circle"></i>
               <p>Account</p>
 
             </a>
           </li>
           <li>
-            <a href="../ojt/homepage/dist/index.html">
+            <a href="logout.php">
           <i class="fas fa-sign-out-alt"></i>
               <p>Log out</p>
             </a>
@@ -110,7 +107,7 @@ $row = $funObj->details($sql);
                 <span class="navbar-toggler-bar bar3"></span>
               </button>
             </div>
-            <a class="navbar-brand" href="javascript:;">Hi, Sainz!</a>
+            <a class="navbar-brand" href="javascript:;">Hi, <b> <?php echo $row['fname'];?></b>!</a>
           </div>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-bar navbar-kebab"></span>
@@ -150,10 +147,10 @@ $row = $funObj->details($sql);
                 </div>
                 <div class="card-body">
                   <label> NAME </label>
-                  <h5 class="card-title mb-3">Carlos Sainz</h5>
+                  <h5 class="card-title mb-3"><?php echo $row['fname'];?> <?php echo $row['lname'];?></h5>
 
                   <label> EMAIL </label>
-                  <h5 class="card-title mb-3">tifosi@gmail.com</h5>
+                  <h5 class="card-title mb-3"><?php echo $row['email'];?></h5>
 
                   <label> PASSWORD </label>
                   <h5 class="card-title ">*******</h5>

@@ -26,7 +26,9 @@ session_start();
         $stmt->bindparam(4,$this->password);
         $stmt->execute();
                     
+        return true;
         }  
+
         function loginUser($email, $password){  
             $password = md5($password); 
             $sql = "SELECT * FROM organizers where email='$email' AND password='$password'";
@@ -80,7 +82,28 @@ session_start();
 
         public function isUserExist($email){  
             $sql = "SELECT * FROM organizers WHERE email = '".$email."'";
+            $stmt = $this->conn->prepare($sql);
+            $sql->execute();
+            //$query = $this->connection->query($sql);
+     
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $row; 
 
         }  
+
+        function editAcct($fname, $lname, $email, $password){  
+        $password = md5($password);  
+        $sql = "INSERT INTO organizers(fname, lname, email, password) values('$fname','$lname','$email','$password')";
+
+        $stmt = $this->conn->prepare($sql);
+
+        $stmt->bindparam(1,$this->fname);
+        $stmt->bindparam(2,$this->lname);
+        $stmt->bindparam(3,$this->email);
+        $stmt->bindparam(4,$this->password);
+        $stmt->execute();
+                    
+        return true;
+        }
     }  
 ?>  

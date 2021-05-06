@@ -79,14 +79,14 @@ $row = $funObj->details($sql);
       <div class="sidebar-wrapper">
         <ul class="nav">
           <li class="active">
-            <a href="../ojt/certs.html">
+            <a href="../ojt/certs.php">
               <i class="fas fa-certificate"></i>
               <p>Certificates</p>
             </a>
           </li>
 
           <li>
-            <a href="../ojt/account.html">
+            <a href="../ojt/account.php">
               <i class="far fa-user-circle"></i>
               <p>Account</p>
 
@@ -115,7 +115,7 @@ $row = $funObj->details($sql);
                 <span class="navbar-toggler-bar bar3"></span>
               </button>
             </div>
-            <a class="navbar-brand" href="javascript:;">Hi, <b><?php echo $row['fname']; ?></b> !</a>
+            <a class="navbar-brand" href="javascript:;">Hi, <b><?php echo $row['fname']; ?></b>!</a>
           </div>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-bar navbar-kebab"></span>

@@ -33,12 +33,12 @@
         $password = $_POST['password'];  
         $confirmPassword = $_POST['confirm_password'];  
         if($password == $confirmPassword){  
-            //$email = $funObj->isUserExist($email); 
+            $email = $funObj->isUserExist($email); 
             $register = $funObj->UserRegister($fname, $lname, $email, $password);  
-                if(!$register){  
-                    echo "<script>alert('Registration Not Successful')</script>";  
+                if($register){  
+                    echo "<script>alert('Registration Successful')</script>";  
                 }else{  
-                     echo "<script>alert('Registration Successful')</script>";  
+                    echo "<script>alert('Registration Not Successful')</script>";  
                 }   
           
         }  else{
