@@ -83,7 +83,7 @@ session_start();
         public function isUserExist($email){  
             $sql = "SELECT * FROM organizers WHERE email = '".$email."'";
             $stmt = $this->conn->prepare($sql);
-            $sql->execute();
+            //$sql->execute();
             //$query = $this->connection->query($sql);
      
             $row = $stmt->fetch(PDO::FETCH_ASSOC);
