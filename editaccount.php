@@ -30,6 +30,29 @@ $funObj = new dbFunction($db);
 $sql = "SELECT * FROM organizers WHERE id = '".$_SESSION['user']."'";
 $row = $funObj->details($sql);
 
+
+if(isset($_POST['edit'])){ 
+    $id =  $_SESSION['user'];
+    $fname = $_POST['fname'];  
+    $lname = $_POST['lname'];  
+    $email = $_POST['email'];  
+    //$password = $_POST['password'];  
+    //$confirmPassword = $_POST['confirm_password'];  
+   
+        //$email = $funObj->isUserExist($email); 
+        $stmt1 = $funObj->checkDuplicates($email);
+        $check1 = $stmt1->rowCount();
+
+        $edit = $funObj->editAcct($fname, $lname, $email, $id); 
+           if($edit){  
+                header('location:editaccount.php');
+                echo "<script>alert('Changes saved.')</script>";
+            }else{  
+                echo "<script>alert('No changes saved.')</script>";  
+            }     
+
+  }  
+
 ?>
 <!doctype html>
 <html lang="en">
@@ -61,6 +84,7 @@ $row = $funObj->details($sql);
 
 <body class="bgbody">
   <div class="wrapper ">
+
     <div class="sidebar" data-color="white">
       <div class="logo">
         <a href="/" class="simple-text logo-normal">
@@ -95,6 +119,7 @@ $row = $funObj->details($sql);
         </ul>
       </div>
     </div>
+  
     <div class="main-panel" style="height: 100vh;">
       <!-- Navbar -->
       <nav class="navbar navbar-expand-lg navbar-absolute fixed-top navbar-transparent">
@@ -146,16 +171,40 @@ $row = $funObj->details($sql);
                   
                 </div>
                 <div class="card-body">
-                  <label> NAME </label>
-                  <h5 class="card-title mb-3"><?php echo $row['fname'];?> <?php echo $row['lname'];?></h5>
+                  <div class="row">
+                    <div class="col-4">
+                      
+                    </div>
 
-                  <label> EMAIL </label>
-                  <h5 class="card-title mb-3"><?php echo $row['email'];?></h5>
+                    <div class="col-4">
+                      <form name="edit" method="post" action="editaccount.php">
+                        <label> FIRST NAME </label>
+                        <input type="text" class="form-control mb-2 text-center" id="fname" name="fname"  value='<?php echo $row['fname'];?>'>
 
-                  <label> PASSWORD </label>
-                  <h5 class="card-title ">*******</h5>
-                  <hr>
-                  <a href="#" class="btn smbtn">Edit Account</a>
+                        <label> LAST NAME </label>
+                        <input type="text" class="form-control mb-4 text-center" id="lname" name="lname"  value='<?php echo $row['lname'];?>'>
+
+                        <label> EMAIL </label>
+                        <input type="email" class="form-control mb-4 text-center" id="email" name="email"value="<?php echo $row['email'];?>">
+
+                        <!--
+                        <label> PASSWORD </label>
+                        <input type="password" class="form-control mb-4 text-center" id="password" name="password" placeholder="*********">
+                        <label> CONFIRM PASSWORD </label>
+                        <input type="password" class="form-control mb-4 text-center" id="confirm_password" name="confirm_password" placeholder="*********">
+                        -->
+
+                        <hr>
+                        <input type="submit" class="btn smbtn btn-sm" value="SAVE" name="edit"><br>
+                      </form>
+                    </div>
+
+                    <div class="col-4">
+                      
+                    </div>
+                    
+                  </div>
+                  
                 </div>
                 <div class="card-footer text-muted">
                   

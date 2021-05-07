@@ -91,16 +91,24 @@ session_start();
 
         }  
 
-        function editAcct($fname, $lname, $email, $password){  
-        $password = md5($password);  
-        $sql = "INSERT INTO organizers(fname, lname, email, password) values('$fname','$lname','$email','$password')";
+        function checkDuplicates($email){
+            $sql = "SELECT * FROM organizers WHERE email = '".$email."'";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute();
+            return $stmt;
+
+        }
+
+        function editAcct($fname, $lname, $email, $id){  
+        //$password = md5($password);  
+        $sql = "UPDATE organizers SET fname='$fname', lname='$lname', email='$email' WHERE id='$id'";
 
         $stmt = $this->conn->prepare($sql);
 
         $stmt->bindparam(1,$this->fname);
         $stmt->bindparam(2,$this->lname);
         $stmt->bindparam(3,$this->email);
-        $stmt->bindparam(4,$this->password);
+        $stmt->bindparam(4,$this->id);
         $stmt->execute();
                     
         return true;

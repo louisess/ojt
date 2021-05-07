@@ -33,13 +33,22 @@
         $password = $_POST['password'];  
         $confirmPassword = $_POST['confirm_password'];  
         if($password == $confirmPassword){  
-            $email = $funObj->isUserExist($email); 
-            $register = $funObj->UserRegister($fname, $lname, $email, $password);  
-                if($register){  
-                    echo "<script>alert('Registration Successful')</script>";  
+            //$email = $funObj->isUserExist($email); 
+            $stmt1 = $funObj->checkDuplicates($email);
+            $check1 = $stmt1->rowCount();
+
+            $register = $funObj->UserRegister($fname, $lname, $email, $password); 
+
+            if($check1>0){
+                echo "<script>alert('Email already exists!')</script>"; 
+            }else{
+               if($register){  
+                echo "<script>alert('Registration Successful. Please log in.')</script>";  
                 }else{  
                     echo "<script>alert('Registration Not Successful')</script>";  
-                }   
+                }    
+            }
+            
           
         }  else{
             echo "<script>alert('Password does not match')</script>";  

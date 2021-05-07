@@ -155,7 +155,7 @@ $row = $funObj->details($sql);
                   <label> PASSWORD </label>
                   <h5 class="card-title ">*******</h5>
                   <hr>
-                  <a href="#" class="btn smbtn">Edit Account</a>
+                  <a href="/ojt/editaccount.php" class="btn smbtn">Edit Account</a>
                 </div>
                 <div class="card-footer text-muted">
                   
