@@ -159,7 +159,7 @@ if(isset($_POST['edit'])){
       <div class="content">
         <div class="row">
           <div class="col-md-12">
-            <h3 class="description">Edit Account</h3>
+            <h3 class="description"><a href="../ojt/account.php" title="Click to go back to account overview.">Account</a> / Edit Account</h3>
           </div>
 
           <div class="row">
@@ -187,6 +187,8 @@ if(isset($_POST['edit'])){
                         <label> EMAIL </label>
                         <input type="email" class="form-control mb-4 text-center" id="email" name="email"value="<?php echo $row['email'];?>">
 
+                        <label> PASSWORD </label><br>
+                        <input type="submit" class="btn smbtn btn-sm" value="Edit password" name="editpass" title="Click here to change your password."><br>
                         <!--
                         <label> PASSWORD </label>
                         <input type="password" class="form-control mb-4 text-center" id="password" name="password" placeholder="*********">
@@ -195,7 +197,7 @@ if(isset($_POST['edit'])){
                         -->
 
                         <hr>
-                        <input type="submit" class="btn smbtn btn-sm" value="SAVE" name="edit"><br>
+                        <input type="submit" class="btn smbtn btn-sm" value="SAVE" name="edit" title="Save changes to your account."><br>
                       </form>
                     </div>
 
