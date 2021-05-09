@@ -31,27 +31,7 @@ $sql = "SELECT * FROM organizers WHERE id = '".$_SESSION['user']."'";
 $row = $funObj->details($sql);
 
 
-if(isset($_POST['edit'])){ 
-    $id =  $_SESSION['user'];
-    $fname = $_POST['fname'];  
-    $lname = $_POST['lname'];  
-    $email = $_POST['email'];  
-    //$password = $_POST['password'];  
-    //$confirmPassword = $_POST['confirm_password'];  
-   
-        //$email = $funObj->isUserExist($email); 
-        $stmt1 = $funObj->checkDuplicates($email);
-        $check1 = $stmt1->rowCount();
 
-        $edit = $funObj->editAcct($fname, $lname, $email, $id); 
-           if($edit){  
-                header('location:editaccount.php');
-                echo "<script>alert('Changes saved.')</script>";
-            }else{  
-                echo "<script>alert('No changes saved.')</script>";  
-            }     
-
-  }  
 
 ?>
 <!doctype html>
@@ -171,7 +151,34 @@ if(isset($_POST['edit'])){
                   
                 </div>
                 <div class="card-body">
-                  <div class="row">
+                  <div class="row m-2">
+                    <?php
+                    if(isset($_POST['edit'])){ 
+                      $id =  $_SESSION['user'];
+                      $fname = $_POST['fname'];  
+                      $lname = $_POST['lname'];  
+                      $email = $_POST['email'];  
+                      //$password = $_POST['password'];  
+                      //$confirmPassword = $_POST['confirm_password'];  
+                     
+                          //$email = $funObj->isUserExist($email); 
+                          $stmt1 = $funObj->checkDuplicates($email);
+                          $check1 = $stmt1->rowCount();
+
+                          $edit = $funObj->editAcct($fname, $lname, $email, $id); 
+                             if($edit){  
+                                  echo '<div class="alert  alert-success alert-dismissible fade show" role="alert">
+                                                Changes saved to your account.
+                                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                  <span aria-hidden="true">&times;</span>
+                                                </button>
+                                              </div>';
+                              }else{  
+                                  echo "<script>alert('No changes saved.')</script>";  
+                              }     
+
+                    }  
+                    ?>
                     <div class="col-4">
                       
                     </div>
@@ -188,7 +195,7 @@ if(isset($_POST['edit'])){
                         <input type="email" class="form-control mb-4 text-center" id="email" name="email"value="<?php echo $row['email'];?>">
 
                         <label> PASSWORD </label><br>
-                        <input type="submit" class="btn smbtn btn-sm" value="Edit password" name="editpass" title="Click here to change your password."><br>
+                        <input type="submit" class="btn btn-sm btn-round" value="Edit password" name="editpass" title="Click here to change your password."><br>
                         <!--
                         <label> PASSWORD </label>
                         <input type="password" class="form-control mb-4 text-center" id="password" name="password" placeholder="*********">
@@ -197,7 +204,7 @@ if(isset($_POST['edit'])){
                         -->
 
                         <hr>
-                        <input type="submit" class="btn smbtn btn-sm" value="SAVE" name="edit" title="Save changes to your account."><br>
+                        <input type="submit" class="btn smbtn btn-sm btn-round" value="SAVE" name="edit" title="Save changes to your account."><br>
                       </form>
                     </div>
 

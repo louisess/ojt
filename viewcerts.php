@@ -143,38 +143,126 @@ $row = $funObj->details($sql);
       <div class="content">
         <div class="row">
           <div class="col-md-12">
-            <h3 class="description">Certificate</h3>
+            <h3 class="description"><a href="../ojt/certs.php" title="Click to go back to account overview.">Certificates</a> / Your certificates</h3>
           </div>
 
           <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-12">
 
-              <!-- certificates container -->
-              <div class="card card-nav-tabs">
-                <div class="card-body">
-                  <h3><i class="fas fa-scroll"></i></h3>
-                  <hr>
-                  <h4 class="card-title">Your certificates</h4>
-                  <p class="card-text">View your saved certificates and their details.</p>
-                  <a href="../ojt/viewcerts.php" class="btn btn-round">CERTIFICATES</a>
+              <!-- events container -->
+              <div class="card text-center">
+                <div class="card-header">
+                  <!--
+                  <input type="button" class="btn btn-sm float-left smbtn" value="MY CERTIFICATES" name="answer" onclick="showCerts()"/>
+                  <input type="button" href="#" class="btn btn-sm float-left smbtn" value="CREATE" name="answer" onclick="showDiv()"/>
+                  -->
                 </div>
-              </div>            
-
-            </div>
-
-            <!-- create certificates container -->
-            <div class="col-md-6">
-              <div class="card card-nav-tabs">
                 <div class="card-body">
-                  <h3><i class="fas fa-file-pdf"></i></h3>
+                 <div id="certlist" style="display: block;" class="answer_list" >
+                  <h5>YOUR CERTIFICATES</h5>
+                  <p>
+                    <i class="fas fa-asterisk"></i> A list of your saved certificates for events.
+                  </p>
+
                   <hr>
-                  <h4 class="card-title">Generate certificates</h4>
-                  <p class="card-text">Choose among the provided templates and generate your certificates.</p>
-                  <a href="../ojt/createcert.php" class="btn btn-round" title="Go to create certificates form.">CREATE CERTIFICATES</a>
+
+                   
+                        <?php
+                            $id =  $_SESSION['user'];
+                            //$sql2 = "SELECT * FROM certificates WHERE orgid = '".$_SESSION['user']."'";
+                            $cert = $funObj->viewCerts($id);
+                            //$stmt=$client->viewClients();
+
+                            $count =  $cert->rowCount();
+
+                            if(!$cert){
+                              echo "<label> There are no certificates here... </label>";
+                            }else{
+                              echo ' <div id="accordion">
+                                        <table class="table table-hover text-custom">
+                                        <thead class="text-custom">
+                                        <tr>
+                                          <th scope="col">EVENT NAME</th>
+                                          <th scope="col">DATE</th>
+                                          <th scope="col">VENUE</th>
+                                          <th scope="col"></th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>';
+                              while ($certrow = $cert->fetch(PDO::FETCH_ASSOC)) {
+                                extract($certrow);
+                                echo ' <tr data-toggle="collapse" data-target="#collapse'.$certrow['certid'].'" class="collapse-row collapsed accordion-toggle" title="ℹ Click row for details">
+                          
+                                <td>'.$certrow['eventname'].'</td>';
+                                echo '<td>'.$certrow['eventdate'].'</td>';
+                                echo '<td>'.$certrow['venue']. '<td>';
+                                echo '<td colspan="2">
+                            <a href="../ojt/participantsform.html" type="button" class="btn btn-success btn-sm">GENERATE PARTICIPANT FROM</a>
+                            <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#exampleModal">GENERATE CERTIFICATES</button>
+                            
+                          </td>
+                        </tr>
+                        <div id="collapse'.$certrow['certid'].'" class="accordion-body collapse in">
+                        <tr>
+                          <!----------WHERE DETAILS APPEAR------------->
+                            <td colspan="4">
+                              <table class="table table-borderless">
+                                <tbody>
+                                  <tr>
+                                    <th scope="col">EVENT NAME</th>
+                                    <td>'.$certrow['eventname'].'</td>
+                                  </tr>
+
+                                  <tr>
+                                    <th scope="row">DATE</th>
+                                    <td>'.$certrow['eventdate'].'</td>
+                                  </tr>
+
+                                  <tr>
+                                    <th scope="row">VENUE</th>
+                                    <td>'.$certrow['venue']. '</td>
+                                  </tr>
+
+                                  <tr>
+                                    <th scope="row">ORGANIZER/S</th>
+
+                                    <td>'.$certrow['organizer1']. '<br>'
+                                    .$certrow['organizer2'].'<br>'
+                                    .$certrow['organizer3'].'
+                                    </td>
+                                  </tr>
+
+                                </tbody>
+                              </table>
+                                
+                            </td>
+                            <!----------END OF DETAILS------------->
+                        </tr>';
+
+                              }
+
+                        echo '</div>
+                         </tbody>
+                    </table>
+                    </div>';
+                            }
+                          ?>
+
+
+                   
+
+                 </div>
+
+                  </div>
+
+                  
+
+                <div class="card-footer text-muted">
+                  
                 </div>
               </div>
-            </div>
 
+            </div>
           </div>
         </div>
       </div>
