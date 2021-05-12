@@ -20,10 +20,7 @@ session_start();
 
         $stmt = $this->conn->prepare($sql);
 
-        $stmt->bindparam(1,$this->fname);
-        $stmt->bindparam(2,$this->lname);
-        $stmt->bindparam(3,$this->email);
-        $stmt->bindparam(4,$this->password);
+
         $stmt->execute();
                     
         return true;
@@ -132,14 +129,6 @@ session_start();
 
             $stmt = $this->conn->prepare($sql);
 
-            $stmt->bindparam(1,$this->orgid);
-            $stmt->bindparam(2,$this->eventname);
-            $stmt->bindparam(3,$this->eventdate);
-            $stmt->bindparam(4,$this->venue);
-            $stmt->bindparam(5,$this->organizer1);
-            $stmt->bindparam(6,$this->organizer2);
-            $stmt->bindparam(7,$this->organizer3);
-            //$stmt->bindparam(8,$this->certid);
             $stmt->execute();
                         
             return true;
