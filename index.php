@@ -64,19 +64,24 @@
         <meta name="description" content="Login and Registration Form with HTML5 and CSS3" />  
         <meta name="keywords" content="html5, css3, form, switch, animation, :target, pseudo-class" />  
         <meta name="author" content="Codrops" />  
+
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
+        <link href="/assets/css/style.css" rel="stylesheet" />
+        <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
     </head>  
     <body>  
-        <div class="container">  
-            <header>  
-                <h1>Login and Registration Form  </h1>  
-            </header>  
-            <section>               
-                <div id="container_demo" >  
-                     
-                    <a class="hiddenanchor" id="toregister"></a>  
-                    <a class="hiddenanchor" id="tologin"></a>  
-                    <div id="wrapper">  
-                        <div id="login" class="animate form">  
+    	<div class="container">
+    		<div class="row">
+    			<header> <h1 align="center">CertiCreate</h1></header>
+    		</div>
+    	</div>
+        <div class="container"> 
+        <div class="row">
+		    <div class="col">
+		    	<a class="hiddenanchor" id="toregister"></a>  
+                <a class="hiddenanchor" id="tologin"></a>  
+                 
+		      <div id="login" class="animate form">  
                            <form name="login" method="post" action="index.php">  
                                 <h1>Log in</h1>   
                                 <p>   
@@ -96,8 +101,9 @@
                                 </p>  
                             </form>  
                         </div>  
-  
-                        <div id="register" class="animate form">  
+		    </div>
+		    <div class="col">
+		      <div id="register" class="animate form">  
                             <form name="login" method="post" action="index.php">  
                                 <h1> Sign up </h1>   
                                 <p>   
@@ -129,6 +135,18 @@
                                 </p>  
                             </form>  
                         </div>  
+		    </div>
+		  </div>
+            
+                
+         
+            <section>               
+                <div id="container_demo" >  
+                     
+                    
+                        
+  
+                        
                           
                     </div>  
                 </div>    
