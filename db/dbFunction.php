@@ -101,11 +101,6 @@ session_start();
         $sql = "UPDATE organizers SET fname='$fname', lname='$lname', email='$email' WHERE id='$id'";
 
         $stmt = $this->conn->prepare($sql);
-
-        $stmt->bindparam(1,$this->fname);
-        $stmt->bindparam(2,$this->lname);
-        $stmt->bindparam(3,$this->email);
-        $stmt->bindparam(4,$this->id);
         $stmt->execute();
                     
         return true;
@@ -114,10 +109,7 @@ session_start();
         function viewCerts($id){
             $sql = "SELECT * FROM certificates WHERE orgid = '".$id."'";
             $stmt = $this->conn->prepare($sql);
-
             $stmt->execute();
-            
-            
 
             return $stmt;
 
@@ -128,7 +120,6 @@ session_start();
             $sql = "INSERT INTO certificates (eventname, eventdate, orgid, venue, organizer1, organizer2, organizer3) values('$eventname','$eventdate','$orgid', '$venue','$organizer1','$organizer2','$organizer3')";
 
             $stmt = $this->conn->prepare($sql);
-
             $stmt->execute();
                         
             return true;
