@@ -234,39 +234,7 @@ $row = $funObj->details($sql);
                             <input type="date" id="eventdate" name="eventdate" class="form-control text-center">
                           -->
                             <label for="date" class="mr-2">Day</label> 
-                              <!--
-                              <select name="name">
-                                <option value="name1">1st</option>
-                                <option value="name2">2nd</option>
-                                <option value="name3">3rd</option>
-                                <option value="name4">4th</option>
-                                <option value="name4">5th</option>
-                                <option value="name4">6th</option>
-                                <option value="name4">7th</option>
-                                <option value="name4">8th</option>
-                                <option value="name4">9th</option>
-                                <option value="name4">10th</option>
-                                <option value="name4">11th</option>
-                                <option value="name4">12th</option>
-                                <option value="name4">13th</option>
-                                <option value="name4">14th</option>
-                                <option value="name4">15th</option>
-                                <option value="name4">16th</option>
-                                <option value="name4">17th</option>
-                                <option value="name4">18th</option>
-                                <option value="name4">19th</option>
-                                <option value="name4">20th</option>
-                                <option value="name4">21st</option>
-                                <option value="name4">22nd</option>
-                                <option value="name4">23rd</option>
-                                <option value="name4">24th</option>
-                                <option value="name4">25th</option>
-                                <option value="name4">26th</option>
-                                <option value="name4">26th</option>
-                                <option value="name4">26th</option>
-                              </select>
 
-                            -->
                             <?php
                               echo "<select name='day'>";
                               for ($day = 1; $day <= 31; $day++) {

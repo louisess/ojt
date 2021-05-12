@@ -126,10 +126,9 @@ session_start();
 
         }
 
-        function createCert( $eventname, $eventdate, $orgid, $venue, $organizer1, $organizer2, $organizer3){
+        function createCert($eventname, $eventdate, $orgid, $venue, $organizer1, $organizer2, $organizer3){
             //$sql = "SELECT * FROM certificates WHERE orgid = '$id'";
-            $sql = "INSERT INTO certificates (eventname, eventdate, orgid, venue, organizer1, organizer2, organizer3) values('$eventname','$eventdate','$orgid', '$venue','$organizer1','$organizer2',
-            '$organizer3')";
+            $sql = "INSERT INTO certificates (eventname, eventdate, orgid, venue, organizer1, organizer2, organizer3) values('$eventname','$eventdate','$orgid', '$venue','$organizer1','$organizer2','$organizer3')";
 
             $stmt = $this->conn->prepare($sql);
 
@@ -140,6 +139,7 @@ session_start();
             $stmt->bindparam(5,$this->organizer1);
             $stmt->bindparam(6,$this->organizer2);
             $stmt->bindparam(7,$this->organizer3);
+            //$stmt->bindparam(8,$this->certid);
             $stmt->execute();
                         
             return true;
