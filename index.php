@@ -1,4 +1,6 @@
 <?php 
+session_start();  
+
     include ('db/dbcon.php');
     include_once('db/dbFunction.php');  
 

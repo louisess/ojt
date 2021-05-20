@@ -13,8 +13,21 @@ Coded by www.creative-tim.com
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 -->
 <?php
+include ('db/dbcon.php');
+include_once('db/dbFunction.php'); 
 
+$database = new Database();
+$db = $database->getConnection();
+
+//session_start();
+
+// check user login
+//$user = new User();
+$funObj = new dbFunction($db); 
+
+$certid = $_GET['certid'];
 ?>
+
 <!doctype html>
 <html lang="en">
 
@@ -60,24 +73,82 @@ Coded by www.creative-tim.com
           <h5 class="card-title">Participant Form</h5>
           <hr>
             <div class="row formrow">
-              <form>
+              <p>
+                <?php
+                  //echo $certid;
+                  $cert = $funObj->certName($certid);
+                  echo "<b>Seminar: </b>".$cert['eventname'];
+                ?>
+              </p>
+              <form id="addParticipants" action="participantsform.php" method="post">
                 <div class="form-group">
                   <label for="formGroupExampleInput">NAME</label>
-                  <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Juan dela Cruz">
+                  <input type="text" name="name" class="form-control" id="formGroupExampleInput" placeholder="Juan dela Cruz">
                 </div>
 
                 <div class="form-group">
                   <label for="formGroupExampleInput2">EMAIL</label>
-                  <input type="email" class="form-control" id="formGroupExampleInput2" placeholder="jdl@gmail.com">
+                  <input type="email" name="email" class="form-control" id="formGroupExampleInput2" placeholder="jdl@gmail.com">
                 </div>
 
+
+                <!--
                 <div class="form-group">
                   <label for="formGroupExampleInput2">CONFIRM EMAIL</label>
                   <input type="email" class="form-control" id="formGroupExampleInput2" placeholder="jdl@gmail.com">
                 </div>
+              -->
+              <input type="submit" class="btn btn-primary" value="Submit">
+              <?php
+                if(isset($_POST['createcert'])){
+                  $orgid = $_SESSION['user'];  
+                  $eventname = $_POST['eventname']; 
+                  $day = $_POST['day']; 
+                  $month = $_POST['month']; 
+                  $year = $_POST['year'];
+                  //$st = range(4,20);
+                  //eventdate conditions:
+                  
+                    if($day == 1 || $day == 21 || $day == 31){
+                      $eventdate = $_POST['day'].'st of '.$month.', '.$year;
+                    }else if($day == 2 || $day == 22){
+                      $eventdate = $_POST['day'].'nd of '.$month.', '.$year;
+                    }else if($day == 3 || $day == 23){
+                      $eventdate = $_POST['day'].'rd of '.$month.', '.$year;
+                    }else{
+                      $eventdate = $_POST['day'].'th of '.$month.', '.$year;
+                    }
+                  
+
+                  $venue = $_POST['venue'];  
+                  $organizer1 = $_POST['organizer1'];  
+                  $organizer2 = $_POST['organizer2'];  
+                  $organizer3 = $_POST['organizer3'];  
+
+
+                  $savecert = $funObj->createCert($eventname, $eventdate, $orgid, $venue, $organizer1, $organizer2, $organizer3); 
+
+                  if(!$savecert){
+                    //echo "sno";
+                    echo "<script> unsuccesful </script>";
+
+                  }else{
+                    //echo "<script> succesful </script>";
+                    echo '<div class="alert  alert-success alert-dismissible fade show" role="alert">
+                      Nice!<strong> '.$eventname.'</strong> has been added to your events.
+                      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>';
+                  }
+
+                      
+
+                }  
+                ?>
               </form>
             </div>
-          <a href="../addevent.html" class="btn btn-primary">Submit</a>
+          
         </div>
         <div class="card-footer text-muted">
           

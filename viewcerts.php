@@ -15,6 +15,8 @@ Coded by www.creative-tim.com
 -->
 
 <?php
+session_start();  
+
 include ('db/dbcon.php');
 include_once('db/dbFunction.php'); 
 
@@ -197,7 +199,7 @@ $row = $funObj->details($sql);
                                 echo '<td>'.$certrow['eventdate'].'</td>';
                                 echo '<td>'.$certrow['venue']. '<td>';
                                 echo '<td colspan="2">
-                            <a href="../ojt/participantsform.html" type="button" class="btn btn-success btn-sm">GENERATE PARTICIPANT FROM</a>
+                            <a href="../ojt/participantsform.php?certid='.$certrow['certid'].'" type="button" class="btn btn-success btn-sm">GENERATE PARTICIPANT FROM</a>
                             <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#exampleModal">GENERATE CERTIFICATES</button>
                             
                           </td>

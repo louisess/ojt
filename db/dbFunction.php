@@ -1,6 +1,5 @@
 <?php  
 
-session_start();  
     class dbFunction {  
 
     private $conn;
@@ -113,6 +112,20 @@ session_start();
 
             return $stmt;
 
+
+        }
+
+        function certName($certid){
+            $sql = "SELECT * FROM certificates WHERE orgid = '".$certid."'";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute();
+
+            //return $stmt;
+
+            $cert = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $cert; 
+            
+
         }
 
         function createCert($eventname, $eventdate, $orgid, $venue, $organizer1, $organizer2, $organizer3){
@@ -125,6 +138,16 @@ session_start();
             return true;
         }
 
+        function addParticipant($name, $email, $certid){
+            //$sql = "SELECT * FROM certificates WHERE orgid = '$id'";
+            $sql = "INSERT INTO participants (name, email, certid, email) values('$name','$email','$certid')";
+
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute();
+                        
+            return true;
+        }
+
 
     }  
-?>  
+?>   
