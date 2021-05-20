@@ -115,15 +115,15 @@
 
         }
 
-        function certName($certid){
-            $sql = "SELECT * FROM certificates WHERE orgid = '".$certid."'";
+        function certName($eventid){
+            $sql = "SELECT * FROM certificates WHERE certid = '".$eventid."'";
             $stmt = $this->conn->prepare($sql);
             $stmt->execute();
+            //$query = $this->connection->query($sql);
+     
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $row;    
 
-            //return $stmt;
-
-            $cert = $stmt->fetch(PDO::FETCH_ASSOC);
-            return $cert; 
             
 
         }
@@ -138,9 +138,9 @@
             return true;
         }
 
-        function addParticipant($name, $email, $certid){
+        function addParticipant($name, $email, $eventid){
             //$sql = "SELECT * FROM certificates WHERE orgid = '$id'";
-            $sql = "INSERT INTO participants (name, email, certid, email) values('$name','$email','$certid')";
+            $sql = "INSERT INTO participants(name, email, eventid) values('$name','$email','$eventid')";
 
             $stmt = $this->conn->prepare($sql);
             $stmt->execute();

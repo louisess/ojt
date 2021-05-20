@@ -25,7 +25,7 @@ $db = $database->getConnection();
 //$user = new User();
 $funObj = new dbFunction($db); 
 
-$certid = $_GET['certid'];
+
 ?>
 
 <!doctype html>
@@ -73,14 +73,49 @@ $certid = $_GET['certid'];
           <h5 class="card-title">Participant Form</h5>
           <hr>
             <div class="row formrow">
-              <p>
-                <?php
-                  //echo $certid;
-                  $cert = $funObj->certName($certid);
-                  echo "<b>Seminar: </b>".$cert['eventname'];
-                ?>
-              </p>
-              <form id="addParticipants" action="participantsform.php" method="post">
+              <?php
+                  $eventid = $_GET['certid'];
+                  //echo $eventid;
+                  $row = $funObj->certName($eventid);
+                  echo "<p><b>Seminar: </b>".$row['eventname'];
+
+                  if(isset($_POST['addparticipant'])){
+
+                    $eventid = $_POST['eventid'];
+                    $name = $_POST['name']; 
+                    $email1 = $_POST['email1'];
+                    $email2 = $_POST['email2'];
+
+                    if ($email1 !== $email2){
+                      echo '<div class="alert alert-success alert-dismissible fade show" role="alert">
+                              Oops! Email do not match!
+                              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>';
+                    }else{
+                      $email = $_POST['email1'];
+                      $added = $funObj->addParticipant($name, $email, $eventid);
+
+                       echo '<div class="alert  alert-success alert-dismissible fade show" role="alert">
+                              Success!
+                              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>';
+                    } 
+                    
+
+                        
+
+                  }  
+
+                  echo '</p>
+
+              <form id="addParticipants" action="participantsform.php?certid='.$eventid.'" method="post">
+
+                <input type="hidden" id="eventid" name="eventid" value="'.$eventid.'">
+
                 <div class="form-group">
                   <label for="formGroupExampleInput">NAME</label>
                   <input type="text" name="name" class="form-control" id="formGroupExampleInput" placeholder="Juan dela Cruz">
@@ -88,63 +123,21 @@ $certid = $_GET['certid'];
 
                 <div class="form-group">
                   <label for="formGroupExampleInput2">EMAIL</label>
-                  <input type="email" name="email" class="form-control" id="formGroupExampleInput2" placeholder="jdl@gmail.com">
+                  <input type="email" name="email1" class="form-control" id="formGroupExampleInput2" placeholder="jdl@gmail.com">
                 </div>
 
 
-                <!--
+                
                 <div class="form-group">
                   <label for="formGroupExampleInput2">CONFIRM EMAIL</label>
-                  <input type="email" class="form-control" id="formGroupExampleInput2" placeholder="jdl@gmail.com">
+                  <input type="email" name="email2" class="form-control" id="formGroupExampleInput2" placeholder="jdl@gmail.com">
                 </div>
-              -->
-              <input type="submit" class="btn btn-primary" value="Submit">
-              <?php
-                if(isset($_POST['createcert'])){
-                  $orgid = $_SESSION['user'];  
-                  $eventname = $_POST['eventname']; 
-                  $day = $_POST['day']; 
-                  $month = $_POST['month']; 
-                  $year = $_POST['year'];
-                  //$st = range(4,20);
-                  //eventdate conditions:
-                  
-                    if($day == 1 || $day == 21 || $day == 31){
-                      $eventdate = $_POST['day'].'st of '.$month.', '.$year;
-                    }else if($day == 2 || $day == 22){
-                      $eventdate = $_POST['day'].'nd of '.$month.', '.$year;
-                    }else if($day == 3 || $day == 23){
-                      $eventdate = $_POST['day'].'rd of '.$month.', '.$year;
-                    }else{
-                      $eventdate = $_POST['day'].'th of '.$month.', '.$year;
-                    }
-                  
-
-                  $venue = $_POST['venue'];  
-                  $organizer1 = $_POST['organizer1'];  
-                  $organizer2 = $_POST['organizer2'];  
-                  $organizer3 = $_POST['organizer3'];  
+              
+              <input type="submit" class="btn btn-primary" value="Submit" name="addparticipant">';
 
 
-                  $savecert = $funObj->createCert($eventname, $eventdate, $orgid, $venue, $organizer1, $organizer2, $organizer3); 
 
-                  if(!$savecert){
-                    //echo "sno";
-                    echo "<script> unsuccesful </script>";
 
-                  }else{
-                    //echo "<script> succesful </script>";
-                    echo '<div class="alert  alert-success alert-dismissible fade show" role="alert">
-                      Nice!<strong> '.$eventname.'</strong> has been added to your events.
-                      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                    </div>';
-                  }
-
-                      
-
-                }  
                 ?>
               </form>
             </div>

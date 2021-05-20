@@ -199,7 +199,7 @@ $row = $funObj->details($sql);
                                 echo '<td>'.$certrow['eventdate'].'</td>';
                                 echo '<td>'.$certrow['venue']. '<td>';
                                 echo '<td colspan="2">
-                            <a href="../ojt/participantsform.php?certid='.$certrow['certid'].'" type="button" class="btn btn-success btn-sm">GENERATE PARTICIPANT FROM</a>
+                            
                             <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#exampleModal">GENERATE CERTIFICATES</button>
                             
                           </td>
@@ -234,6 +234,14 @@ $row = $funObj->details($sql);
                                     </td>
                                   </tr>
 
+                                  <tr>
+                                    <th scope="row">REGISTRATION LINK</th>
+                                    <td>
+                                    <input type="text" id="country" name="country" value="localhost/ojt/participantsform.php?certid='.$certrow['certid'].'" readonly>
+                                    <label>Double click to highlight.</label>
+                                    </td>
+                                  </tr>
+                                  
                                 </tbody>
                               </table>
                                 
