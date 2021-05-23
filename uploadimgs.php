@@ -163,160 +163,81 @@ $row = $funObj->details($sql);
                   <div id="createform"  style="display:block;" class="answer_list" >
                     <h5> CREATE CERTIFICATE </h5>
                     <p>
-                      <i class="fas fa-asterisk"></i> Choose from certificate templates and create a certificate to be generated.
+                      <i class="fas fa-asterisk"></i> Upload the your logos and signatories here.
                     </p>
                     <hr>
-                    <form id="uploadForm" action="createcert.php" method="post"></form>
-                    <form class="formrow" name="savecert" method="post" action="createcert.php">
+                     <?php
+
+                        $certid = $_GET['certid'];
+                        $row = $funObj->certName($certid);
+                        //echo "<p><b>Seminar: </b>".$row['eventname'];
+                        
+                        if(isset($_POST['uploadimgs']) && isset($_FILES['signatory1'])){
+                          
+                           //echo $certid;
+                          /*
+                          
+                          //$target_file = $target_dir . basename($_FILES["signatory1"]["name"]);
+                          //$signatory1 =  $_FILES["signatory1"]["name"];
+
+                          //$img_upload_path = 'assets/';
+                          move_uploaded_file($signatory1, $target_dir);
+                          */
+                            $signatory1 = $_FILES["signatory1"]["name"];
+                            $target_dir = "/";
+
+                            $img_ex = pathinfo($signatory1, PATHINFO_EXTENSION);
+                            $img_ex_lc = strtolower($img_ex);
+
+                            $allowed_exs = array("jpg", "jpeg", "png"); 
+
+                            if (in_array($img_ex_lc, $allowed_exs)) {
+                              $new_img_name = uniqid("IMG-", true).'.'.$img_ex_lc;
+                              //$img_upload_path = 'ojt/uploads/'.$new_img_name;
+                              move_uploaded_file($signatory1, $target_dir);
+
+                              // Insert into Database
+                            $upload = $funObj->uploadImages($signatory1, $certid); 
+                              if(!$upload){
+                                //echo "sno";
+                                echo "<script> unsuccesful </script>";
+
+                              }else{
+                                //echo "<script> succesful </script>";
+                                echo 'Uploaded.';
+                              }
+                            }else {
+                              $em = "You can't upload files of this type";
+                                  echo 'npe';
+                            }
+
+                          
+
+                            
+
+                        } 
+                        echo '
+                    <form class="formrow" action="uploadimgs.php?certid='.$certid.'" method="post" enctype="multipart/form-data">
+
+                   
                     <div class="row m-2">
                       <!---create cert form function--->
-                        <?php
-                        if(isset($_POST['createcert'])){
-                          $orgid = $_SESSION['user'];  
-                          $eventname = $_POST['eventname']; 
-                          $dayfrom = $_POST['dayfrom']; 
-                          $dayto = $_POST['dayto']; 
-                          $month = $_POST['month']; 
-                          $year = $_POST['year'];
-                          //$st = range(4,20);
-                          //eventdate conditions:
-                          
-                          if($dayfrom == $dayto){
-                            if($dayfrom == 1 || $dayfrom == 21 || $dayfrom == 31){
-                              $eventdate = $_POST['dayfrom'].'st of '.$month.', '.$year;
-                            }else if($dayfrom == 2 || $dayfrom == 22){
-                              $eventdate = $_POST['dayfrom'].'nd of '.$month.', '.$year;
-                            }else if($dayfrom == 3 || $dayfrom == 23){
-                              $eventdate = $_POST['dayfrom'].'rd of '.$month.', '.$year;
-                            }else{
-                              $eventdate = $_POST['dayfrom'].'th of '.$month.', '.$year;
-                            }
-                          }else{
-                            if($dayto == 1 || $dayto == 21 || $dayto == 31){
-                              $eventdate = $_POST['dayfrom']. ' to ' .$_POST['dayto'].'st of '.$month.', '.$year;
-                            }else if($dayto == 2 || $dayto == 22){
-                              $eventdate = $_POST['dayfrom']. ' to ' .$_POST['dayto'].'nd of '.$month.', '.$year;
-                            }else if($dayto == 3 || $dayto == 23){
-                              $eventdate = $_POST['dayfrom']. ' to ' .$_POST['dayto'].'rd of '.$month.', '.$year;
-                            }else{
-                              $eventdate = $_POST['dayfrom']. ' to ' .$_POST['dayto'].'th of '.$month.', '.$year;
-                            }
-                          } 
-                            
-                          
-
-                          $venue = $_POST['venue'];  
-                          $organizer1 = $_POST['organizer1'];  
-                          $organizer2 = $_POST['organizer2'];  
-                          $organizer3 = $_POST['organizer3'];  
-
-
-                          $savecert = $funObj->createCert($eventname, $eventdate, $orgid, $venue, $organizer1, $organizer2, $organizer3); 
-
-                          if(!$savecert){
-                            //echo "sno";
-                            echo "<script> unsuccesful </script>";
-
-                          }else{
-                            //echo "<script> succesful </script>";
-                            $id = $orgid;
-                            $cert = $funObj->viewCertsForUpload($id, $eventdate, $venue, $eventname);
-                            $count =  $cert->rowCount();
-                            $certrow = $cert->fetch(PDO::FETCH_ASSOC);
-                            extract($certrow);
-
-                            echo '<div class="alert  alert-success alert-dismissible fade show" role="alert">
-                              Nice!<strong> '.$eventname.'</strong> has been added to your events.Upload your logos and signatories <a href="uploadimgs.php?certid='.$certrow['certid'].'">here</a>.
-                              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                              </button>
-                            </div>';
-                          }
-
-                            
-
-                        }  
-                        ?>
+                       
                       <div class="col-md-2">
                       </div>
 
                       <div class="col-md-8">
                          
+                        
+                          <h6><i>'.$row['eventname'].'</i>: CERTIFICATE DETAILS</h6>';
+                        ?>
+                          
+
                         <div class="form-group">
-                          <h6>EVENT DETAILS</h6>
-
-                          <label for="eventname">EVENT NAME</label>
-                          <input type="text" class="form-control text-center" id="eventname" name="eventname" placeholder="" required>
+                          <label for="eventname">SIGNATORIES</label>
+                          <input type="file" class="form-control text-center" id="signatory1" name="signatory1" placeholder="" accept="image/*" required>
                         </div>
-                        <div class="form-group">
-                          <label for="formGroupExampleInput2">DATE</label>
-                          <div class="md-form">
-                            <!--
-                            <input type="date" id="eventdate" name="eventdate" class="form-control text-center">
-                          -->
-                            <label for="date" class="mr-2">Day</label> 
-                            From:
-                            <?php
-                              echo "<select name='dayfrom'>";
-                              for ($day = 1; $day <= 31; $day++) {
-                                echo "<option value=".$day.">$day<br></option>";
-                              }
-                              echo "</select>";
-                            ?>
-                            To:
 
-                            <?php
-                              echo "<select name='dayto'>";
-                              for ($day = 1; $day <= 31; $day++) {
-                                echo "<option value=".$day.">$day<br></option>";
-                              }
-                              echo "</select>";
-                            ?>
-
-                            <br>
-
-                              <label for="date" class="mr-2">Month</label> 
-                              <select name="month">
-                                <option value="January">January</option>
-                                <option value="February">February</option>
-                                <option value="March">March</option>
-                                <option value="April">April</option>
-                                <option value="May">May</option>
-                                <option value="June">June</option>
-                                <option value="July">July</option>
-                                <option value="August">August</option>
-                                <option value="September">September</option>
-                                <option value="October">October</option>
-                                <option value="November">November</option>
-                                <option value="December">December</option>
-                              </select>
-                              <br>
-
-                              <label for="date" class="mr-2">Year</label> 
-                                <?php
-                                  echo "<select name='year'>";
-                                  for ($year = 2021; $year <= 2035; $year++) {
-                                    echo "<option value=$year>$year<br></option>";
-                                  }
-                                  echo "</select>";
-                                ?>
-                                <p>
-                                  *Date in the certificates will come out as <i>"1st of January, 2021"</i>
-                                </p>
- 
-                            
-                          </div>
-                        </div>
-                        <div class="form-group">
-                          <label for="venue">VENUE</label>
-                          <input type="text" class="form-control text-center" id="venue" name="venue" placeholder="" required>
-                        </div>
-                        <div class="form-group">
-                          <label for="hosts">HOSTS/ORGANIZERS</label>
-                          <input type="text" class="form-control mb-2 text-center" id="organizer1" name="organizer1" value="<?php echo $row['fname'].' '.$row['lname']; ?>" required>
-                          <input type="text" class="form-control mb-2 text-center" id="organizer2" name="organizer2" placeholder="">
-                          <input type="text" class="form-control text-center" id="organizer3" name="organizer3" placeholder="">
-                        </div>
                       </div>
                       <div class="col-md-2">
                         
@@ -354,7 +275,7 @@ $row = $funObj->details($sql);
                                         
                     </div>
                     <!--- end of row --->
-                    <input type="submit" value="SAVE CERTIFICATE" class="btn btn-sm smbtn btn-round" name="createcert" title="Save you certificate details."/>
+                    <input type="submit" value="UPLOAD IMAGES" class="btn btn-sm smbtn btn-round" name="uploadimgs" title="Save you certificate details."/>
                     </form>
                     <hr>
                         
@@ -386,15 +307,7 @@ $row = $funObj->details($sql);
       $('.collapse.in').collapse('hide');
     });
 
-    /*
-    function showCerts() {
-       document.getElementById('certlist').style.display = "block";
-       document.getElementById('createform').style.display = "none";
-    }
-    function showDiv() {
-       document.getElementById('createform').style.display = "block";
-       document.getElementById('certlist').style.display = "none";
-    }
+
     
 
   </script>

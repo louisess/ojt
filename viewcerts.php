@@ -200,7 +200,10 @@ $row = $funObj->details($sql);
                                 echo '<td>'.$certrow['venue']. '<td>';
                                 echo '<td colspan="2">
                             
-                            <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#exampleModal">GENERATE CERTIFICATES</button>
+                            <form class="form-inline" method="post" action="generatepdftry.php">
+                              <button type="submit" id="pdf" name="generate_pdf" class="btn btn-primary"><i class="fa fa-pdf"" aria-hidden="true"></i>
+                              Generate PDF</button>
+                              </form>
                             
                           </td>
                         </tr>
@@ -226,13 +229,25 @@ $row = $funObj->details($sql);
                                   </tr>
 
                                   <tr>
-                                    <th scope="row">ORGANIZER/S</th>
+                                    <th scope="row">ORGANIZER/S OR SIGNATORIES</th>
 
                                     <td>'.$certrow['organizer1']. '<br>'
                                     .$certrow['organizer2'].'<br>'
                                     .$certrow['organizer3'].'
                                     </td>
                                   </tr>
+
+                                  <tr>
+                                    <th scope="row">SIGNATORY IMAGES</th>';
+                                    if ($certrow['signatory1'] == null){
+                                      echo '<td>No image uploaded. Upload <a href="uploadimgs.php?certid='.$certrow['certid'].'">here</a>.
+                                      </td>';
+                                    }else{
+                                      echo '<td><img src="uploads/'.$certrow['signatory1'].'"/>
+                                      </td>';
+                                    }
+                                    
+                                  echo '</tr>
 
                                   <tr>
                                     <th scope="row">REGISTRATION LINK</th>

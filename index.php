@@ -141,17 +141,7 @@ session_start();
             
                 
          
-            <section>               
-                <div id="container_demo" >  
-                     
-                    
-                        
-  
-                        
-                          
-                    </div>  
-                </div>    
-            </section>  
+            
         </div>  
     </body>  
 </html>  

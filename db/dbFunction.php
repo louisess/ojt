@@ -115,6 +115,21 @@
 
         }
 
+        function viewCertsForUpload($id, $eventdate, $venue, $eventname){
+            //$sql = "SELECT * FROM certificates WHERE orgid = '".$id."'. AND eventdate = '". ."'";
+            $sql = "SELECT certid FROM certificates
+            WHERE orgid = '$id' 
+            AND eventdate = '$eventdate'
+            AND eventname = '$eventname';
+            AND venue = '$venue'";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute();
+
+            return $stmt;
+
+
+        }
+
         function certName($eventid){
             $sql = "SELECT * FROM certificates WHERE certid = '".$eventid."'";
             $stmt = $this->conn->prepare($sql);
@@ -143,6 +158,19 @@
             $sql = "INSERT INTO participants(name, email, eventid) values('$name','$email','$eventid')";
 
             $stmt = $this->conn->prepare($sql);
+            $stmt->execute();
+                        
+            return true;
+        }
+
+        function uploadImages($signatory1, $certid){  
+           //$sql = "INSERT INTO organizers(fname, lname, email, password) values('$fname','$lname','$email','$password')";
+           // $sql = "INSERT INTO certificates(logo1, signatory1) VALUES ('$logo1','$signatory1') WHERE certid = '$certid'";
+            $sql = "UPDATE certificates SET signatory1='$signatory1' WHERE certid='$certid'";
+
+            $stmt = $this->conn->prepare($sql);
+
+
             $stmt->execute();
                         
             return true;
