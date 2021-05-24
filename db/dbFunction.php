@@ -153,6 +153,15 @@
             return true;
         }
 
+        function updateCert($eventname, $eventdate, $certid, $venue, $organizer1, $organizer2, $organizer3, $orgid){
+            $sql = "UPDATE certificates SET eventname='$eventname', eventdate='$eventdate', venue='$venue', organizer1='$organizer1', organizer2='$organizer2', organizer3='$organizer3', orgid='$orgid' WHERE certid='$certid'";
+
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute();
+                        
+            return true;
+        }
+
         function addParticipant($name, $email, $eventid){
             //$sql = "SELECT * FROM certificates WHERE orgid = '$id'";
             $sql = "INSERT INTO participants(name, email, eventid) values('$name','$email','$eventid')";
@@ -176,6 +185,32 @@
             return true;
         }
 
+        function upload2($signatory2, $certid){  
+           //$sql = "INSERT INTO organizers(fname, lname, email, password) values('$fname','$lname','$email','$password')";
+           // $sql = "INSERT INTO certificates(logo1, signatory1) VALUES ('$logo1','$signatory1') WHERE certid = '$certid'";
+            $sql = "UPDATE certificates SET signatory2='$signatory2' WHERE certid='$certid'";
+
+            $stmt = $this->conn->prepare($sql);
+
+
             $stmt->execute();
+                        
+            return true;
+        }
+
+        function upload3($signatory3, $certid){  
+           //$sql = "INSERT INTO organizers(fname, lname, email, password) values('$fname','$lname','$email','$password')";
+           // $sql = "INSERT INTO certificates(logo1, signatory1) VALUES ('$logo1','$signatory1') WHERE certid = '$certid'";
+            $sql = "UPDATE certificates SET signatory3='$signatory3' WHERE certid='$certid'";
+
+            $stmt = $this->conn->prepare($sql);
+
+
+            $stmt->execute();
+                        
+            return true;
+        }
+
+           //$stmt->execute();
     }  
 ?>   

@@ -201,7 +201,7 @@ $row = $funObj->details($sql);
                                 echo '<td colspan="2">
                             
                             <form class="form-inline" method="get" target="_blank" action="generatepdftry.php">
-                              <a type="submit" id="certid" name="pdf_report_generate" class="btn btn-primary" href="generatepdftry.php?='.$certrow['certid'].'"><i class="fa fa-pdf"" aria-hidden="true"></i>
+                              <a type="submit" id="certid" name="pdf_report_generate" class="btn btn-primary" href="generatepdftry.php?certid='.$certrow['certid'].'"><i class="fa fa-pdf"" aria-hidden="true"></i>
                               Generate PDF</a>
                               </form>
                             
@@ -213,6 +213,10 @@ $row = $funObj->details($sql);
                             <td colspan="4">
                               <table class="table table-borderless">
                                 <tbody>
+                                <tr> 
+                                    <td>  <a href="editcert.php?certid='.$certrow['certid'].'" id="certid"  name="editcert" class="btn btn-primary btn-sm"><i class="fa fa-pdf"" aria-hidden="true"></i> 
+                                      <i class="fas fa-edit"></i> Edit Details </a> </td>  
+                                </tr> 
                                   <tr>
                                     <th scope="col">EVENT NAME</th>
                                     <td>'.$certrow['eventname'].'</td>
