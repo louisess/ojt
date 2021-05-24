@@ -163,10 +163,36 @@
             return true;
         }
 
-        function uploadImages($signatory1, $certid){  
+        function upload1($signatory1, $certid){  
            //$sql = "INSERT INTO organizers(fname, lname, email, password) values('$fname','$lname','$email','$password')";
            // $sql = "INSERT INTO certificates(logo1, signatory1) VALUES ('$logo1','$signatory1') WHERE certid = '$certid'";
             $sql = "UPDATE certificates SET signatory1='$signatory1' WHERE certid='$certid'";
+
+            $stmt = $this->conn->prepare($sql);
+
+
+            $stmt->execute();
+                        
+            return true;
+        }
+
+        function upload2($signatory2, $certid){  
+           //$sql = "INSERT INTO organizers(fname, lname, email, password) values('$fname','$lname','$email','$password')";
+           // $sql = "INSERT INTO certificates(logo1, signatory1) VALUES ('$logo1','$signatory1') WHERE certid = '$certid'";
+            $sql = "UPDATE certificates SET signatory2='$signatory2' WHERE certid='$certid'";
+
+            $stmt = $this->conn->prepare($sql);
+
+
+            $stmt->execute();
+                        
+            return true;
+        }
+
+        function upload3($signatory3, $certid){  
+           //$sql = "INSERT INTO organizers(fname, lname, email, password) values('$fname','$lname','$email','$password')";
+           // $sql = "INSERT INTO certificates(logo1, signatory1) VALUES ('$logo1','$signatory1') WHERE certid = '$certid'";
+            $sql = "UPDATE certificates SET signatory3='$signatory3' WHERE certid='$certid'";
 
             $stmt = $this->conn->prepare($sql);
 
