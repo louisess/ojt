@@ -7680,9 +7680,9 @@ class TCPDF {
 		switch($dest) {
 			case 'I': {
 				// Send PDF to the standard output
-				/*if (ob_get_contents()) {
+				if (ob_get_contents()) {
 					$this->Error('Some data has already been output, can\'t send PDF file');
-				}*/
+				}
 				if (php_sapi_name() != 'cli') {
 					// send output to a browser
 					header('Content-Type: application/pdf');
