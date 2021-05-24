@@ -243,7 +243,8 @@ $row = $funObj->details($sql);
                                       echo '<td>No image uploaded. Upload <a href="uploadimgs.php?certid='.$certrow['certid'].'">here</a>.
                                       </td>';
                                     }else{
-                                      echo '<td><img src="uploads/'.$certrow['signatory1'].'"/>
+                                      echo '<td><img width="200px" height="80px" src="uploads/'.$certrow['signatory1'].'"/> <br>
+                                      Re-upload <a href="uploadimgs.php?certid='.$certrow['certid'].'">here</a>.
                                       </td>';
                                     }
                                     

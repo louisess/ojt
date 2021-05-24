@@ -163,7 +163,7 @@
             return true;
         }
 
-        function uploadImages($signatory1, $certid){  
+        function upload1($signatory1, $certid){  
            //$sql = "INSERT INTO organizers(fname, lname, email, password) values('$fname','$lname','$email','$password')";
            // $sql = "INSERT INTO certificates(logo1, signatory1) VALUES ('$logo1','$signatory1') WHERE certid = '$certid'";
             $sql = "UPDATE certificates SET signatory1='$signatory1' WHERE certid='$certid'";
@@ -176,6 +176,6 @@
             return true;
         }
 
-         
+            $stmt->execute();
     }  
 ?>   

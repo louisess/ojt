@@ -206,9 +206,9 @@ $row = $funObj->details($sql);
                           
 
                           $venue = $_POST['venue'];  
-                          $organizer1 = $_POST['organizer1'];  
-                          $organizer2 = $_POST['organizer2'];  
-                          $organizer3 = $_POST['organizer3'];  
+                          $organizer1 = $_POST['organizer1'] . ' - ' . $_POST['position1'];  
+                          $organizer2 = $_POST['organizer2'] . ' - ' . $_POST['position2']; 
+                          $organizer3 = $_POST['organizer3'] . ' - ' . $_POST['position3'];  
 
 
                           $savecert = $funObj->createCert($eventname, $eventdate, $orgid, $venue, $organizer1, $organizer2, $organizer3); 
@@ -313,9 +313,48 @@ $row = $funObj->details($sql);
                         </div>
                         <div class="form-group">
                           <label for="hosts">HOSTS/ORGANIZERS</label>
-                          <input type="text" class="form-control mb-2 text-center" id="organizer1" name="organizer1" value="<?php echo $row['fname'].' '.$row['lname']; ?>" required>
-                          <input type="text" class="form-control mb-2 text-center" id="organizer2" name="organizer2" placeholder="">
-                          <input type="text" class="form-control text-center" id="organizer3" name="organizer3" placeholder="">
+                          <div class="row">
+                            <div class="col-6">
+                              <label>NAME</label>
+                              <input type="text" class="form-control mb-2 text-center" id="organizer1" name="organizer1" value="<?php echo $row['fname'].' '.$row['lname']; ?>" required>
+                            </div>
+                            <div class="col-6">
+                              <label>POSITION</label>
+
+                              <input type="text" class="form-control mb-2 text-center" id="position1" name="position1" placeholder="">
+                            </div>                            
+                            
+                          </div>
+
+                          <div class="row">
+                            <div class="col-6">
+                              <label>NAME</label>
+                              <input type="text" class="form-control text-center" id="organizer2" name="organizer2" placeholder="">
+                            </div>
+                            <div class="col-6">
+                              <label>POSITION</label>
+
+                              <input type="text" class="form-control mb-2 text-center" id="position2" name="position2" placeholder="">
+                            </div>                            
+                            
+                          </div>
+
+                          <div class="row">
+                            <div class="col-6">
+                              <label>NAME</label>
+                              <input type="text" class="form-control text-center" id="organizer3" name="organizer3" placeholder="">
+                            </div>
+                            <div class="col-6">
+                              <label>POSITION</label>
+
+                              <input type="text" class="form-control mb-2 text-center" id="position3" name="position3" placeholder="">
+                            </div>                            
+                            
+                          </div>
+                          
+                          
+                          
+                          
                         </div>
                       </div>
                       <div class="col-md-2">
