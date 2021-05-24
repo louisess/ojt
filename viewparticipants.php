@@ -37,6 +37,11 @@ $funObj = new dbFunction($db);
 $sql = "SELECT * FROM organizers WHERE id = '".$_SESSION['user']."'";
 $row = $funObj->details($sql);
 
+$eventid = $_GET['certid'];
+//echo $eventid;
+$row2 = $funObj->viewParticipants($eventid);
+//echo "<p><b>Seminar: </b>".$row['eventname'];
+
 ?>
 
 
@@ -161,140 +166,56 @@ $row = $funObj->details($sql);
                 </div>
                 <div class="card-body">
                  <div id="certlist" style="display: block;" class="answer_list" >
-                  <h5>YOUR CERTIFICATES</h5>
+                  <?php 
+                      //$id =  $_SESSION['user'];
+                       $eventid = $_GET['certid'];
+                      //echo $eventid;
+                        $row3 = $funObj->certName($eventid);
+
+                        $vp = $funObj->viewParticipants($eventid);
+                        $count =  $vp->rowCount();
+
+                     
+
+                     
+                      echo '<p><b>'.$row3['eventname']. '</b>
+                  
+                  PARTICIPANTS</h5>
                   <p>
-                    <i class="fas fa-asterisk"></i> A list of your saved certificates for events.
+                    <i class="fas fa-asterisk"></i> A list of the registered participants in your event.
                   </p>
 
-                  <hr>
-
-                   
-                        <?php
-                            $id =  $_SESSION['user'];
-                            //$sql2 = "SELECT * FROM certificates WHERE orgid = '".$_SESSION['user']."'";
-                            $cert = $funObj->viewCerts($id);
-                            //$stmt=$client->viewClients();
-
-                            $count =  $cert->rowCount();
-
-                            if(!$cert){
-                              echo "<label> There are no certificates here... </label>";
-                            }else{
-                              echo ' <div id="accordion">
-                                        <table class="table table-hover text-custom">
-                                        <thead class="text-custom">
-                                        <tr>
-                                          <th scope="col">EVENT NAME</th>
-                                          <th scope="col">DATE</th>
-                                          <th scope="col">VENUE</th>
-                                          <th scope="col"></th>
-                                        </tr>
-                                      </thead>
-                                      <tbody>';
-                              while ($certrow = $cert->fetch(PDO::FETCH_ASSOC)) {
-                                extract($certrow);
-                                echo ' <tr data-toggle="collapse" data-target="#collapse'.$certrow['certid'].'" class="collapse-row collapsed accordion-toggle" title="ℹ Click row for details">
-                          
-                                <td>'.$certrow['eventname'].'</td>';
-                                echo '<td>'.$certrow['eventdate'].'</td>';
-                                echo '<td>'.$certrow['venue']. '<td>';
-                                echo '<td colspan="2">
-                            
-                            <form class="form-inline" method="get" target="_blank" action="generatepdftry.php">
-                            <input type="number" id="certid" name="certid" value="'.$certrow['certid'].'">
-                              <button type="submit" id="pdf_report_generate" name="pdf_report_generate" class="btn btn-primary" href="generatepdftry.php?certid='.$certrow['certid'].'"><i class="fa fa-pdf"" aria-hidden="true"></i>
-                              Generate PDF</button>
-                              </form>
-                            
-                          </td>
-                        </tr>
-                        <div id="collapse'.$certrow['certid'].'" class="accordion-body collapse in">
-                        <tr>
-                          <!----------WHERE DETAILS APPEAR------------->
-                            <td colspan="4">
-                              <table class="table table-borderless">
-                                <tbody>
-                                <tr> 
-                                    <td>  <a href="editcert.php?certid='.$certrow['certid'].'" id="certid"  name="editcert" class="btn btn-primary btn-sm"><i class="fa fa-pdf"" aria-hidden="true"></i> 
-                                      <i class="fas fa-edit"></i> Edit Details </a> </td>  
-                                </tr> 
-                                  <tr>
-                                    <th scope="col">EVENT NAME</th>
-                                    <td>'.$certrow['eventname'].'</td>
-                                  </tr>
-
-                                  <tr>
-                                    <th scope="row">DATE</th>
-                                    <td>'.$certrow['eventdate'].'</td>
-                                  </tr>
-
-                                  <tr>
-                                    <th scope="row">VENUE</th>
-                                    <td>'.$certrow['venue']. '</td>
-                                  </tr>
-
-                                  <tr>
-                                    <th scope="row">ORGANIZER/S OR SIGNATORIES</th>
-
-                                    <td>'.$certrow['organizer1']. '<br>'
-                                    .$certrow['organizer2'].'<br>'
-                                    .$certrow['organizer3'].'
-                                    </td>
-                                  </tr>
-
-                                  <tr>
-                                    <th scope="row">SIGNATORY IMAGES</th>';
-                                    if ($certrow['signatory1'] == null){
-                                      echo '<td>No image uploaded. Upload <a href="uploadimgs.php?certid='.$certrow['certid'].'">here</a>.
-                                      </td>';
-                                    }else{
-                                      echo '<td><img width="200px" height="80px" src="uploads/'.$certrow['signatory1'].'"/> <br>
-                                      </td>
-                                      <td><img width="200px" height="80px" src="uploads/'.$certrow['signatory2'].'"/> <br>
-                                      </td>
-                                      <td><img width="200px" height="80px" src="uploads/'.$certrow['signatory3'].'"/> <br>
-                                      Re-upload <a href="uploadimgs.php?certid='.$certrow['certid'].'">here</a>.
-                                      </td>';
-                                    }
-                                    
-                                  echo '</tr>
-
-                                  <tr>
-                                    <th scope="row">REGISTRATION LINK</th>
-                                    <td>
-                                    <input type="text" id="participants" name="participants" value="localhost/ojt/participantsform.php?certid='.$certrow['certid'].'" readonly>
-                                    <label>Double click to highlight.</label>
-                                    <br>
-                                    <a href="viewparticipants.php?certid='.$certrow['certid'].'" id="certid"  name="viewparticipants" class="btn btn-primary btn-sm"><i class="fa fa-pdf"" aria-hidden="true"></i> 
-                                      <i class="fas fa-edit"></i> View Registered Participants </a>
-                                    </td>
-                                  </tr>
-                                  
-                                </tbody>
-                              </table>
+                  <hr>';
+                  if(!$vp){
+                        echo '<label> There are no particpants registered yet... </label>';
+                      }else{
+                        echo '<table class="table table-hover">
+                        <thead>
+                          <tr>
+                            <th scope="col">Name</th>
+                            <th scope="col">Email</th>
+                          </tr>
+                        </thead>
+                        <tbody>';
+                        while ($vprow = $vp->fetch(PDO::FETCH_ASSOC)) {
+                                extract($vprow);
                                 
-                            </td>
-                            <!----------END OF DETAILS------------->
+                        echo '<tr>
+                          <td>'.$vprow['name'].'</td>
+                          <td>'.$vprow['email'].'</td>
                         </tr>';
-
-                              }
-
-                        echo '</div>
-                         </tbody>
-                    </table>
-                    </div>';
-                            }
-                          ?>
-
-
-                   
-
-                 </div>
-
-                  </div>
-
+                        
+                      }
+                      echo '</tbody>
+                    </table>';
+                      
+                    }
                   
-
+                  ?>
+  
+                   </div>
+  
+                    </div>
                 <div class="card-footer text-muted">
                   
                 </div>

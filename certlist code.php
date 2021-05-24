@@ -84,3 +84,108 @@
                    
 
                  </div>
+
+                 <div class="form-group">
+                          <?php 
+                              $organizername1 = $row2['organizer1'];
+                              $organizername2  = $row2['organizer2'];
+                              $organizername3  = $row2['organizer3'];
+                              list($organizer1, $position1) = explode(" - ", $organizername1);
+                              list($organizer2, $position2) = explode(" - ", $organizername2);
+                              list($organizer3, $position3) = explode(" - ", $organizername3);
+                               
+                               
+                          echo 
+                        '
+                        </div>
+                        <div class="form-group">
+                          <label for="hosts">HOSTS/ORGANIZERS</label>
+                          <div class="row">
+                            <div class="col-6">
+                              <label>NAME</label>
+                              <input type="text" class="form-control mb-2 text-center" id="organizer1" name="organizer1" value="'. $organizer1.'" required>
+                            </div>
+                            <div class="col-6">
+                              <label>POSITION</label>
+
+                              <input type="text" class="form-control mb-2 text-center" id="position1" name="position1" placeholder=""';
+                              if ($position1 == null) {
+                                  echo 'value=""';
+                              }else{
+                                  //$pos1 = '$position1';
+                                  echo 'value="'.$position1.'"';
+                               
+                              }
+                                
+                                echo '>
+                            </div>                            
+                            
+                          </div>
+
+
+                          <div class="row">
+                            <div class="col-6">
+                              <label>NAME</label>
+                              <input type="text" class="form-control text-center" id="organizer2" name="organizer2" placeholder=""';
+                                if ($organizer2 == null) {
+                                  echo 'value=""';
+                                }else{
+                                  echo 'value="'.$organizer2.'"';
+                                 
+                                }
+
+                              echo '>
+                            </div>
+                            <div class="col-6">
+                              <label>POSITION</label>
+
+                              <input type="text" class="form-control mb-2 text-center" id="position2" name="position2" placeholder=""';
+                                if ($position2 == null) {
+                                  echo 'value=""';
+                                }else{
+                                  echo 'value="'.$position2.'"';
+                                 
+                                }
+                              echo '>
+                            </div>                            
+                            
+                          </div>
+
+                          <div class="row">
+                            <div class="col-6">
+                              <label>NAME</label>
+                              <input type="text" class="form-control text-center" id="organizer3" name="organizer3" placeholder=""';
+                                if ($organizer3 == null) {
+                                  echo 'value=""';
+                                }else{
+                                  echo 'value="'.$organizer3.'"';
+                                 
+                                }
+
+                              echo '>
+                            </div>
+                            <div class="col-6">
+                              <label>POSITION</label>
+
+                              <input type="text" class="form-control mb-2 text-center" id="position3" name="position3" placeholder=""';
+                                if ($position3 == null) {
+                                  echo 'value=""';
+                                }else{
+                                  echo 'value="'.$position3.'"';
+                                 
+                                }
+
+                              echo '>
+                            </div>                            
+                            
+                          </div>';
+                          
+                          
+                          ?>
+                          
+                        </div>
+
+                      </div>
+                      <div class="col-md-2">
+                        
+                      </div>

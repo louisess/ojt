@@ -180,8 +180,15 @@ $row = $funObj->details($sql);
                           $year = $_POST['year'];
                           //$st = range(4,20);
                           //eventdate conditions:
-                          
-                          if($dayfrom == $dayto){
+                          if($dayfrom > $dayto){
+                             echo '<div class="alert alert-warning alert-dismissible fade show" role="alert">
+                              Oops. Please choose a later day for your end date.
+                              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>';
+                          }else{
+                            if($dayfrom == $dayto){
                             if($dayfrom == 1 || $dayfrom == 21 || $dayfrom == 31){
                               $eventdate = $_POST['dayfrom'].'st of '.$month.', '.$year;
                             }else if($dayfrom == 2 || $dayfrom == 22){
@@ -226,12 +233,15 @@ $row = $funObj->details($sql);
                             extract($certrow);
 
                             echo '<div class="alert  alert-success alert-dismissible fade show" role="alert">
-                              Nice!<strong> '.$eventname.'</strong> has been added to your events.Upload your logos and signatories <a href="uploadimgs.php?certid='.$certrow['certid'].'">here</a>.
+                              Nice!<strong> '.$eventname.'</strong> has been added to your events.Upload your logos and signatories <a style="color: white;" href="uploadimgs.php?certid='.$certrow['certid'].'">here</a>.
                               <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                               </button>
                             </div>';
                           }
+
+                          }
+                          
 
                             
 

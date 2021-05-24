@@ -115,6 +115,16 @@
 
         }
 
+
+        function viewParticipants($eventid){
+            $sql = "SELECT * FROM participants WHERE eventid = '".$eventid."'";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute();
+
+            return $stmt;
+
+        }
+
         function viewCertsForUpload($id, $eventdate, $venue, $eventname){
             //$sql = "SELECT * FROM certificates WHERE orgid = '".$id."'. AND eventdate = '". ."'";
             $sql = "SELECT certid FROM certificates
@@ -153,8 +163,8 @@
             return true;
         }
 
-        function updateCert($eventname, $eventdate, $certid, $venue, $organizer1, $organizer2, $organizer3, $orgid){
-            $sql = "UPDATE certificates SET eventname='$eventname', eventdate='$eventdate', venue='$venue', organizer1='$organizer1', organizer2='$organizer2', organizer3='$organizer3', orgid='$orgid' WHERE certid='$certid'";
+        function updateCert($eventname, $eventdate, $certid, $venue, $organizer1 , $organizer2, $organizer3){
+            $sql = "UPDATE certificates SET eventname='$eventname', eventdate='$eventdate', venue='$venue', organizer1='$organizer1', organizer2='$organizer2' , organizer3='$organizer3'  WHERE certid='$certid'";
 
             $stmt = $this->conn->prepare($sql);
             $stmt->execute();

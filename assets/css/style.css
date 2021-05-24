@@ -56,3 +56,7 @@
 .collapse-row.collapsed + tr {
      display: none;
   }
+
+ .alert a{
+ 	color: white;
+ }

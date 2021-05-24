@@ -124,7 +124,7 @@ $row2 = $funObj->details($sql2);
                 <span class="navbar-toggler-bar bar3"></span>
               </button>
             </div>
-            <a class="navbar-brand" href="javascript:;">Hi, <b><?php echo $row['fname']; ?></b>!</a>
+            <a class="navbar-brand">Hi, <b><?php echo $row['fname']; ?></b>!</a>
           </div>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-bar navbar-kebab"></span>
@@ -192,56 +192,65 @@ $row2 = $funObj->details($sql2);
                           //$st = range(4,20);
                           //eventdate conditions:
                           
-
-                          if($dayfrom == $dayto){
-                            if($dayfrom == 1 || $dayfrom == 21 || $dayfrom == 31){
-                              $eventdate = $_POST['dayfrom'].'st of '.$month.', '.$year;
-                            }else if($dayfrom == 2 || $dayfrom == 22){
-                              $eventdate = $_POST['dayfrom'].'nd of '.$month.', '.$year;
-                            }else if($dayfrom == 3 || $dayfrom == 23){
-                              $eventdate = $_POST['dayfrom'].'rd of '.$month.', '.$year;
-                            }else{
-                              $eventdate = $_POST['dayfrom'].'th of '.$month.', '.$year;
-                            }
-                          }else{
-                            if($dayto == 1 || $dayto == 21 || $dayto == 31){
-                              $eventdate = $_POST['dayfrom']. ' to ' .$_POST['dayto'].'st of '.$month.', '.$year;
-                            }else if($dayto == 2 || $dayto == 22){
-                              $eventdate = $_POST['dayfrom']. ' to ' .$_POST['dayto'].'nd of '.$month.', '.$year;
-                            }else if($dayto == 3 || $dayto == 23){
-                              $eventdate = $_POST['dayfrom']. ' to ' .$_POST['dayto'].'rd of '.$month.', '.$year;
-                            }else{
-                              $eventdate = $_POST['dayfrom']. ' to ' .$_POST['dayto'].'th of '.$month.', '.$year;
-                            }
-                          } 
-                            
-                          
-
-                          $venue = $_POST['venue'];  
-                          $organizer1 = $_POST['organizer1'] . ' - ' . $_POST['position1'];  
-                          $organizer2 = $_POST['organizer2'] . ' - ' . $_POST['position2']; 
-                          $organizer3 = $_POST['organizer3'] . ' - ' . $_POST['position3'];  
-
-
-                          $updatecert = $funObj->updateCert($eventname, $eventdate, $venue, $organizer1, $organizer2, $organizer3, $certid, $orgid); 
-
-                          if(!$updatecert){
-                            //echo "sno";
-                            echo "<script> unsuccesful </script>";
-
-                          }else{
-                            //echo "<script> succesful </script>";
-
-                            echo '<div class="alert  alert-success alert-dismissible fade show" role="alert">
-                              Nice!<strong> '.$eventname.'</strong> has been updated.
+                          if($dayfrom > $dayto){
+                            echo '<div class="alert alert-warning alert-dismissible fade show" role="alert">
+                              Oops. Please choose a later day for your end date.
                               <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                               </button>
                             </div>';
+                          }else{
+                            if($dayfrom == $dayto){
+                              if($dayfrom == 1 || $dayfrom == 21 || $dayfrom == 31){
+                                $eventdate = $_POST['dayfrom'].'st of '.$month.', '.$year;
+                              }else if($dayfrom == 2 || $dayfrom == 22){
+                                $eventdate = $_POST['dayfrom'].'nd of '.$month.', '.$year;
+                              }else if($dayfrom == 3 || $dayfrom == 23){
+                                $eventdate = $_POST['dayfrom'].'rd of '.$month.', '.$year;
+                              }else{
+                                $eventdate = $_POST['dayfrom'].'th of '.$month.', '.$year;
+                              }
+                            }else{
+                              if($dayto == 1 || $dayto == 21 || $dayto == 31){
+                                $eventdate = $_POST['dayfrom']. ' to ' .$_POST['dayto'].'st of '.$month.', '.$year;
+                              }else if($dayto == 2 || $dayto == 22){
+                                $eventdate = $_POST['dayfrom']. ' to ' .$_POST['dayto'].'nd of '.$month.', '.$year;
+                              }else if($dayto == 3 || $dayto == 23){
+                                $eventdate = $_POST['dayfrom']. ' to ' .$_POST['dayto'].'rd of '.$month.', '.$year;
+                              }else{
+                                $eventdate = $_POST['dayfrom']. ' to ' .$_POST['dayto'].'th of '.$month.', '.$year;
+                              }
+                            } 
+
+                            $venue = $_POST['venue'];  
+                            $organizer1 = $_POST['organizer1']. ' - ' .$_POST['position1'];  
+                            $organizer2 = $_POST['organizer2']. ' - ' .$_POST['position2'];  
+                            $organizer3 = $_POST['organizer3']. ' - ' .$_POST['position3'];  
+
+
+                            $updatecert = $funObj->updateCert($eventname, $eventdate, $certid, $venue, $organizer1, $organizer2, $organizer3); 
+
+                            if(!$updatecert){
+                              //echo "sno";
+                              echo "<script> unsuccesful </script>";
+
+                            }else{
+                              //echo "<script> succesful </script>";
+                              
+                              echo '<div class="alert alert-success alert-dismissible fade show" role="alert">
+                                Nice!<strong> '.$eventname.'</strong> has been updated. Click <A style="color: white;" HREF="javascript:history.go(0)"><b>here</b></A> to refresh page.
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                              </div>';
+                            }
+
                           }
 
                             
+                          
 
+                    
                         }  
                         ?>
                       <div class="col-md-2">
@@ -313,108 +322,69 @@ $row2 = $funObj->details($sql2);
  
                             
                           </div>
-                        </div>
-                        <div class="form-group">
-                          <?php 
-                              $organizername1  = $row2['organizer1'];
-                              $organizername2  = $row2['organizer2'];
-                              $organizername3  = $row2['organizer3'];
-                              $name = explode(" - ", $organizername1);                             
-                              $name2 = explode(" - ", $organizername2);
-                              $name3 = explode(" - ", $organizername3);
-                               
-                               
-                          echo 
-                        '<label for="venue">VENUE</label>
-                          <input type="text" class="form-control text-center" id="venue" name="venue" placeholder="" value="'. $row2['venue'].'" required>
-                        </div>
-                        <div class="form-group">
+
+                          <label for="venue">VENUE</label>
+                          <input type="text" class="form-control text-center" id="venue" name="venue" placeholder="" value="<?php echo $row2['venue'] ?>" required>
+
                           <label for="hosts">HOSTS/ORGANIZERS</label>
                           <div class="row">
                             <div class="col-6">
                               <label>NAME</label>
-                              <input type="text" class="form-control mb-2 text-center" id="organizer1" name="organizer1" value="'. $name[0].'" required>
+                              <?php
+                                $organizername1 = array_pad(explode(" - ", $row2['organizer1']), 2, null);
+                                $organizername2 = array_pad(explode(" - ", $row2['organizer2']), 2, null);
+                                $organizername3 = array_pad(explode(" - ", $row2['organizer3']), 2, null);
+                                //$organizername1 = $row2['organizer1']; list($organizer1, $position1) = explode(" - ", $organizername1);
+                                //$organizername2 = $row2['organizer2']; list($organizer2, $position2) = explode(" - ", $organizername2);
+                                //$organizername3 = $row2['organizer3']; list($organizer3, $position3) = explode(" - ", $organizername3);
+
+                               echo '
+                              <input type="text" class="form-control mb-2 text-center" id="organizer1" name="organizer1" value="'. $organizername1[0] .'" required>
                             </div>
                             <div class="col-6">
-                              <label>POSITION</label>
+                              <label>TITLE</label>
+                              <input type="text" class="form-control mb-2 text-center" id="position1" name="position1" value="'.$organizername1[1].'">
 
-                              <input type="text" class="form-control mb-2 text-center" id="position1" name="position1" placeholder=""'; 
-                                if($name[1] == null){
-                                  echo 'value=""';
-                                }else{
-                                   echo 'value="'.$name[1].'"';
-                                }
-                                echo '>
-                            </div>                            
-                            
+                            </div>
                           </div>
-
-                          <div class="row">
+                          <div class = "row">
                             <div class="col-6">
                               <label>NAME</label>
-                              <input type="text" class="form-control text-center" id="organizer2" name="organizer2" placeholder=""';
-                                if($name2[0] == null){
-                                  echo 'value=""';
-                                }else{
-                                   echo 'value="'.$name2[0].'"';
-                                }
+                              <input type="text" class="form-control mb-2 text-center" id="organizer2" name="organizer2" value="'.$organizername2[0].'">
 
-                              echo '>
                             </div>
                             <div class="col-6">
-                              <label>POSITION</label>
+                              <label>TITLE</label>
+                              <input type="text" class="form-control mb-2 text-center" id="position2" name="position2" value="'.$organizername2[1].'">
 
-                              <input type="text" class="form-control mb-2 text-center" id="position2" name="position2" placeholder=""';
-                                if($name2[1] == null){
-                                  echo 'value=""';
-                                }else{
-                                   echo 'value="'.$name2[1].'"';
-                                }
-                              echo '>
-                            </div>                            
-                            
+                            </div>
                           </div>
 
-                          <div class="row">
+                          <div class = "row">
                             <div class="col-6">
                               <label>NAME</label>
-                              <input type="text" class="form-control text-center" id="organizer3" name="organizer3" placeholder=""';
-                                if($name3[0] == null){
-                                  echo 'value=""';
-                                }else{
-                                   echo 'value="'.$name3[0].'"';
-                                }
+                              <input type="text" class="form-control mb-2 text-center" id="organizer2" name="organizer3" value="'.$organizername3[0].'">
 
-                              echo '>
                             </div>
                             <div class="col-6">
-                              <label>POSITION</label>
+                              <label>TITLE</label>
+                              <input type="text" class="form-control mb-2 text-center" id="position2" name="position3" value="'.$organizername3[1].'">
 
-                              <input type="text" class="form-control mb-2 text-center" id="position3" name="position3" placeholder=""';
-                                if($name3[1] == null){
-                                  echo 'value=""';
-                                }else{
-                                   echo 'value="'.$name3[1].'"';
-                                }
+                            </div>
+                          </div    
 
-                              echo '>
-                            </div>                            
-                            
-                          </div>';
-                          
-                          
-                          ?>
-                          
-                        </div>
-                      </div>
-                      <div class="col-md-2">
-                        
-                      </div>
+                          </div>
+                           <input type="submit" value="UPDATE" class="btn btn-sm smbtn btn-round" name="updatecert" title="Save you certificate details."/>
+                        </div>';
+
+                        ?> 
+                       
 
                                         
                     </div>
                     <!--- end of row --->
-                    <input type="submit" value="UPDATE" class="btn btn-sm smbtn btn-round" name="updatecert" title="Save you certificate details."/>
+
+                   
                     </form>
                     <hr>
                         
