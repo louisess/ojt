@@ -200,9 +200,9 @@ $row = $funObj->details($sql);
                                 echo '<td>'.$certrow['venue']. '<td>';
                                 echo '<td colspan="2">
                             
-                            <form class="form-inline" method="post" action="generatepdftry.php">
-                              <button type="submit" id="pdf" name="generate_pdf" class="btn btn-primary"><i class="fa fa-pdf"" aria-hidden="true"></i>
-                              Generate PDF</button>
+                            <form class="form-inline" method="get" target="_blank" action="generatepdftry.php">
+                              <a type="submit" id="certid" name="pdf_report_generate" class="btn btn-primary" href="generatepdftry.php?='.$certrow['certid'].'"><i class="fa fa-pdf"" aria-hidden="true"></i>
+                              Generate PDF</a>
                               </form>
                             
                           </td>

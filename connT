@@ -1,0 +1,9 @@
+<?php
+
+$dbServer = "localhost";
+$user = "root";
+$password = "";
+$dbname = "cerdbase";
+
+$conn = mysqli_connect();
+?>
