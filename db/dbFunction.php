@@ -2,7 +2,7 @@
 
     class dbFunction {  
 
-    private $conn;
+    public $conn;
     public $id;
     public $fname;
     public $lname;
@@ -176,6 +176,6 @@
             return true;
         }
 
-
+         
     }  
 ?>   
