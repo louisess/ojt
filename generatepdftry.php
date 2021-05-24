@@ -10,22 +10,28 @@ require_once('pdf/TCPDF-main/tcpdf.php');
 if (isset($_GET['pdf_report_generate'])) {
 
 	$certid = $_GET['certid'];
+	echo ("
+		<script>
+    		alert('".$certid."');
+		</script> ");
+
 	//$eventname = $_GET['eventname'];
 
 	//$select = "SELECT participants,certificates FROM participants,certificates WHERE participants.eventid = '$eventid' AND certificates.certid = '$eventid'";
-	$select = "SELECT * FROM participants WHERE eventid = '$eventid";
+	$select = "SELECT name FROM participants WHERE eventid = '$certid";
 	//$select = "SELECT * FROM  particpants JOIN certificates WHERE eventid = '$eventid'";
-	//$query = mysqli_query($conn, $select);
+	$query = mysqli_query($conn, $select);
 
-	while ($certrow = mysqli_fetch_array($query))
+	while ($row = mysqli_fetch_array($query))
 	{
 		//$pid = $row['pid'];
-		$eventname = $certrow['eventname'];
-		//$eventid = $certrow['eventid'];
-		//$name = $certrow['name'];
-		//$email = $certrow['email'];
+		//$eventname = "test";
+		//$eventid = $row['eventid'];
+		$name = $row['name'];
+		//$email = $row['email'];
 
 	}
+	
 }
 class PDF extends TCPDF
 {
@@ -64,7 +70,7 @@ class PDF extends TCPDF
 		$this->SetFont('helvetica','','15');
 		$html = '<p style="text-align:center">for actively participating during the seminar entitled</p>';
 		$this->writeHTML($html, true, false, true, false, '');
-		$this->Cell(270,5, $eventname,0,1,'C');
+		$this->Cell(270,5, 'sdasdsad'.$name,0,1,'C');
 		$this->Ln(10);
 		$this->SetFont('helvetica','','10');
 		$html = '<p style="text-align:center">Your continued and unwavering support has contributed to the attainment of the university and schools objectives and realization of its mission of providing a balanced quality education.</p>';
@@ -170,14 +176,5 @@ $pdf->Output('Certificate.pdf', 'I');
 //============================================================+
 // END OF FILE
 //============================================================+
-
-
-//include ('db/dbFunction.php')
-/**
- * 
- */
-
-//$database = new Database();
-//$db = $database->getConnection();*/
 
 ?>
