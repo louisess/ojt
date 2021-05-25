@@ -234,6 +234,19 @@ $row = $funObj->details($sql);
                                   </tr>
 
                                   <tr>
+                                    <th scope="row">DEPARTMENT</th>
+                                    <td>'.$certrow['department']. '</td>
+                                  </tr>
+                                  <tr>
+                                    <th scope="row">CERTIFICATE TITLE</th>
+                                    <td>'.$certrow['title']. '</td>
+                                  </tr>
+                                  <tr>
+                                    <th scope="row">CERTIFICATE DESCRIPTION</th>
+                                    <td>'.$certrow['description']. '</td>
+                                  </tr>
+
+                                  <tr>
                                     <th scope="row">ORGANIZER/S OR SIGNATORIES</th>
 
                                     <td>'.$certrow['organizer1']. '<br>'
@@ -244,23 +257,43 @@ $row = $funObj->details($sql);
 
                                   <tr>
                                     <th scope="row">SIGNATORY IMAGES</th>';
-                                    if ($certrow['signatory1'] == null){
-                                      echo '<td>No image uploaded. Upload <a href="uploadimgs.php?certid='.$certrow['certid'].'">here</a>.
-                                      </td>';
-                                    }else if($certrow['signatory3'] == null && $certrow['signatory2'] == null){
-                                      echo '<td><img width="200px" height="80px" src="uploads/'.$certrow['signatory1'].'"/> <br>                                  
-                                      Re-upload <a href="uploadimgs.php?certid='.$certrow['certid'].'">here</a>.
-                                      </td>';
-                                    }else{
+                                    
+                                    if ($certrow['signatory1'] != null && $certrow['signatory2'] == null && $certrow['signatory3'] == null){
                                       echo '
                                       <td><img width="200px" height="80px" src="uploads/'.$certrow['signatory1'].'"/> <br>                                  
                                       Re-upload <a href="uploadimgs.php?certid='.$certrow['certid'].'">here</a>.
-                                      </td><td><img width="200px" height="80px" src="uploads/'.$certrow['signatory2'].'"/> <br>                                  
-                                      Re-upload <a href="uploadimgs.php?certid='.$certrow['certid'].'">here</a>.
                                       </td>
-                                      <td><img width="200px" height="80px" src="uploads/'.$certrow['signatory3'].'"/> <br>                                  
-                                      Re-upload <a href="uploadimgs.php?certid='.$certrow['certid'].'">here</a>.
+
+                                      ';
+                                    }else if($certrow['signatory1'] != null && $certrow['signatory2'] != null && $certrow['signatory3'] == null){
+                                      echo '<td><img width="200px" height="80px" src="uploads/'.$certrow['signatory1'].'"/> <br>                                  
+                                      
+                                      <br>
+                                      <img width="200px" height="80px" src="uploads/'.$certrow['signatory2'].'"/>
+                                      <br>                                  
+                                      Re-upload <a href="uploadimgs.php?certid='.$certrow['certid'].'">here</a>
                                       </td>';
+                                    }else if($certrow['signatory1'] != null && $certrow['signatory2'] != null && $certrow['signatory3'] != null){
+                                      echo '<td><img width="200px" height="80px" src="uploads/'.$certrow['signatory1'].'"/> <br>                                  
+                                      
+                                      
+                                      <br>
+                                      <img width="200px" height="80px" src="uploads/'.$certrow['signatory2'].'"/>                                      
+                                                                       
+                                      <br>
+                                      <img width="200px" height="80px" src="uploads/'.$certrow['signatory3'].'"/>
+                                      <br>                                  
+                                      Re-upload <a href="uploadimgs.php?certid='.$certrow['certid'].'">here</a>
+                                      
+                                                                       
+                                      </td>
+                                      
+                                      ';
+                                    }else if($certrow['signatory1'] == null && $certrow['signatory2'] == null && $certrow['signatory3'] == null){
+
+                                      echo '<td>No image uploaded. Upload <a href="uploadimgs.php?certid='.$certrow['certid'].'">here</a>.
+                                      </td>';
+
                                     }
                                     
                                   echo '</tr>

@@ -353,7 +353,8 @@ $row2 = $funObj->details($sql2);
                         
                         <div class="form-group">
                           <label for="description">DESCRIPTION</label>
-                         <textarea class="form-control" id="description" name="description" value="<?php echo $row2['description'] ?>" rows="3"></textarea>
+                         <textarea class="form-control" id="description" name="description" rows="3"><?php
+                         $value = $row2['description']; echo htmlspecialchars($value); ?></textarea>
                         </div>
 
 
