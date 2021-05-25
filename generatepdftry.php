@@ -14,20 +14,7 @@ if ($conn->connect_error) {
 }
 
 
-
-
-if (isset($_GET['pdf_report_generate'])){
-
-	$certid = $_GET['certid'];
-	$select = "SELECT participants.*,certificates.* FROM participants,certificates WHERE participants.eventid = '$certid' AND certificates.certid = '$certid'";
-
-	$query = mysqli_query($conn, $select);
-		while($row = mysqli_fetch_array($query)) {
-		    $name = $row['name'];
-		    $eventname = $row['eventname'];
-		    //$lastname = $row['lastname'];
-
-		    // create new PDF document
+ // create new PDF document
 			$pdf = new TCPDF('l', 'mm', 'A4', true, 'UTF-8', false);
 
 			// set document information
@@ -58,8 +45,6 @@ if (isset($_GET['pdf_report_generate'])){
 			    require_once(dirname(__FILE__).'/lang/eng.php');
 			    $pdf->setLanguageArray($l);
 			}
-
-
 			// ---------------------------------------------------------
 
 			// set default font subsetting mode
@@ -70,6 +55,19 @@ if (isset($_GET['pdf_report_generate'])){
 			// print standard ASCII chars, you can use core fonts like
 			// helvetica or times to reduce file size.
 			$pdf->SetFont('dejavusans', '', 14, '', true);
+
+if (isset($_GET['pdf_report_generate'])){
+
+	$certid = $_GET['certid'];
+	$select = "SELECT participants.*,certificates.* FROM participants,certificates WHERE participants.eventid = '$certid' AND certificates.certid = '$certid'";
+
+	$query = mysqli_query($conn, $select);
+		while($row = mysqli_fetch_array($query)) {
+		    $name = $row['name'];
+		    $eventname = $row['eventname'];
+		    //$lastname = $row['lastname'];
+
+		   
 
 			// Add a page
 			// This method has several options, check the source code documentation for more information.
@@ -95,7 +93,8 @@ if (isset($_GET['pdf_report_generate'])){
 			$pdf->SetFont('helvetica','','15');
 			$html = '<p style="text-align:center">for actively participating during the seminar entitled</p>';
 			$pdf->writeHTML($html, true, false, true, false, '');
-			$pdf->Cell(270,5, $eventname,0,1,'C');
+			$pdf->SetFont('helvetica', 'I','18');
+			$pdf->Cell(270,5, $eventname ,0,1,'C');
 			$pdf->Ln(10);
 			$pdf->SetFont('helvetica','','10');
 			$html = '<p style="text-align:center">Your continued and unwavering support has contributed to the attainment of the university and schools objectives and realization of its mission of providing a balanced quality education.</p>';
@@ -115,29 +114,30 @@ if (isset($_GET['pdf_report_generate'])){
 			//ob_end_clean();
 			// Close and output PDF document
 			// This method has several options, check the source code documentation for more information.
-			$pdf->Output('Certificate.pdf', 'I');
-
-			$pdf->Output("PDF Files/filename.pdf", "F"); //save the pdf to a folder setting `F`
-			require_once('phpmailer/class.phpmailer.php'); //where your phpmailer folder is
-			$mail = new PHPMailer();                    
-			$mail->From = "omgmaryknoll@gmail.com";
-			$mail->FromName = "Your name";
-			$mail->AddAddress("omgmaryknoll@gmail.com");
-			$mail->AddReplyTo("imnonomonster@gmail.com", "Your name");               
-			$mail->AddAttachment("PDF Files/filename.pdf");      
-			// attach pdf that was saved in a folder
-			$mail->Subject = "Email Subject";                  
-			$mail->Body = "Email Body";
-			if(!$mail->Send())
-			{
-			   echo "Message could not be sent. <p>";
-			   echo "Mailer Error: " . $mail->ErrorInfo;
-			}
-			else
-			{
-			   echo "Message sent";
-			} //`the end`
+			
+			// $pdf->Output("PDF Files/filename.pdf", "F"); //save the pdf to a folder setting `F`
+			// require_once('phpmailer/class.phpmailer.php'); //where your phpmailer folder is
+			// $mail = new PHPMailer();                    
+			// $mail->From = "omgmaryknoll@gmail.com";
+			// $mail->FromName = "Your name";
+			// $mail->AddAddress("omgmaryknoll@gmail.com");
+			// $mail->AddReplyTo("imnonomonster@gmail.com", "Your name");               
+			// $mail->AddAttachment("PDF Files/filename.pdf");      
+			// // attach pdf that was saved in a folder
+			// $mail->Subject = "Email Subject";                  
+			// $mail->Body = "Email Body";
+			// if(!$mail->Send())
+			// {
+			//    echo "Message could not be sent. <p>";
+			//    echo "Mailer Error: " . $mail->ErrorInfo;
+			// }
+			// else
+			// {
+			//    echo "Message sent";
+			// } //`the end`
 				}
+				$pdf->Output('Certificate.pdf', 'I');
+
 
 			}
 //============================================================+
