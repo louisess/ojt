@@ -65,8 +65,18 @@ if (isset($_GET['pdf_report_generate'])){
 		while($row = mysqli_fetch_array($query)) {
 		    $name = $row['name'];
 		    $eventname = $row['eventname'];
-		    //$lastname = $row['lastname'];
-
+		    $eventdate = $row['eventdate'];
+		    $venue = $row['venue'];
+		    $organizer1 = $row['organizer1'];
+		    $organizer2 = $row['organizer2'];
+		    $organizer3 = $row['organizer3'];
+		    $signatory1 = $row['signatory1'];
+		    $signatory2 = $row['signatory2'];
+		    $signatory3 = $row['signatory3'];
+		    $department = $row['department'];
+		    $title = $row['title'];
+		    $desc = $row['description'];
+		    $pid = $row['pid'];
 		   
 
 			// Add a page
@@ -76,10 +86,10 @@ if (isset($_GET['pdf_report_generate'])){
 			$pdf->Image($imageFile, 110, 10, 70, '', 'PNG', '', 'M', false, 300, '', false, false, 0, false, false, false);
 			$pdf->Ln(12);
 			$pdf->SetFont('helvetica','','15');
-			$html = '<p style="text-align:center">SCHOOL OF INFORMATION TECHNOLOGY</p>';
+			$html = '<p style="text-align:center">'. $department .'</p>';
 			$pdf->writeHTML($html, true, false, true, false, '');
 			$pdf->SetFont('helvetica','','20');
-			$html = '<span color="red"><p style="text-align:center">CERTIFICATE OF PARTICIPATION</p></span>';
+			$html = '<span color="red"><p style="text-align:center">'. $title .'</p></span>';
 			$pdf->writeHTML($html, true, false, true, false, '');
 			$pdf->Ln(-10);
 			$pdf->SetFont('helvetica','','10');
@@ -93,24 +103,28 @@ if (isset($_GET['pdf_report_generate'])){
 			$pdf->SetFont('helvetica','','15');
 			$html = '<p style="text-align:center">for actively participating during the seminar entitled</p>';
 			$pdf->writeHTML($html, true, false, true, false, '');
-			$pdf->SetFont('helvetica', 'I','18');
+			$pdf->SetFont('helvetica', 'IB','18');
 			$pdf->Cell(270,5, $eventname ,0,1,'C');
 			$pdf->Ln(10);
 			$pdf->SetFont('helvetica','','10');
-			$html = '<p style="text-align:center">Your continued and unwavering support has contributed to the attainment of the university and schools objectives and realization of its mission of providing a balanced quality education.</p>';
+			$html = '<p style="text-align:center">'. $desc .'</p>';
 			$pdf->writeHTML($html, true, false, true, false, '');
 			$pdf->Ln(5);
 			$pdf->SetFont('helvetica', 'I', 10);
 			//Page Number
-			date_default_timezone_set("Asia/Dhaka");
-			$today = date("F j, Y");
-			$html = '<p style="text-align:center"> Given this ' .$today. '</p>';
+			//date_default_timezone_set("Asia/Dhaka");
+			//$today = date("F j, Y");
+			$html = '<p style="text-align:center"> Given this ' .$eventdate. '</p>';
 			$pdf->writeHTML($html, true, false, true, false, '');
-			$pdf->Ln(15);
+			$pdf->Ln(10);
 			$pdf->SetFont('helvetica', '',12);
-			$pdf->Cell(20,0,'Samantha Louise S. Magalong',0,0);
-			$pdf->SetFont('helvetica', '',8);
-			$pdf->Cell(20,15,'DEAN, SIT',0,1);
+			$pdf->Cell(20,5,$organizer1,0,0);
+			$pdf->Ln(1);
+			$pdf->SetFont('helvetica', '',10);
+			$pdf->Cell(20,10,'Certificate Code: UB - '. $pid,0,1);
+			$pdf->Cell(20,10,'visit asdasdasd to verify certificate',0,1);
+			//$pdf->SetFont('helvetica', '',8);
+			//$pdf->Cell(20,15,'DEAN, SIT',0,1);
 			//ob_end_clean();
 			// Close and output PDF document
 			// This method has several options, check the source code documentation for more information.

@@ -328,15 +328,15 @@ $row = $funObj->details($sql);
                           <label for="department">DEPARTMENT</label>
                           <br>
                           <select name="department">
-                                <option value="School of Business Administration and Accountancy">School of Business Administration and Accountancy</option>
-                                <option value="School of Criminal Justice and Public Safety">School of Criminal Justice and Public Safety</option>
-                                <option value="School of Engineering and Architecture">School of Engineering and Architecture</option>
-                                <option value="School of Information Technology">School of Information Technology</option>
-                                <option value="School of International Hospitality and Tourism Management">School of International Hospitality and Tourism Management</option>
-                                <option value="School of Law">School of Law</option>
-                                <option value="School of Nursing">School of Nursing</option>
-                                <option value="School of Natural Sciences">School of Natural Sciences</option>
-                                <option value="School of Teacher Education and Liberal Arts">School of Teacher Education and Liberal Arts</option>
+                                <option value="SCHOOL OF BUSINESS ADMINISTRATION AND ACCOUNTANCY">School of Business Administration and Accountancy</option>
+                                <option value="SCHOOL OF CRIMINAL JUSTICE AND PUBLIC SAFETY">School of Criminal Justice and Public Safety</option>
+                                <option value="SCHOOL OF ENGINEERING AND ARCHITECTURE">School of Engineering and Architecture</option>
+                                <option value="SCHOOL OF INFORMATION TECHNOLOGY">School of Information Technology</option>
+                                <option value="SCHOOL OF INTERNATIONAL HOSPITALITY AND TOURISM MANAGEMENT">School of International Hospitality and Tourism Management</option>
+                                <option value="SCHOOL OF LAW">School of Law</option>
+                                <option value="SCHOOL OF NURSING">School of Nursing</option>
+                                <option value="SCHOOL OF NATURAL SCIENCES">School of Natural Sciences</option>
+                                <option value="SCHOOL OF TEACHER EDUCATION AND LIBERAL ARTS">School of Teacher Education and Liberal Arts</option>
                               </select>
                         </div>
                         <div class="form-group">
