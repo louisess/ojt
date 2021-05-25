@@ -114,7 +114,12 @@ if (isset($_GET['pdf_report_generate'])){
 			//Page Number
 			//date_default_timezone_set("Asia/Dhaka");
 			//$today = date("F j, Y");
-			$html = '<p style="text-align:center"> Given this ' .$eventdate. '</p>';
+			$givendate = array_pad(explode("to", $eventdate), 2, null);
+			if($givendate[1] == null){
+				$html = '<p style="text-align:center"> Given this ' .$givendate[0]. '</p>';
+			}else{
+				$html = '<p style="text-align:center"> Given this ' .$givendate[1]. '</p>';
+			}
 			$pdf->writeHTML($html, true, false, true, false, '');
 			$pdf->Ln(10);
 			$pdf->SetFont('helvetica', '',12);
@@ -122,7 +127,7 @@ if (isset($_GET['pdf_report_generate'])){
 			$pdf->Ln(1);
 			$pdf->SetFont('helvetica', '',10);
 			$pdf->Cell(20,10,'Certificate Code: UB - '. $pid,0,1);
-			$pdf->Cell(20,10,'visit asdasdasd to verify certificate',0,1);
+			$pdf->Cell(20,10,'Visit verify.php to verify and download you certificate using the provided ID.',0,1);
 			//$pdf->SetFont('helvetica', '',8);
 			//$pdf->Cell(20,15,'DEAN, SIT',0,1);
 			//ob_end_clean();
