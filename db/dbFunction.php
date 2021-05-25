@@ -153,9 +153,9 @@
 
         }
 
-        function createCert($eventname, $eventdate, $orgid, $venue, $organizer1, $organizer2, $organizer3){
+        function createCert($eventname, $eventdate, $orgid, $venue, $organizer1, $organizer2, $organizer3, $department, $title, $description){
             //$sql = "SELECT * FROM certificates WHERE orgid = '$id'";
-            $sql = "INSERT INTO certificates (eventname, eventdate, orgid, venue, organizer1, organizer2, organizer3) values('$eventname','$eventdate','$orgid', '$venue','$organizer1','$organizer2','$organizer3')";
+            $sql = "INSERT INTO certificates (eventname, eventdate, orgid, venue, organizer1, organizer2, organizer3, department, title, description) values('$eventname','$eventdate','$orgid', '$venue','$organizer1','$organizer2','$organizer3','$department','$title','$description')";
 
             $stmt = $this->conn->prepare($sql);
             $stmt->execute();
@@ -163,8 +163,8 @@
             return true;
         }
 
-        function updateCert($eventname, $eventdate, $certid, $venue, $organizer1 , $organizer2, $organizer3){
-            $sql = "UPDATE certificates SET eventname='$eventname', eventdate='$eventdate', venue='$venue', organizer1='$organizer1', organizer2='$organizer2' , organizer3='$organizer3'  WHERE certid='$certid'";
+        function updateCert($eventname, $eventdate, $certid, $venue, $organizer1 , $organizer2, $organizer3, $title, $department, $description){
+            $sql = "UPDATE certificates SET eventname='$eventname', eventdate='$eventdate', venue='$venue', organizer1='$organizer1', organizer2='$organizer2' , organizer3='$organizer3', department='$department', title='$title',  description='$description'  WHERE certid='$certid'";
 
             $stmt = $this->conn->prepare($sql);
             $stmt->execute();

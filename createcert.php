@@ -178,6 +178,9 @@ $row = $funObj->details($sql);
                           $dayto = $_POST['dayto']; 
                           $month = $_POST['month']; 
                           $year = $_POST['year'];
+                          $department = $_POST['department'];
+                          $title = $_POST['title'];
+                          $description = $_POST['description'];
                           //$st = range(4,20);
                           //eventdate conditions:
                           if($dayfrom > $dayto){
@@ -218,7 +221,7 @@ $row = $funObj->details($sql);
                           $organizer3 = $_POST['organizer3'] . ' - ' . $_POST['position3'];  
 
 
-                          $savecert = $funObj->createCert($eventname, $eventdate, $orgid, $venue, $organizer1, $organizer2, $organizer3); 
+                          $savecert = $funObj->createCert($eventname, $eventdate, $orgid, $venue, $organizer1, $organizer2, $organizer3, $department, $title, $description); 
 
                           if(!$savecert){
                             //echo "sno";
@@ -233,7 +236,7 @@ $row = $funObj->details($sql);
                             extract($certrow);
 
                             echo '<div class="alert  alert-success alert-dismissible fade show" role="alert">
-                              Nice!<strong> '.$eventname.'</strong> has been added to your events.Upload your logos and signatories <a style="color: white;" href="uploadimgs.php?certid='.$certrow['certid'].'">here</a>.
+                              Nice!<strong> '.$eventname.'</strong> has been added to your events.Upload your logos and signatories <a style="color: white;" href="uploadimgs.php?certid='.$certrow['certid'].'"><b>here</b></a>.
                               <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                               </button>
@@ -320,6 +323,31 @@ $row = $funObj->details($sql);
                         <div class="form-group">
                           <label for="venue">VENUE</label>
                           <input type="text" class="form-control text-center" id="venue" name="venue" placeholder="" required>
+                        </div>
+                        <div class="form-group">
+                          <label for="department">DEPARTMENT</label>
+                          <br>
+                          <select name="department">
+                                <option value="School of Business Administration and Accountancy">School of Business Administration and Accountancy</option>
+                                <option value="School of Criminal Justice and Public Safety">School of Criminal Justice and Public Safety</option>
+                                <option value="School of Engineering and Architecture">School of Engineering and Architecture</option>
+                                <option value="School of Information Technology">School of Information Technology</option>
+                                <option value="School of International Hospitality and Tourism Management">School of International Hospitality and Tourism Management</option>
+                                <option value="School of Law">School of Law</option>
+                                <option value="School of Nursing">School of Nursing</option>
+                                <option value="School of Natural Sciences">School of Natural Sciences</option>
+                                <option value="School of Teacher Education and Liberal Arts">School of Teacher Education and Liberal Arts</option>
+                              </select>
+                        </div>
+                        <div class="form-group">
+                          <label for="title">TITLE</label>
+                          <input type="text" class="form-control text-center" id="title" name="title" placeholder="" required>
+                          <p>*Certificate of Attendance/Participation</p>
+                        </div>
+                        
+                        <div class="form-group">
+                          <label for="description">DESCRIPTION</label>
+                         <textarea class="form-control" id="description" name="description" rows="3"></textarea>
                         </div>
                         <div class="form-group">
                           <label for="hosts">HOSTS/ORGANIZERS</label>

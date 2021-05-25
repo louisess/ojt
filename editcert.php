@@ -189,6 +189,9 @@ $row2 = $funObj->details($sql2);
                           $dayto = $_POST['dayto']; 
                           $month = $_POST['month']; 
                           $year = $_POST['year'];
+                          $department = $_POST['department'];
+                          $title = $_POST['title'];
+                          $description = $_POST['description'];
                           //$st = range(4,20);
                           //eventdate conditions:
                           
@@ -228,7 +231,7 @@ $row2 = $funObj->details($sql2);
                             $organizer3 = $_POST['organizer3']. ' - ' .$_POST['position3'];  
 
 
-                            $updatecert = $funObj->updateCert($eventname, $eventdate, $certid, $venue, $organizer1, $organizer2, $organizer3); 
+                            $updatecert = $funObj->updateCert($eventname, $eventdate, $certid, $venue, $organizer1, $organizer2, $organizer3, $department, $title, $description); 
 
                             if(!$updatecert){
                               //echo "sno";
@@ -325,6 +328,34 @@ $row2 = $funObj->details($sql2);
 
                           <label for="venue">VENUE</label>
                           <input type="text" class="form-control text-center" id="venue" name="venue" placeholder="" value="<?php echo $row2['venue'] ?>" required>
+                          <br>
+
+                           <div class="form-group">
+                          <label for="department" >DEPARTMENT</label>
+                          <br>
+                          <select name="department" selected="<?php echo $row2['department'] ?>">
+                            <option value="School of Business Administration and Accountancy">School of Business Administration and Accountancy</option>
+                            <option value="School of Criminal Justice and Public Safety">School of Criminal Justice and Public Safety</option>
+                            <option value="School of Engineering and Architecture">School of Engineering and Architecture</option>
+                            <option value="School of Information Technology">School of Information Technology</option>
+                            <option value="School of International Hospitality and Tourism Management">School of International Hospitality and Tourism Management</option>
+                            <option value="School of Law">School of Law</option>
+                            <option value="School of Nursing">School of Nursing</option>
+                            <option value="School of Natural Sciences">School of Natural Sciences</option>
+                            <option value="School of Teacher Education and Liberal Arts">School of Teacher Education and Liberal Arts</option>
+                          </select>
+                        </div>
+                        <div class="form-group">
+                          <label for="title">TITLE</label>
+                          <input type="text" class="form-control text-center" value="<?php echo $row2['title'] ?>" id="title" name="title" placeholder="" required>
+                          <p>*Certificate of Attendance/Participation</p>
+                        </div>
+                        
+                        <div class="form-group">
+                          <label for="description">DESCRIPTION</label>
+                         <textarea class="form-control" id="description" name="description" value="<?php echo $row2['description'] ?>" rows="3"></textarea>
+                        </div>
+
 
                           <label for="hosts">HOSTS/ORGANIZERS</label>
                           <div class="row">

@@ -247,12 +247,18 @@ $row = $funObj->details($sql);
                                     if ($certrow['signatory1'] == null){
                                       echo '<td>No image uploaded. Upload <a href="uploadimgs.php?certid='.$certrow['certid'].'">here</a>.
                                       </td>';
+                                    }else if($certrow['signatory3'] == null && $certrow['signatory2'] == null){
+                                      echo '<td><img width="200px" height="80px" src="uploads/'.$certrow['signatory1'].'"/> <br>                                  
+                                      Re-upload <a href="uploadimgs.php?certid='.$certrow['certid'].'">here</a>.
+                                      </td>';
                                     }else{
-                                      echo '<td><img width="200px" height="80px" src="uploads/'.$certrow['signatory1'].'"/> <br>
+                                      echo '
+                                      <td><img width="200px" height="80px" src="uploads/'.$certrow['signatory1'].'"/> <br>                                  
+                                      Re-upload <a href="uploadimgs.php?certid='.$certrow['certid'].'">here</a>.
+                                      </td><td><img width="200px" height="80px" src="uploads/'.$certrow['signatory2'].'"/> <br>                                  
+                                      Re-upload <a href="uploadimgs.php?certid='.$certrow['certid'].'">here</a>.
                                       </td>
-                                      <td><img width="200px" height="80px" src="uploads/'.$certrow['signatory2'].'"/> <br>
-                                      </td>
-                                      <td><img width="200px" height="80px" src="uploads/'.$certrow['signatory3'].'"/> <br>
+                                      <td><img width="200px" height="80px" src="uploads/'.$certrow['signatory3'].'"/> <br>                                  
                                       Re-upload <a href="uploadimgs.php?certid='.$certrow['certid'].'">here</a>.
                                       </td>';
                                     }
