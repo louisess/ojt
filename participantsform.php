@@ -57,6 +57,9 @@ $funObj = new dbFunction($db);
 </head>
 
 <body class="bgbody">
+  <div class="container mt-5 text-center">
+      <img src="assets/img/logotiny.png">
+  </div>
   <div class="row">
     <div class="col-md-2">
       
@@ -101,15 +104,12 @@ $funObj = new dbFunction($db);
                       $partrow = $retrieveId->fetch(PDO::FETCH_ASSOC);
                       extract($partrow);
                        echo '<div class="alert  alert-success alert-dismissible fade show" role="alert">
-                              Success! Here is your ID:<b> '. $partrow['pid'] .'</b>
+                              Success! Here is your Certificate Code: UB-<b> '. $partrow['pid'] .'</b> Verify and Download your Certificate <a style="color:white" href="verify.php?verify='. $partrow['pid'] .'">here.</a>
                               <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                               </button>
                             </div>';
-                    } 
-                    
-
-                        
+                    }                       
 
                   }  
 

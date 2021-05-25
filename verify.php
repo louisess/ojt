@@ -15,9 +15,8 @@ Coded by www.creative-tim.com
 -->
 <?php
 session_start();  
-
 include ('db/dbcon.php');
-
+$verify = $_GET['verify'];
 ?>
 
 
@@ -53,47 +52,32 @@ include ('db/dbcon.php');
   <div class="container mt-5 text-center">
       <img src="assets/img/logotiny.png">
   </div>
-  <div class="wrapper ">
-  <div class="container">
+  
   <div class="row">
-    <div class="col">
+    <div class="col-md-2">
       
     </div>
-    <div class="col-6 mt-5">
-      <div class="content">
-        <h3>Verify Certificate</h3>
+    <div class="col-md-8">
+      <div class="card text-center mx-5 my-5">
+      <div class="card-header">
+        </div>
+        <h5 class="card-title">Verify and Download Certificate</h5>
+        <hr>
         <div id="login" class="animate form">  
              <form name="verify" method="get" target="_blank" action="showverify.php">    
                   <div class="form-group">
                     <label for="verify">
-                      <input type="int" name="verify" id="verify" class="form-control" aria-describedby="verify">
+                      <input type="int" name="verify" id="verify" class="form-control" value="<?php echo $verify; ?>" aria-describedby="verify">
                     </label>
-                    <button type="submit" name="pdf_report" class="btn btn-primary">Verify</button>
+                    <button type="submit" name="pdf_report" class="btn btn-primary">Open Certificate</button>
                   </div>
               </form>  
           </div>  
-        </div>
     </div>
-    <div class="col">
+    <div class="col md-2">
       
     </div>
-  </div>
-  <div class="row">
-    <div class="col">
-      
-    </div>
-    <div class="col-6 mt-2">
-      <div class="content">
-        <h6>What is Certificate Verification?</h6>
-        <div id="login" class="animate form">  
-           <p>dsfdsffdsfdsfdsfdsfsdfdsfdsfdsfdsfsdfsdfsdfsdfsfd *insert sample image of cert naka bilog yung cert code*</p>                
-        </div>  
-      </div>
-    </div>
-    <div class="col">
-      
-    </div>
-  </div>
+
 </div>  
       
       <!-- End Navbar -->
