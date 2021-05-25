@@ -125,6 +125,19 @@
 
         }
 
+        function retrieveId($eventid, $email){
+            //$sql = "SELECT * FROM participants WHERE eventid = '".$eventid."'";
+            $sql = "SELECT *
+            FROM participants
+            WHERE eventid = '$eventid'
+            AND email = '$email'";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute();
+
+            return $stmt;
+
+        }
+
         function viewCertsForUpload($id, $eventdate, $venue, $eventname){
             //$sql = "SELECT * FROM certificates WHERE orgid = '".$id."'. AND eventdate = '". ."'";
             $sql = "SELECT certid FROM certificates

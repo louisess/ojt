@@ -96,9 +96,12 @@ $funObj = new dbFunction($db);
                     }else{
                       $email = $_POST['email1'];
                       $added = $funObj->addParticipant($name, $email, $eventid);
-
+                      $retrieveId = $funObj->retrieveId($eventid, $email);
+                      $count =  $retrieveId->rowCount();
+                      $partrow = $retrieveId->fetch(PDO::FETCH_ASSOC);
+                      extract($partrow);
                        echo '<div class="alert  alert-success alert-dismissible fade show" role="alert">
-                              Success!
+                              Success! Here is your ID:<b> '. $partrow['pid'] .'</b>
                               <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                               </button>
