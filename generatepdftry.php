@@ -88,29 +88,31 @@ if (isset($_GET['pdf_report_generate'])){
 			$pdf->SetFont('helvetica','','15');
 			$html = '<p style="text-align:center">'. $department .'</p>';
 			$pdf->writeHTML($html, true, false, true, false, '');
+			$pdf->Ln(-5);
+
 			$pdf->SetFont('helvetica','','20');
 			$html = '<span color="red"><p style="text-align:center">'. $title .'</p></span>';
 			$pdf->writeHTML($html, true, false, true, false, '');
 			$pdf->Ln(-10);
 			$pdf->SetFont('helvetica','','10');
-			$pdf->Cell(265,5, 'is awarded to', 0, 1, 'C');
-			$pdf->Ln(10);
+			$pdf->Cell(265,4, 'is awarded to', 0, 1, 'C');
+			$pdf->Ln(5);
 			$pdf->SetFont('times','','25');
 			$html = '<p style="text-align:center">'. $name . '</p>';
 
 			$pdf->writeHTML($html, true, false, true, false, '');
-			$pdf->Ln(10);
+			$pdf->Ln(5);
 			$pdf->SetFont('helvetica','','15');
 			$html = '<p style="text-align:center">for actively participating during the seminar entitled</p>';
 			$pdf->writeHTML($html, true, false, true, false, '');
 			$pdf->SetFont('helvetica', 'IB','18');
 			$pdf->Cell(270,5, $eventname ,0,1,'C');
-			$pdf->Ln(10);
+			$pdf->Ln(5);
 			$pdf->SetFont('helvetica','','10');
 			$html = '<p style="text-align:center">'. $desc .'</p>';
 			$pdf->writeHTML($html, true, false, true, false, '');
-			$pdf->Ln(5);
-			$pdf->SetFont('helvetica', 'I', 10);
+			$pdf->Ln(4);
+			$pdf->SetFont('helvetica', 'I', 15);
 			//Page Number
 			//date_default_timezone_set("Asia/Dhaka");
 			//$today = date("F j, Y");
@@ -121,13 +123,130 @@ if (isset($_GET['pdf_report_generate'])){
 				$html = '<p style="text-align:center"> Given this ' .$givendate[1]. '</p>';
 			}
 			$pdf->writeHTML($html, true, false, true, false, '');
-			$pdf->Ln(10);
-			$pdf->SetFont('helvetica', '',12);
-			$pdf->Cell(20,5,$organizer1,0,0);
-			$pdf->Ln(1);
+			$pdf->Ln(20);
 			$pdf->SetFont('helvetica', '',10);
-			$pdf->Cell(20,10,'Certificate Code: UB - '. $pid,0,1);
-			$pdf->Cell(20,10,'Visit verify.php to verify and download you certificate using the provided ID.',0,1);
+			$orgname1 = array_pad(explode(" - ", $organizer1), 2, null);
+			$orgname2 = array_pad(explode(" - ", $organizer2), 2, null);
+			$orgname3 = array_pad(explode(" - ", $organizer3), 2, null);
+			$signpath = 'uploads/';
+			$sign1 = $signpath.$signatory1;
+			$sign2 = $signpath.$signatory2;
+			$sign3 = $signpath.$signatory3;
+			//$pdf->Image($sign1, '', '', 40, 40, '', '', 'T', false, 300, '', false, false, 1, false, false, false);
+			if ($organizer1 !== ' - ' && $organizer2 == ' - ' && $organizer3 == ' - '){
+				$html = '<p style="text-align:center">
+							<table>
+						  <thead>
+						  </thead>
+						  <tbody>
+						    <tr>
+						      <td>
+						      
+						      </td>
+						      <td>
+						      <img width="50px" height="20px" src="'. $sign1 .'">
+						      <br>
+						      '.$orgname1[0].'
+						      <br>
+						      <b>'.$orgname1[1].'</b></td>
+						      <td>
+						      
+						      </td>
+
+						    </tr>
+						    
+						  </tbody>
+						</table>
+						</p>
+
+				';
+				$pdf->writeHTML($html, true, false, true, false, '');
+				// /$pdf->Ln(1);
+				
+
+
+			}else if($organizer1 !== null && $organizer2 !== null && $organizer3 == ' - '){
+				$html = '
+				<p style="text-align:center">
+							<table>
+						  <thead>
+						  </thead>
+						  <tbody>
+						    <tr>
+						      <td>
+						      <img width="50px" height="20px" src="'. $sign1 .'">
+						      <br>
+						      '.$orgname1[0].'
+						      <br>
+						      <b>'.$orgname1[1].'</b>
+						      </td>
+						      <td>
+
+						      </td>
+						      <td>
+						      <img width="50px" height="20px" src="'. $sign2 .'">
+						      <br>
+						      '.$orgname2[0].'
+						      <br>
+						      <b>'.$orgname2[1].'</b>
+						      </td>
+
+						    </tr>
+						    
+						  </tbody>
+						</table>
+						</p>';
+				$pdf->writeHTML($html, true, false, true, false, '');
+				
+			}else if($organizer1 !== ' - ' && $organizer2 !== ' - ' && $organizer3 !== ' - '){
+				$html = '
+				<p style="text-align:center">
+					<table>
+						  <thead>
+						  </thead>
+						  <tbody>
+						    <tr>
+						      <td>   
+						      '.$orgname1[0].'
+						      <br>
+						      <b>'.$orgname1[1].'</b>
+						      </td>
+						      
+						      <td>
+						      '.$orgname2[0].'
+						      <br>
+						      <b>'.$orgname2[1].'</b>
+						      </td>
+						      <td>
+						      '.$orgname3[0].'
+						      <br>
+						      <b>'.$orgname3[1].'</b>
+						      </td>
+
+						    </tr>
+						    
+						  </tbody>
+						</table>
+						</p>
+				';
+				$pdf->writeHTML($html, true, false, true, false, '');
+			}
+			
+			$pdf->Ln(3);
+			$pdf->SetFont('helvetica', 'I',10);
+			$html = '<p style="text-align:left">Certificate Code: UB - '.$pid.'<br>
+			Visit verify.php to verify and download your certificate using the provided code.
+			</p>';
+			$pdf->writeHTML($html, true, false, true, false, '');
+			
+
+
+			//$pdf->Cell(10,12,'Certificate Code: UB - '. $pid,0,1);
+			//$pdf->SetFont('helvetica', '',9);
+			//$html = '<p style="text-align:left">Visit verify.php to verify and download your certificate using the provided code.</p>';
+			//$pdf->writeHTML($html, true, false, true, false, '');
+			//$pdf->Cell(20,0,'Visit verify.php to verify and download your certificate using the provided code.',0,1);
+			
 			//$pdf->SetFont('helvetica', '',8);
 			//$pdf->Cell(20,15,'DEAN, SIT',0,1);
 			//ob_end_clean();

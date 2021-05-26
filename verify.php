@@ -16,7 +16,12 @@ Coded by www.creative-tim.com
 <?php
 session_start();  
 include ('db/dbcon.php');
-$verify = $_GET['verify'];
+
+
+if(isset($verify)) {
+  $verify = $_GET['verify'];
+}
+
 ?>
 
 
@@ -67,7 +72,9 @@ $verify = $_GET['verify'];
              <form name="verify" method="get" target="_blank" action="showverify.php">    
                   <div class="form-group">
                     <label for="verify">
-                      <input type="int" name="verify" id="verify" class="form-control" value="<?php echo $verify; ?>" aria-describedby="verify">
+                      <input type="int" name="verify" id="verify" class="form-control" value="<?php if(isset($verify)) {
+  echo $verify;
+} echo '' ?>" aria-describedby="verify" required>
                     </label>
                     <button type="submit" name="pdf_report" class="btn btn-primary">Open Certificate</button>
                   </div>

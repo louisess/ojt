@@ -327,7 +327,7 @@ $row = $funObj->details($sql);
                         <div class="form-group">
                           <label for="department">DEPARTMENT</label>
                           <br>
-                          <select name="department">
+                          <select name="department" required>
                                 <option value="SCHOOL OF BUSINESS ADMINISTRATION AND ACCOUNTANCY">School of Business Administration and Accountancy</option>
                                 <option value="SCHOOL OF CRIMINAL JUSTICE AND PUBLIC SAFETY">School of Criminal Justice and Public Safety</option>
                                 <option value="SCHOOL OF ENGINEERING AND ARCHITECTURE">School of Engineering and Architecture</option>
@@ -359,7 +359,7 @@ $row = $funObj->details($sql);
                             <div class="col-6">
                               <label>POSITION</label>
 
-                              <input type="text" class="form-control mb-2 text-center" id="position1" name="position1" placeholder="">
+                              <input type="text" class="form-control mb-2 text-center" id="position1" name="position1" placeholder="" required>
                             </div>                            
                             
                           </div>

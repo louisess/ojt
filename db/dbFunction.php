@@ -176,7 +176,7 @@
             return true;
         }
 
-        function updateCert($eventname, $eventdate, $certid, $venue, $organizer1 , $organizer2, $organizer3, $title, $department, $description){
+        function updateCert($eventname, $eventdate, $venue, $organizer1, $organizer2, $organizer3, $department, $title, $description, $certid){
             $sql = "UPDATE certificates SET eventname='$eventname', eventdate='$eventdate', venue='$venue', organizer1='$organizer1', organizer2='$organizer2' , organizer3='$organizer3', department='$department', title='$title',  description='$description'  WHERE certid='$certid'";
 
             $stmt = $this->conn->prepare($sql);

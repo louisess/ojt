@@ -231,7 +231,7 @@ $row2 = $funObj->details($sql2);
                             $organizer3 = $_POST['organizer3']. ' - ' .$_POST['position3'];  
 
 
-                            $updatecert = $funObj->updateCert($eventname, $eventdate, $certid, $venue, $organizer1, $organizer2, $organizer3, $department, $title, $description); 
+                            $updatecert = $funObj->updateCert($eventname, $eventdate, $venue, $organizer1, $organizer2, $organizer3, $department, $title, $description, $certid); 
 
                             if(!$updatecert){
                               //echo "sno";
@@ -276,41 +276,400 @@ $row2 = $funObj->details($sql2);
                             <label for="date" class="mr-2">Day</label> 
                             From:
                             <?php
-                              echo "<select name='dayfrom'>";
-                              for ($day = 1; $day <= 31; $day++) {
-                                echo "<option value=".$day.">$day<br></option>";
-                              }
-                              echo "</select>";
-                            ?>
-                            To:
+                            $dbday1 = array_pad(explode("to", $row2['eventdate']), 2, null);
+                            //echo $dbday1[0];
+                              $day1tmp1 = array_pad(explode("rd", $dbday1[0]), 2, null);
+                              $day1tmp2 = array_pad(explode("st", $dbday1[0]), 2, null);
+                              $day1tmp3 = array_pad(explode("th", $dbday1[0]), 2, null);
+                              $day1tmp4 = array_pad(explode("nd", $dbday1[0]), 2, null);
 
-                            <?php
-                              echo "<select name='dayto'>";
-                              for ($day = 1; $day <= 31; $day++) {
-                                echo "<option value=".$day.">$day<br></option>";
-                              }
-                              echo "</select>";
-                            ?>
+                              $dbday2 = array_pad(explode("of", $dbday1[1]), 2, null);
+                              //$dbday2exp = array_pad(explode(",", $dbday1[0]), 2, null);
+                              $day2tmp1 = array_pad(explode("th", $dbday2[0]), 2, null);
+                              $day2tmp2 = array_pad(explode("st", $dbday2[0]), 2, null);
+                              $day2tmp3 = array_pad(explode("nd", $dbday2[0]), 2, null);
+                              $day2tmp4 = array_pad(explode("rd", $dbday2[0]), 2, null);
 
-                            <br>
+                              
+                            if($dbday1[1] == null){
+                              if(is_numeric($day1tmp1[0])){
+                                $day1 = $day1tmp1[0];
+                                $day2 = $day1;
+                              }else if(is_numeric($day1tmp2[0])){
+                                $day1 = $day1tmp2[0];
+                                $day2 = $day1;
+                              }else if(is_numeric($day1tmp3[0])){
+                                $day1 = $day1tmp3[0];
+                                $day2 = $day1;
+                              }else{
+                                $day1 = $day1tmp4[0];
+                                $day2 = $day1;
+
+                              }
+                              $mnd = array_pad(explode(",", $dbday1[0]), 2, null);
+                              $month = array_pad(explode("of ", $mnd[0]), 2, null);
+                              $dbmnth = $month[1];
+                              $dbyr = $mnd[1];
+                              //echo $dbmnth;
+                            }else{
+                              //if date is within a range
+                              
+                              if(is_numeric($day2tmp1[0])){
+                                $day1 = $day1tmp1[0];
+                                $day2 = $day2tmp1[0];
+                              }else if(is_numeric($day2tmp2[0])){
+                                $day1 = $day1tmp2[0];
+                                $day2 = $day2tmp2[0];
+                              }else if(is_numeric($day2tmp3[0])){
+                                $day1 = $day1tmp3[0];
+                                $day2 = $day2tmp3[0];
+                              }else{
+                                $day1 = $day1tmp4[0];
+                                $day2 = $day2tmp4[0];
+
+                              }
+
+                              $mnd = array_pad(explode(",", $dbday1[1]), 2, null);
+                              $mndtmp = array_pad(explode("of ", $mnd[0]), 2, null);
+                              $dbmnth = $mndtmp[1];
+                              $dbyr = $mnd[1];
+                              //echo $dbmnth;
+                            }
+                              
+                           // echo $day2;
+                            
+                            //echo $mnd[1];
+                        echo "<select name='dayfrom'>
+                                <option value='1'"; if($day1 == '1'){
+                                    echo "selected";
+                                  }
+                                  echo ">1</option>
+                                <option value='2'"; if($day1 == '2'){
+                                    echo "selected";
+                                  }
+                                  echo ">2</option>
+                                <option value='3'"; if($day1 == '3'){
+                                    echo "selected";
+                                  }
+                                  echo ">3</option>
+                                <option value='4'"; if($day1 == '4'){
+                                    echo "selected";
+                                  }
+                                  echo ">4</option>
+                                <option value='5'"; if($day1 == '5'){
+                                    echo "selected";
+                                  }
+                                  echo ">5</option>
+                                <option value='6'"; if($day1 == '6'){
+                                    echo "selected";
+                                  }
+                                  echo ">6</option>
+                                <option value='7'"; if($day1 == '7'){
+                                    echo "selected";
+                                  }
+                                  echo ">7</option>
+                                <option value='8'"; if($day1 == '8'){
+                                    echo "selected";
+                                  }
+                                  echo ">8</option>
+                                <option value='9'"; if($day1 == '9'){
+                                    echo "selected";
+                                  }
+                                  echo ">9</option>
+                                <option value='10'"; if($day1 == '10'){
+                                    echo "selected";
+                                  }
+                                  echo ">10</option>
+                                <option value='11'"; if($day1 == '11'){
+                                    echo "selected";
+                                  }
+                                  echo ">11</option>
+                                <option value='12'"; if($day1 == '12'){
+                                    echo "selected";
+                                  }
+                                  echo ">12</option>
+                                <option value='13'"; if($day1 == '13'){
+                                    echo "selected";
+                                  }
+                                  echo ">13</option>
+                                <option value='14'"; if($day1 == '14'){
+                                    echo "selected";
+                                  }
+                                  echo ">14</option>
+                                <option value='15'"; if($day1 == '15'){
+                                    echo "selected";
+                                  }
+                                  echo ">15</option>
+                                <option value='16'"; if($day1 == '16'){
+                                    echo "selected";
+                                  }
+                                  echo ">16</option>
+                                <option value='17'"; if($day1 == '17'){
+                                    echo "selected";
+                                  }
+                                  echo ">17</option>
+                                <option value='18'"; if($day1 == '18'){
+                                    echo "selected";
+                                  }
+                                  echo ">18</option>
+                                <option value='19'"; if($day1 == '19'){
+                                    echo "selected";
+                                  }
+                                  echo ">19</option>
+                                <option value='20'"; if($day1 == '20'){
+                                    echo "selected";
+                                  }
+                                  echo ">20</option>
+                                <option value='21'"; if($day1 == '21'){
+                                    echo "selected";
+                                  }
+                                  echo ">21</option>
+                                <option value='22'"; if($day1 == '22'){
+                                    echo "selected";
+                                  }
+                                  echo ">22</option>
+                                <option value='23'"; if($day1 == '23'){
+                                    echo "selected";
+                                  }
+                                  echo ">23</option>
+                                <option value='24'"; if($day1 == '24'){
+                                    echo "selected";
+                                  }
+                                  echo ">24</option>
+                                <option value='25'"; if($day1 == '25'){
+                                    echo "selected";
+                                  }
+                                  echo ">25</option>
+                                <option value='26'"; if($day1 == '26'){
+                                    echo "selected";
+                                  }
+                                  echo ">26</option>
+                                <option value='27'"; if($day1 == '27'){
+                                    echo "selected";
+                                  }
+                                  echo ">27</option>
+                                <option value='28'"; if($day1 == '28'){
+                                    echo "selected";
+                                  }
+                                  echo ">28</option>
+                                <option value='29'"; if($day1 == '29'){
+                                    echo "selected";
+                                  }
+                                  echo ">29</option>
+                                <option value='30'"; if($day1 == '30'){
+                                    echo "selected";
+                                  }
+                                  echo ">30</option>
+                                <option value='31'"; if($day1 == '31'){
+                                    echo "selected";
+                                  }
+                                  echo ">31</option>
+                                </select>
+                              To:";
+                            
+                            
+                             
+                              //$day2 = $dbday3[0];
+
+                              //echo $day2;
+                            
+                              echo "<select name='dayto'>
+                                      <option value='1'"; if($day2 == '1'){
+                                    echo "selected";
+                                  }
+                                  echo ">1</option>
+                                <option value='2'"; if($day2 == '2'){
+                                    echo "selected";
+                                  }
+                                  echo ">2</option>
+                                <option value='3'"; if($day2 == '3'){
+                                    echo "selected";
+                                  }
+                                  echo ">3</option>
+                                <option value='4'"; if($day2 == '4'){
+                                    echo "selected";
+                                  }
+                                  echo ">4</option>
+                                <option value='5'"; if($day2 == '5'){
+                                    echo "selected";
+                                  }
+                                  echo ">5</option>
+                                <option value='6'"; if($day2 == '6'){
+                                    echo "selected";
+                                  }
+                                  echo ">6</option>
+                                <option value='7'"; if($day2 == '7'){
+                                    echo "selected";
+                                  }
+                                  echo ">7</option>
+                                <option value='8'"; if($day2 == '8'){
+                                    echo "selected";
+                                  }
+                                  echo ">8</option>
+                                <option value='9'"; if($day2 == '9'){
+                                    echo "selected";
+                                  }
+                                  echo ">9</option>
+                                <option value='10'"; if($day2 == '10'){
+                                    echo "selected";
+                                  }
+                                  echo ">10</option>
+                                <option value='11'"; if($day2 == '11'){
+                                    echo "selected";
+                                  }
+                                  echo ">11</option>
+                                <option value='12'"; if($day2 == '12'){
+                                    echo "selected";
+                                  }
+                                  echo ">12</option>
+                                <option value='13'"; if($day2 == '13'){
+                                    echo "selected";
+                                  }
+                                  echo ">13</option>
+                                <option value='14'"; if($day2 == '14'){
+                                    echo "selected";
+                                  }
+                                  echo ">14</option>
+                                <option value='15'"; if($day2 == '15'){
+                                    echo "selected";
+                                  }
+                                  echo ">15</option>
+                                <option value='16'"; if($day2 == '16'){
+                                    echo "selected";
+                                  }
+                                  echo ">16</option>
+                                <option value='17'"; if($day2 == '17'){
+                                    echo "selected";
+                                  }
+                                  echo ">17</option>
+                                <option value='18'"; if($day2 == '18'){
+                                    echo "selected";
+                                  }
+                                  echo ">18</option>
+                                <option value='19'"; if($day2 == '19'){
+                                    echo "selected";
+                                  }
+                                  echo ">19</option>
+                                <option value='20'"; if($day2 == '20'){
+                                    echo "selected";
+                                  }
+                                  echo ">20</option>
+                                <option value='21'"; if($day2 == '21'){
+                                    echo "selected";
+                                  }
+                                  echo ">21</option>
+                                <option value='22'"; if($day2 == '22'){
+                                    echo "selected";
+                                  }
+                                  echo ">22</option>
+                                <option value='23'"; if($day2 == '23'){
+                                    echo "selected";
+                                  }
+                                  echo ">23</option>
+                                <option value='24'"; if($day2 == '24'){
+                                    echo "selected";
+                                  }
+                                  echo ">24</option>
+                                <option value='25'"; if($day2 == '25'){
+                                    echo "selected";
+                                  }
+                                  echo ">25</option>
+                                <option value='26'"; if($day2 == '26'){
+                                    echo "selected";
+                                  }
+                                  echo ">26</option>
+                                <option value='27'"; if($day2 == '27'){
+                                    echo "selected";
+                                  }
+                                  echo ">27</option>
+                                <option value='28'"; if($day2 == '28'){
+                                    echo "selected";
+                                  }
+                                  echo ">28</option>
+                                <option value='29'"; if($day2 == '29'){
+                                    echo "selected";
+                                  }
+                                  echo ">29</option>
+                                <option value='30'"; if($day2 == '30'){
+                                    echo "selected";
+                                  }
+                                  echo ">30</option>
+                                <option value='31'"; if($day2 == '31'){
+                                    echo "selected";
+                                  }
+                                  echo ">31</option>
+                                      </select>";
+                            
+
+                            echo '<br>
 
                               <label for="date" class="mr-2">Month</label> 
                               <select name="month">
-                                <option value="January">January</option>
-                                <option value="February">February</option>
-                                <option value="March">March</option>
-                                <option value="April">April</option>
-                                <option value="May">May</option>
-                                <option value="June">June</option>
-                                <option value="July">July</option>
-                                <option value="August">August</option>
-                                <option value="September">September</option>
-                                <option value="October">October</option>
-                                <option value="November">November</option>
-                                <option value="December">December</option>
+                                <option value="January"';
+                                if($dbmnth == 'January'){
+                                  echo "selected";
+                                }
+                                echo '>January</option>
+                                <option value="February"';
+                                if($dbmnth == 'February'){
+                                  echo "selected";
+                                }
+                                echo '>February</option>
+                                <option value="March"
+                                ';
+                                if($dbmnth == 'March'){
+                                  echo "selected";
+                                }
+                                echo '>March</option>
+                                <option value="April"';
+                                if($dbmnth == 'April'){
+                                  echo "selected";
+                                }
+                                echo '>April</option>
+                                <option value="May"';
+                                if($dbmnth == 'May'){
+                                  echo "selected";
+                                }
+                                echo '>May</option>
+                                <option value="June"';
+                                if($dbmnth == 'June'){
+                                  echo "selected";
+                                }
+                                echo '>June</option>
+                                <option value="July"';
+                                if($dbmnth == 'July'){
+                                  echo "selected";
+                                }
+                                echo '>July</option>
+                                <option value="August"';
+                                if($dbmnth == 'August'){
+                                  echo "selected";
+                                }
+                                echo '>August</option>
+                                <option value="September"';
+                                if($dbmnth == 'September'){
+                                  echo "selected";
+                                }
+                                echo '>September</option>
+                                <option value="October"';
+                                if($dbmnth == 'October'){
+                                  echo "selected";
+                                }
+                                echo '>October</option>
+                                <option value="November"';
+                                if($dbmnth == 'November'){
+                                  echo "selected";
+                                }
+                                echo '>November</option>
+                                <option value="December"';
+                                if($dbmnth == 'December'){
+                                  echo "selected";
+                                }
+                                echo '>December</option>
                               </select>
-                              <br>
+                              <br>';
 
+                              ?>
                               <label for="date" class="mr-2">Year</label> 
                                 <?php
                                   echo "<select name='year'>";
@@ -333,16 +692,23 @@ $row2 = $funObj->details($sql2);
                            <div class="form-group">
                           <label for="department" >DEPARTMENT</label>
                           <br>
-                          <select name="department" selected="<?php echo $row2['department'] ?>">
-                            <option value="School of Business Administration and Accountancy">School of Business Administration and Accountancy</option>
-                            <option value="School of Criminal Justice and Public Safety">School of Criminal Justice and Public Safety</option>
-                            <option value="School of Engineering and Architecture">School of Engineering and Architecture</option>
-                            <option value="School of Information Technology">School of Information Technology</option>
-                            <option value="School of International Hospitality and Tourism Management">School of International Hospitality and Tourism Management</option>
-                            <option value="School of Law">School of Law</option>
-                            <option value="School of Nursing">School of Nursing</option>
-                            <option value="School of Natural Sciences">School of Natural Sciences</option>
-                            <option value="School of Teacher Education and Liberal Arts">School of Teacher Education and Liberal Arts</option>
+                          <select name="department" required>
+                            <option value="School of Business Administration and Accountancy" 
+                            <?php if($row2['department']=="School of Business Administration and Accountancy") echo 'selected';?>>School of Business Administration and Accountancy</option>
+                            <option value="School of Criminal Justice and Public Safety"
+                            <?php if($row2['department']=="School of Criminal Justice and Public Safety") echo 'selected';?>>School of Criminal Justice and Public Safety</option>
+                            <option value="School of Engineering and Architecture"
+                            <?php if($row2['department']=="School of Engineering and Architecture") echo 'selected';?>>School of Engineering and Architecture</option>
+                            <option value="School of Information Technology"
+                            <?php if($row2['department']=="School of Information Technology") echo 'selected';?>>School of Information Technology</option>
+                            <option value="School of International Hospitality and Tourism Management"
+                            <?php if($row2['department']=="School of International Hospitality and Tourism Management") echo 'selected';?>>School of International Hospitality and Tourism Management</option>
+                            <option value="School of Law"
+                            <?php if($row2['department']=="School of Law") echo 'selected';?>>School of Law</option>
+                            <option value="School of Nursing" <?php if($row2['department']=="School of Nursing") echo 'selected';?>>School of Nursing</option>
+                            <option value="School of Natural Sciences"
+                            <?php if($row2['department']=="School of Natural Sciences") echo 'selected';?>>School of Natural Sciences</option>
+                            <option value="School of Teacher Education and Liberal Arts"<?php if($row2['department']=="School of Teacher Education and Liberal Arts") echo 'selected';?>>School of Teacher Education and Liberal Arts</option>
                           </select>
                         </div>
                         <div class="form-group">
@@ -374,14 +740,14 @@ $row2 = $funObj->details($sql2);
                               <input type="text" class="form-control mb-2 text-center" id="organizer1" name="organizer1" value="'. $organizername1[0] .'" required>
                             </div>
                             <div class="col-6">
-                              <label>TITLE</label>
-                              <input type="text" class="form-control mb-2 text-center" id="position1" name="position1" value="'.$organizername1[1].'">
+                              <label>POSITION</label>
+                              <input type="text" class="form-control mb-2 text-center" id="position1" name="position1" value="'.$organizername1[1].'" required>
 
                             </div>
                           </div>
                           <div class = "row">
                             <div class="col-6">
-                              <label>NAME</label>
+                              <label>POSITION</label>
                               <input type="text" class="form-control mb-2 text-center" id="organizer2" name="organizer2" value="'.$organizername2[0].'">
 
                             </div>
@@ -399,7 +765,7 @@ $row2 = $funObj->details($sql2);
 
                             </div>
                             <div class="col-6">
-                              <label>TITLE</label>
+                              <label>POSITION</label>
                               <input type="text" class="form-control mb-2 text-center" id="position2" name="position3" value="'.$organizername3[1].'">
 
                             </div>
