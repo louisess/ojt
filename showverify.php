@@ -20,7 +20,7 @@ if ($conn->connect_error) {
 			// set document information
 			$pdf->SetCreator(PDF_CREATOR);
 			$pdf->SetAuthor('University of Baguio');
-			$pdf->SetTitle('Certificates');
+			$pdf->SetTitle('Certificate');
 			$pdf->SetSubject('');
 			$pdf->SetKeywords('');
 
@@ -59,10 +59,11 @@ if ($conn->connect_error) {
 if (isset($_GET['pdf_report'])){
 
 	$certid = $_GET['verify'];
-	$select = "SELECT participants.*,certificates.* FROM participants,certificates WHERE participants.pid = '$certid'";
+	$select = "SELECT participants.*,certificates.* FROM participants,certificates WHERE CONCAT (certificates.certid,participants.pid) = '$certid'";
 
 	$query = mysqli_query($conn, $select);
 		while($row = mysqli_fetch_array($query)) {
+			$eventid = $row['certid'];
 		    $name = $row['name'];
 		    $eventname = $row['eventname'];
 		    $eventdate = $row['eventdate'];
@@ -123,22 +124,23 @@ if (isset($_GET['pdf_report'])){
 			$pdf->SetFont('helvetica','','10');
 			$pdf->Cell(265,4, 'is awarded to', 0, 1, 'C');
 			$pdf->Ln(5);
-			$pdf->SetFont('times','','25');
+			$pdf->SetFont('times','','30');
 			$html = '<p style="text-align:center">'. $name . '</p>';
 
 			$pdf->writeHTML($html, true, false, true, false, '');
 			$pdf->Ln(5);
-			$pdf->SetFont('helvetica','','15');
+			$pdf->SetFont('helvetica','','10');
 			$html = '<p style="text-align:center">for actively participating during the seminar entitled</p>';
 			$pdf->writeHTML($html, true, false, true, false, '');
+			$pdf->Ln(5);
 			$pdf->SetFont('helvetica', 'IB','18');
-			$pdf->Cell(270,5, $eventname ,0,1,'C');
+			$pdf->Cell(270,5, '"' . $eventname . '"',0,1,'C');
 			$pdf->Ln(5);
 			$pdf->SetFont('helvetica','','10');
 			$html = '<p style="text-align:center">'. $desc .'</p>';
 			$pdf->writeHTML($html, true, false, true, false, '');
 			$pdf->Ln(4);
-			$pdf->SetFont('helvetica', 'I', 15);
+			$pdf->SetFont('helvetica', 'I', 12);
 			//Page Number
 			//date_default_timezone_set("Asia/Dhaka");
 			//$today = date("F j, Y");
@@ -149,7 +151,7 @@ if (isset($_GET['pdf_report'])){
 				$html = '<p style="text-align:center"> Given this ' .$givendate[1]. '</p>';
 			}
 			$pdf->writeHTML($html, true, false, true, false, '');
-			$pdf->Ln(20);
+			$pdf->Ln(18);
 			$pdf->SetFont('helvetica', '',10);
 			$orgname1 = array_pad(explode(" - ", $organizer1), 2, null);
 			$orgname2 = array_pad(explode(" - ", $organizer2), 2, null);
@@ -170,7 +172,7 @@ if (isset($_GET['pdf_report'])){
 						      
 						      </td>
 						      <td>
-						      <img width="50px" height="20px" src="'. $sign1 .'">
+						      <img width="50px" height="30px" src="'. $sign1 .'">
 						      <br>
 						      '.$orgname1[0].'
 						      <br>
@@ -200,7 +202,7 @@ if (isset($_GET['pdf_report'])){
 						  <tbody>
 						    <tr>
 						      <td>
-						      <img width="50px" height="20px" src="'. $sign1 .'">
+						      <img width="50px" height="30px" src="'. $sign1 .'">
 						      <br>
 						      '.$orgname1[0].'
 						      <br>
@@ -210,7 +212,7 @@ if (isset($_GET['pdf_report'])){
 
 						      </td>
 						      <td>
-						      <img width="50px" height="20px" src="'. $sign2 .'">
+						      <img width="50px" height="30px" src="'. $sign2 .'">
 						      <br>
 						      '.$orgname2[0].'
 						      <br>
@@ -258,13 +260,13 @@ if (isset($_GET['pdf_report'])){
 				$pdf->writeHTML($html, true, false, true, false, '');
 			}
 			
-			$pdf->Ln(3);
-			$pdf->SetFont('helvetica', 'I',10);
-			$html = '<p style="text-align:left">Certificate Code: UB - '.$pid.'<br>
-			Visit verify.php to verify and download your certificate using the provided code.
+			$pdf->Ln(2);
+			$pdf->SetFont('helvetica', 'I',8);
+			$html = '<p style="text-align:left">Certificate Code: UB - '.$eventid.$pid.'<br>
+			Visit certcheck.php to verify certificate using the provided code.
 			</p>';
 			$pdf->writeHTML($html, true, false, true, false, '');
-			$pdf->Output('Certificate.pdf', 'I');
+			$pdf->Output($eventname.'.pdf', 'I');
 
 
 			}

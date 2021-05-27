@@ -104,7 +104,7 @@ $funObj = new dbFunction($db);
                       $partrow = $retrieveId->fetch(PDO::FETCH_ASSOC);
                       extract($partrow);
                        echo '<div class="alert  alert-success alert-dismissible fade show" role="alert">
-                              Success! Here is your Certificate Code: UB-<b> '. $partrow['pid'] .'</b> Verify and Download your Certificate <a style="color:white" name="pdf_report_generate" href="verify.php?verify='. $partrow['pid'] .'">here.</a>
+                              Success! Here is your Certificate Code: <b>UB-'.$eventid. $partrow['pid'] .'</b> Verify and Download your Certificate <a style="color:white" name="pdf_report_generate" href="verify.php?verify='.$eventid. $partrow['pid'] .'"><b>here.</b></a>
                               <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                               </button>

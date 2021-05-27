@@ -203,7 +203,7 @@ $row = $funObj->details($sql);
                             <form class="form-inline" method="get" target="_blank" action="generatepdftry.php">
                             <input type="hidden" id="certid" name="certid" value="'.$certrow['certid'].'">
                               <button type="submit" id="pdf_report_generate" name="pdf_report_generate" class="btn btn-primary" href="generatepdftry.php?certid='.$certrow['certid'].'"><i class="fa fa-pdf"" aria-hidden="true"></i>
-                              Generate PDF</button>
+                              Preview Certificate</button>
                               </form>
                             
                           </td>

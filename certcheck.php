@@ -67,17 +67,17 @@ if(isset($verify)) {
       <div class="card text-center mx-5 my-5">
       <div class="card-header">
         </div>
-        <h5 class="card-title">View and Download Certificate</h5>
+        <h5 class="card-title">Verify Certificate</h5>
         <hr>
         <div id="login" class="animate form">  
              <form name="verify" method="get" target="_blank" action="showverify.php">    
                   <div class="form-group">
                      
                     <label for="verify"> 
-                     <input type="int" name="verify" id="verify" class="form-control"  value="<?php $verify = $_GET['verify']; echo $verify;?>" aria-describedby="verify" readonly>
+                     <input type="int" name="verify" id="verify" class="form-control"  placeholder="e.g. 1234" aria-describedby="verify" required>
                     </label>
                    
-                    <button type="submit" name="pdf_report" class="btn btn-primary">View Certificate</button>
+                    <button type="submit" name="pdf_report" class="btn btn-primary">Verify Certificate</button>
                   </div>
               </form>  
           </div>  

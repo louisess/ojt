@@ -63,7 +63,7 @@ if (isset($_GET['pdf_report_generate'])){
 
 	$query = mysqli_query($conn, $select);
 		while($row = mysqli_fetch_array($query)) {
-		    $name = $row['name'];
+		    //$name = $row['name'];
 		    $eventname = $row['eventname'];
 		    $eventdate = $row['eventdate'];
 		    $venue = $row['venue'];
@@ -98,7 +98,7 @@ if (isset($_GET['pdf_report_generate'])){
 			$pdf->Cell(265,4, 'is awarded to', 0, 1, 'C');
 			$pdf->Ln(5);
 			$pdf->SetFont('times','','25');
-			$html = '<p style="text-align:center">'. $name . '</p>';
+			$html = '<p style="text-align:center">Juan Dela Cruz</p>';
 
 			$pdf->writeHTML($html, true, false, true, false, '');
 			$pdf->Ln(5);
@@ -106,7 +106,7 @@ if (isset($_GET['pdf_report_generate'])){
 			$html = '<p style="text-align:center">for actively participating during the seminar entitled</p>';
 			$pdf->writeHTML($html, true, false, true, false, '');
 			$pdf->SetFont('helvetica', 'IB','18');
-			$pdf->Cell(270,5, $eventname ,0,1,'C');
+			$pdf->Cell(270,5, '"'. $eventname . '"' ,0,1,'C');
 			$pdf->Ln(5);
 			$pdf->SetFont('helvetica','','10');
 			$html = '<p style="text-align:center">'. $desc .'</p>';
@@ -234,8 +234,8 @@ if (isset($_GET['pdf_report_generate'])){
 			
 			$pdf->Ln(3);
 			$pdf->SetFont('helvetica', 'I',10);
-			$html = '<p style="text-align:left">Certificate Code: UB - '.$pid.'<br>
-			Visit verify.php to verify and download your certificate using the provided code.
+			$html = '<p style="text-align:left">Certificate Code: UB - '.$certid.$pid.'<br>
+			Visit certcheck.php to verify certificate using the provided code.
 			</p>';
 			$pdf->writeHTML($html, true, false, true, false, '');
 			
