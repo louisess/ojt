@@ -55,6 +55,7 @@ if ($conn->connect_error) {
 			// print standard ASCII chars, you can use core fonts like
 			// helvetica or times to reduce file size.
 			$pdf->SetFont('dejavusans', '', 14, '', true);
+			$pdf->AddPage();
 
 if (isset($_GET['pdf_report_generate'])){
 
@@ -81,7 +82,7 @@ if (isset($_GET['pdf_report_generate'])){
 
 			// Add a page
 			// This method has several options, check the source code documentation for more information.
-			$pdf->AddPage();
+			
 			$imageFile = K_PATH_IMAGES.'LOGO_UB.png';
 			$pdf->Image($imageFile, 110, 10, 70, '', 'PNG', '', 'M', false, 300, '', false, false, 0, false, false, false);
 			$pdf->Ln(12);
@@ -234,7 +235,7 @@ if (isset($_GET['pdf_report_generate'])){
 			
 			$pdf->Ln(3);
 			$pdf->SetFont('helvetica', 'I',10);
-			$html = '<p style="text-align:left">Certificate Code: UB - '.$certid.$pid.'<br>
+			$html = '<p style="text-align:left">Certificate Code: UB - 1234<br>
 			Visit certcheck.php to verify certificate using the provided code.
 			</p>';
 			$pdf->writeHTML($html, true, false, true, false, '');
