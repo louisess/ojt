@@ -2,9 +2,9 @@
 require_once('pdf/TCPDF-main/tcpdf.php');
 
 $servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "certdbase";
+$username = "id16930867_admin";
+$password = "LbYiw!I{E\GQq6wr";
+$dbname = "id16930867_certdbase";
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
@@ -35,7 +35,7 @@ if ($conn->connect_error) {
 			$pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
 
 			// set auto page breaks
-			$pdf->SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);
+			//$pdf->SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);
 
 			// set image scale factor
 			$pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
@@ -60,10 +60,11 @@ if ($conn->connect_error) {
 if (isset($_GET['pdf_report_generate'])){
 
 	$certid = $_GET['certid'];
-	$select = "SELECT participants.*,certificates.* FROM participants,certificates WHERE participants.eventid = '$certid' AND certificates.certid = '$certid'";
+	$select = "SELECT certificates.* FROM certificates WHERE certificates.certid = '$certid'";
 
 	$query = mysqli_query($conn, $select);
-		while($row = mysqli_fetch_array($query)) {
+	//	while($row = mysqli_fetch_array($query)) {
+	       $row = mysqli_fetch_array($query);
 		    //$name = $row['name'];
 		    $eventname = $row['eventname'];
 		    $eventdate = $row['eventdate'];
@@ -77,15 +78,58 @@ if (isset($_GET['pdf_report_generate'])){
 		    $department = $row['department'];
 		    $title = $row['title'];
 		    $desc = $row['description'];
-		    $pid = $row['pid'];
+		    $recog = $row['recognition'];
+		    $presline = $row['presentationline'];
+		    $logo1 = $row['logo1'];
+		    //$pid = $row['pid'];
 		   
 
 			// Add a page
 			// This method has several options, check the source code documentation for more information.
-			
-			$imageFile = K_PATH_IMAGES.'LOGO_UB.png';
-			$pdf->Image($imageFile, 110, 10, 70, '', 'PNG', '', 'M', false, 300, '', false, false, 0, false, false, false);
-			$pdf->Ln(12);
+			$pdf->Ln(-15);
+            $pdf->SetLineStyle(array('width' => 0.5, 'cap' => 'butt', 'join' => 'miter', 'dash' => 0, 'color' => array(255, 0, 0)));
+            $pdf->SetFillColor(255,255,255);
+            $pdf->SetTextColor(0,0,0);
+            $text="";
+
+            $pdf->Cell(0, 177, $text, 1, 1, 'C', 1, 0);
+            
+// 			$imageFile = K_PATH_IMAGES.'LOGO_UB.png';
+// 			$pdf->Image($imageFile, 110, 17, 70, '', 'PNG', '', 'M', false, 300, '', false, false, 0, false, false, false);
+            $signpath = 'uploads/';
+            $logocert = $signpath.$logo1;
+            $imageFile = K_PATH_IMAGES.'LOGO_UB.png';
+            $emptyrow = ' ';
+            if($logo1 == $emptyrow){
+                $pdf->Image($imageFile, 110, 17, 70, '', 'PNG', '', 'M', false, 300, '', false, false, 0, false, false, false);
+               
+                
+            }else if($logo1 !== $emptyrow){
+                $pdf->Ln(-170);
+                 $html = '<p style="text-align:center">
+							<table>
+						  <thead>
+						  </thead>
+						  <tbody>
+						    <tr>
+						      <td>
+						        <img width="200px" height="50px" src="'. $imageFile .'">
+						      </td>
+						      <td>
+						      <img width="200px" height="50px" src="'. $logocert .'">
+
+						      </td>
+
+						    </tr>
+						    
+						  </tbody>
+						</table>
+						</p>
+
+				';
+				$pdf->writeHTML($html, true, false, true, false, '');
+            }
+			$pdf->Ln(10);
 			$pdf->SetFont('helvetica','','15');
 			$html = '<p style="text-align:center">'. $department .'</p>';
 			$pdf->writeHTML($html, true, false, true, false, '');
@@ -96,35 +140,38 @@ if (isset($_GET['pdf_report_generate'])){
 			$pdf->writeHTML($html, true, false, true, false, '');
 			$pdf->Ln(-10);
 			$pdf->SetFont('helvetica','','10');
-			$pdf->Cell(265,4, 'is awarded to', 0, 1, 'C');
+			$pdf->Cell(265,4, $presline, 0, 1, 'C');
 			$pdf->Ln(5);
-			$pdf->SetFont('times','','25');
+			$pdf->SetFont('times','','30');
 			$html = '<p style="text-align:center">Juan Dela Cruz</p>';
 
 			$pdf->writeHTML($html, true, false, true, false, '');
 			$pdf->Ln(5);
-			$pdf->SetFont('helvetica','','15');
-			$html = '<p style="text-align:center">for actively participating during the seminar entitled</p>';
+			$pdf->SetFont('helvetica','','10');
+			$html = '<p style="text-align:center">'. $recog .'</p>';
 			$pdf->writeHTML($html, true, false, true, false, '');
+			$pdf->Ln(5);
 			$pdf->SetFont('helvetica', 'IB','18');
 			$pdf->Cell(270,5, '"'. $eventname . '"' ,0,1,'C');
 			$pdf->Ln(5);
-			$pdf->SetFont('helvetica','','10');
-			$html = '<p style="text-align:center">'. $desc .'</p>';
+			$pdf->SetFont('helvetica','','12');
+			$html = '<p style="text-align:center">Held this '.$eventdate.'<br>  '. $desc .'</p>';
 			$pdf->writeHTML($html, true, false, true, false, '');
 			$pdf->Ln(4);
-			$pdf->SetFont('helvetica', 'I', 15);
+			$pdf->SetFont('helvetica', 'I', 12);
 			//Page Number
-			//date_default_timezone_set("Asia/Dhaka");
-			//$today = date("F j, Y");
-			$givendate = array_pad(explode("to", $eventdate), 2, null);
-			if($givendate[1] == null){
-				$html = '<p style="text-align:center"> Given this ' .$givendate[0]. '</p>';
-			}else{
-				$html = '<p style="text-align:center"> Given this ' .$givendate[1]. '</p>';
-			}
+			date_default_timezone_set("Asia/Dhaka");
+			$today = date("F j, Y");
+			$html = '<p style="text-align:center">Given '. $today .'</p>';
+			
+// 			$givendate = array_pad(explode("to", $eventdate), 2, null);
+// 			if($givendate[1] == null){
+// 				$html = '<p style="text-align:center"> Given this '.$today.' held '.$givendate[0]. '</p>';
+// 			}else{
+// 				$html = '<p style="text-align:center"> Given this '.$today.' held ' .$givendate[1]. '</p>';
+// 			}
 			$pdf->writeHTML($html, true, false, true, false, '');
-			$pdf->Ln(20);
+			$pdf->Ln(8);
 			$pdf->SetFont('helvetica', '',10);
 			$orgname1 = array_pad(explode(" - ", $organizer1), 2, null);
 			$orgname2 = array_pad(explode(" - ", $organizer2), 2, null);
@@ -145,7 +192,7 @@ if (isset($_GET['pdf_report_generate'])){
 						      
 						      </td>
 						      <td>
-						      <img width="50px" height="20px" src="'. $sign1 .'">
+						      <img width="50px" height="30px" src="'. $sign1 .'">
 						      <br>
 						      '.$orgname1[0].'
 						      <br>
@@ -175,7 +222,7 @@ if (isset($_GET['pdf_report_generate'])){
 						  <tbody>
 						    <tr>
 						      <td>
-						      <img width="50px" height="20px" src="'. $sign1 .'">
+						      <img width="50px" height="30px" src="'. $sign1 .'">
 						      <br>
 						      '.$orgname1[0].'
 						      <br>
@@ -185,7 +232,7 @@ if (isset($_GET['pdf_report_generate'])){
 
 						      </td>
 						      <td>
-						      <img width="50px" height="20px" src="'. $sign2 .'">
+						      <img width="50px" height="30px" src="'. $sign2 .'">
 						      <br>
 						      '.$orgname2[0].'
 						      <br>
@@ -233,49 +280,14 @@ if (isset($_GET['pdf_report_generate'])){
 				$pdf->writeHTML($html, true, false, true, false, '');
 			}
 			
-			$pdf->Ln(3);
-			$pdf->SetFont('helvetica', 'I',10);
-			$html = '<p style="text-align:left">Certificate Code: UB - 1234<br>
-			Visit certcheck.php to verify certificate using the provided code.
+			$pdf->Ln(-2);
+			$pdf->SetFont('helvetica', 'I',8);
+			$html = '<p style="text-align:center">Certificate Code: UB - 1234
 			</p>';
 			$pdf->writeHTML($html, true, false, true, false, '');
 			
 
-
-			//$pdf->Cell(10,12,'Certificate Code: UB - '. $pid,0,1);
-			//$pdf->SetFont('helvetica', '',9);
-			//$html = '<p style="text-align:left">Visit verify.php to verify and download your certificate using the provided code.</p>';
-			//$pdf->writeHTML($html, true, false, true, false, '');
-			//$pdf->Cell(20,0,'Visit verify.php to verify and download your certificate using the provided code.',0,1);
-			
-			//$pdf->SetFont('helvetica', '',8);
-			//$pdf->Cell(20,15,'DEAN, SIT',0,1);
-			//ob_end_clean();
-			// Close and output PDF document
-			// This method has several options, check the source code documentation for more information.
-			
-			// $pdf->Output("PDF Files/filename.pdf", "F"); //save the pdf to a folder setting `F`
-			// require_once('phpmailer/class.phpmailer.php'); //where your phpmailer folder is
-			// $mail = new PHPMailer();                    
-			// $mail->From = "omgmaryknoll@gmail.com";
-			// $mail->FromName = "Your name";
-			// $mail->AddAddress("omgmaryknoll@gmail.com");
-			// $mail->AddReplyTo("imnonomonster@gmail.com", "Your name");               
-			// $mail->AddAttachment("PDF Files/filename.pdf");      
-			// // attach pdf that was saved in a folder
-			// $mail->Subject = "Email Subject";                  
-			// $mail->Body = "Email Body";
-			// if(!$mail->Send())
-			// {
-			//    echo "Message could not be sent. <p>";
-			//    echo "Mailer Error: " . $mail->ErrorInfo;
-			// }
-			// else
-			// {
-			//    echo "Message sent";
-			// } //`the end`
-				}
-				$pdf->Output('Certificate.pdf', 'I');
+			$pdf->Output('Certificate.pdf', 'I');
 
 
 			}

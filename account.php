@@ -13,7 +13,6 @@ Coded by www.creative-tim.com
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 -->
 <?php
-session_start();  
 
 include ('db/dbcon.php');
 include_once('db/dbFunction.php'); 
@@ -63,9 +62,9 @@ $row = $funObj->details($sql);
 
 <body class="bgbody">
   <div class="wrapper ">
-    <div class="sidebar" data-color="white">
+    <div class="sidebar" data-color="black">
       <div class="logo">
-        <a href="/" class="simple-text logo-normal">
+        <a href="certs.php" class="simple-text logo-normal">
           
           <div>
             <img src="../ojt/assets/img/logo.png">

@@ -15,7 +15,7 @@ Coded by www.creative-tim.com
 -->
 
 <?php
-session_start();  
+
 
 include ('db/dbcon.php');
 include_once('db/dbFunction.php'); 
@@ -75,7 +75,7 @@ $row2 = $funObj->viewParticipants($eventid);
 
 <body class="bgbody">
   <div class="wrapper ">
-    <div class="sidebar" data-color="white">
+    <div class="sidebar" data-color="black">
       <div class="logo">
         <a href="/" class="simple-text logo-normal">
           
@@ -159,6 +159,7 @@ $row2 = $funObj->viewParticipants($eventid);
               <!-- events container -->
               <div class="card text-center">
                 <div class="card-header">
+                     <a type="button" class="btn btn-sm btn-primary" href="/ojt/viewcerts.php"><i class="fas fa-arrow-circle-left"></i> GO BACK</a>
                   <!--
                   <input type="button" class="btn btn-sm float-left smbtn" value="MY CERTIFICATES" name="answer" onclick="showCerts()"/>
                   <input type="button" href="#" class="btn btn-sm float-left smbtn" value="CREATE" name="answer" onclick="showDiv()"/>

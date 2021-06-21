@@ -13,8 +13,21 @@ Coded by www.creative-tim.com
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 -->
 <?php
+include ('db/dbcon.php');
+include_once('db/dbFunction.php'); 
+
+$database = new Database();
+$db = $database->getConnection();
+
+//session_start();
+
+// check user login
+//$user = new User();
+$funObj = new dbFunction($db); 
+
 
 ?>
+
 <!doctype html>
 <html lang="en">
 
@@ -44,6 +57,9 @@ Coded by www.creative-tim.com
 </head>
 
 <body class="bgbody">
+  <div class="container mt-5 text-center">
+      <img src="assets/img/logotiny.png">
+  </div>
   <div class="row">
     <div class="col-md-2">
       
@@ -60,24 +76,41 @@ Coded by www.creative-tim.com
           <h5 class="card-title">Participant Form</h5>
           <hr>
             <div class="row formrow">
-              <form>
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    <p><b>Sorry, the event you're trying to register to doesn't exist. </b></p>
+                </div>
+              
+
+              <form id="addParticipants" method="post">
+
+                <input type="hidden" id="eventid" name="eventid" readonly>
+
                 <div class="form-group">
                   <label for="formGroupExampleInput">NAME</label>
-                  <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Juan dela Cruz">
+                  <input type="text" name="name" class="form-control" id="formGroupExampleInput" placeholder="Juan dela Cruz" readonly>
                 </div>
 
                 <div class="form-group">
                   <label for="formGroupExampleInput2">EMAIL</label>
-                  <input type="email" class="form-control" id="formGroupExampleInput2" placeholder="jdl@gmail.com">
+                  <input type="email" name="email1" class="form-control" id="formGroupExampleInput2" placeholder="jdl@gmail.com" readonly>
                 </div>
 
+
+                
                 <div class="form-group">
                   <label for="formGroupExampleInput2">CONFIRM EMAIL</label>
-                  <input type="email" class="form-control" id="formGroupExampleInput2" placeholder="jdl@gmail.com">
+                  <input type="email" name="email2" class="form-control" id="formGroupExampleInput2" placeholder="jdl@gmail.com" readonly>
                 </div>
+              
+              <input type="submit" class="btn btn-primary" value="Submit" name="addparticipant" readonly>
+
+
+
+
+    
               </form>
             </div>
-          <a href="../addevent.html" class="btn btn-primary">Submit</a>
+          
         </div>
         <div class="card-footer text-muted">
           

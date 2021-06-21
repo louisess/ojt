@@ -15,7 +15,7 @@ Coded by www.creative-tim.com
 -->
 
 <?php
-session_start();  
+
 
 include ('db/dbcon.php');
 include_once('db/dbFunction.php'); 
@@ -70,9 +70,9 @@ $row = $funObj->details($sql);
 
 <body class="bgbody">
   <div class="wrapper ">
-    <div class="sidebar" data-color="white">
+    <div class="sidebar" data-color="black">
       <div class="logo">
-        <a href="/" class="simple-text logo-normal">
+        <a href="certs.php" class="simple-text logo-normal">
           
           <div>
             <img src="../ojt/assets/img/logo.png">
@@ -145,7 +145,7 @@ $row = $funObj->details($sql);
       <div class="content">
         <div class="row">
           <div class="col-md-12">
-            <h3 class="description">Certificate</h3>
+            <h3 class="description"><b>Certificate</b></h3>
           </div>
 
           <div class="row">
@@ -171,7 +171,7 @@ $row = $funObj->details($sql);
                   <h3><i class="fas fa-file-pdf"></i></h3>
                   <hr>
                   <h4 class="card-title">Generate certificates</h4>
-                  <p class="card-text">Choose among the provided templates and generate your certificates.</p>
+                  <p class="card-text">Fill up the details of your certificates.</p>
                   <a href="../ojt/createcert.php" class="btn btn-round" title="Go to create certificates form.">CREATE CERTIFICATES</a>
                 </div>
               </div>

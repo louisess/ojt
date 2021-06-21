@@ -2,9 +2,9 @@
 class Database{
 
     private $host = "localhost";
-    private $db = "certdbase";
-    private $username = "root";
-    private $password = "";
+    private $db = "id16930867_certdbase";
+    private $username = "id16930867_admin";
+    private $password = "LbYiw!I{E\GQq6wr";
     public $conn;
 
     

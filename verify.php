@@ -14,7 +14,6 @@ Coded by www.creative-tim.com
  
 -->
 <?php
-session_start();  
 include ('db/dbcon.php');
 
 

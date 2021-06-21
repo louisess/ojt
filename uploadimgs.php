@@ -15,8 +15,6 @@ Coded by www.creative-tim.com
 -->
 
 <?php
-session_start();  
-
 include ('db/dbcon.php');
 include_once('db/dbFunction.php'); 
 
@@ -71,9 +69,9 @@ $row = $funObj->details($sql);
 
 <body class="bgbody">
   <div class="wrapper ">
-    <div class="sidebar" data-color="white">
+    <div class="sidebar" data-color="black">
       <div class="logo">
-        <a href="/" class="simple-text logo-normal">
+        <a href="certs.php" class="simple-text logo-normal">
           
           <div>
             <img src="../ojt/assets/img/logo.png">
@@ -155,6 +153,11 @@ $row = $funObj->details($sql);
               <!-- events container -->
               <div class="card text-center">
                 <div class="card-header">
+                    <?php
+
+                        $certid = $_GET['certid'];
+                        echo '
+                     <a type="button" class="btn btn-sm btn-primary" href="/ojt/editcert.php?certid='.$certid.'"><i class="fas fa-arrow-circle-left"></i> GO BACK</a> 
                   <!--
                   <input type="button" class="btn btn-sm float-left smbtn" value="MY CERTIFICATES" name="answer" onclick="showCerts()"/>
                   <input type="button" href="#" class="btn btn-sm float-left smbtn" value="CREATE" name="answer" onclick="showDiv()"/>
@@ -166,10 +169,8 @@ $row = $funObj->details($sql);
                     <p>
                       <i class="fas fa-asterisk"></i> Upload your signatories here.
                     </p>
-                    <hr>
-                     <?php
-
-                        $certid = $_GET['certid'];
+                    <hr>';
+                     
                         $row = $funObj->certName($certid);
                             $target_dir = "uploads/";
 
@@ -186,74 +187,99 @@ $row = $funObj->details($sql);
                               $signatorytmp = $_FILES["signatory1"]["tmp_name"];
 
                               if (move_uploaded_file($signatorytmp,$target_dir.$signatory1)) {
-                                echo '<div class="alert  alert-success alert-dismissible fade show" role="alert">Image uploaded.
-                              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                              </button>
-                            </div>'; 
+                                $success1 = true; 
                                 $upload = $funObj->upload1($signatory1, $certid); 
                                 
                               }else{
                                 echo  "<script>Image not uploaded.</script>";
                               }
 
+                              
 
-                          } 
+                              if(isset($_FILES['signatory2'])){
+                                $signatory2 = $_FILES["signatory2"]["name"];
+                              $signatorytmp = $_FILES["signatory2"]["tmp_name"];
 
+                                if (move_uploaded_file($signatorytmp,$target_dir.$signatory2)) {
+                                  $success2 = true; 
+                                  $upload = $funObj->upload2($signatory2, $certid); 
+                                  
+                                }else{
+                                  echo  "<script>Image not uploaded.</script>";
+                                }
+                              }
 
+                             
 
-                        }
+                              if(isset($_FILES['signatory3'])){
+                                $signatory3 = $_FILES["signatory3"]["name"];
+                                $signatorytmp = $_FILES["signatory3"]["tmp_name"];
+                                if (move_uploaded_file($signatorytmp,$target_dir.$signatory3)) {
+                                  $success3 = true; 
+                                  $upload = $funObj->upload3($signatory3, $certid); 
+                                  
+                                }else{
+                                  echo  "<script>Image not uploaded.</script>";
+                                }
+                              }
+                              
+                              if(isset($_FILES['logo1'])){
+                                $logo1 = $_FILES["logo1"]["name"];
+                                $logotmp = $_FILES["logo1"]["tmp_name"];
+                                if (move_uploaded_file($logotmp,$target_dir.$logo1)) {
+                                  $success4 = true; 
+                                  $upload4 = $funObj->upload4($logo1, $certid); 
+                                  
+                                }else{
+                                  echo  "<script>Image not uploaded.</script>";
+                                }
+                              }
+                              
+                              if(isset($_FILES['logo2'])){
+                                $logo2 = $_FILES["logo2"]["name"];
+                                $logotmp = $_FILES["logo2"]["tmp_name"];
+                                if (move_uploaded_file($logotmp,$target_dir.$logo2)) {
+                                  $success5 = true; 
+                                  $upload5 = $funObj->upload5($logo2, $certid); 
+                                  
+                                }else{
+                                  echo  "<script>Image not uploaded.</script>";
+                                }
+                              }
+                              
+                              if(isset($_FILES['logo3'])){
+                                $logo3 = $_FILES["logo3"]["name"];
+                                $logotmp = $_FILES["logo3"]["tmp_name"];
+                                if (move_uploaded_file($logotmp,$target_dir.$logo3)) {
+                                  $success6 = true; 
+                                  $upload6 = $funObj->upload6($logo3, $certid); 
+                                  
+                                }else{
+                                  echo  "<script>Image not uploaded.</script>";
+                                }
+                              }
 
-                        if(isset($_POST['upload2'])){
-
-                          if(isset($_FILES['signatory2'])){
-                              $signatory2 = $_FILES["signatory2"]["name"];
-                              $signatorytmp2 = $_FILES["signatory2"]["tmp_name"];
-
-                              if (move_uploaded_file($signatorytmp2,$target_dir.$signatory2)) {
-                                echo '<div class="alert  alert-success alert-dismissible fade show" role="alert">Image uploaded.
-                              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                              </button>
-                            </div>';
-                                //$upload = $funObj->uploadImages($signatory1, $certid); 
-                                $upload = $funObj->upload2($signatory2, $certid); 
-                                
-                              }else{
-                                echo  "<script>Image not uploaded.</script>";
+                              if(isset($success4) && ($success4!==false) || ($success1) && ($success1!==false) || ($success2) && ($success2!==false) || ($success3) && ($success3!==false) || ($success4) && ($success4!==false) || ($success5) && ($success5!==false) || ($success6) && ($success6!==false)){
+                              echo '<div class="alert  alert-success alert-dismissible fade show" role="alert">Image uploaded. View certificate <b><a href="/ojt/viewcerts.php">here</a></b>.
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                              </div>';
                               }
 
 
+
+
+                              
+                             
                           } 
 
 
 
                         }
 
-                        if(isset($_POST['upload3'])){
-
-                          if(isset($_FILES['signatory3'])){
-                              $signatory3 = $_FILES["signatory3"]["name"];
-                              $signatorytmp3 = $_FILES["signatory3"]["tmp_name"];
-
-                              if (move_uploaded_file($signatorytmp3,$target_dir.$signatory3)) {
-                                echo '<div class="alert  alert-success alert-dismissible fade show" role="alert">Image uploaded.
-                              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                              </button>
-                            </div>';
-                                $upload = $funObj->upload3($signatory3, $certid); 
-                                
-                              }else{
-                                echo  "<script>Image not uploaded.</script>";
-                              }
-
-
-                          } 
-
-
-
-                        }
+                        
+                        
 
                         echo '
 
@@ -268,29 +294,106 @@ $row = $funObj->details($sql);
                       <div class="col-md-8">
                          
                         
-                          <h6><i>'.$row['eventname'].'</i>: CERTIFICATE DETAILS</h6>
+                          <h5><i>'.$row['eventname'].'</i>: CERTIFICATE DETAILS</h5>
                         
                           
                         <form class="formrow" action="uploadimgs.php?certid='.$certid.'" method="post" enctype="multipart/form-data">
                           <div class="m-3">
-                            <label for="eventname"><i class="fas fa-upload"></i> ' .$row['organizer1'].' - SIGNATURE</label>
+                            <h6 for="eventname"><i class="fas fa-upload"></i> ' .$row['organizer1'].' - SIGNATURE</h6>
                             <input type="file" class="form-control text-center" id="signatory1" name="signatory1" accept="image/*" >
-                            <input type="submit" value="UPLOAD" class="btn btn-sm smbtn btn-round" name="upload1" title="Upload your image."/>
+                            <label for="eventname">'; 
+                               if($row['signatory1'] > 0){
+                                echo 'File uploaded: ' . $row['signatory1'];
+
+                               }else{
+                                echo 'No file uploaded';
+                               }
+
+                            echo '</label>
+                           
                           </div>
-                        </form>
-                        <form class="formrow" action="uploadimgs.php?certid='.$certid.'" method="post" enctype="multipart/form-data">
+                        
+                        
                           <div class="m-3">
-                            <label for="eventname"><i class="fas fa-upload"></i> ' .$row['organizer2'].' - SIGNATURE</label>
+                            <h6 for="eventname"><i class="fas fa-upload"></i> ' .$row['organizer2'].' - SIGNATURE</h6>
                             <input type="file" class="form-control text-center" id="signatory2" name="signatory2" accept="image/*" >
-                            <input type="submit" value="UPLOAD" class="btn btn-sm smbtn btn-round" name="upload2" title="Upload your image."/>
+                            <label for="eventname">';
+
+                               if($row['signatory2'] > 0){
+                                echo 'File uploaded: ' . $row['signatory2'];
+
+                               }else{
+                                echo 'No file uploaded';
+                               }
+
+                            echo '</label>
+                            
                           </div>
-                        </form>
-                        <form class="formrow" action="uploadimgs.php?certid='.$certid.'" method="post" enctype="multipart/form-data">
+                        
                           <div class="m-3">
-                            <label for="eventname"><i class="fas fa-upload"></i> ' .$row['organizer3'].' - SIGNATURE</label>
+                            <h6 for="eventname"><i class="fas fa-upload"></i> ' .$row['organizer3'].' - SIGNATURE</h6>
                             <input type="file" class="form-control text-center" id="signatory3" name="signatory3" accept="image/*" >
-                            <input type="submit" value="UPLOAD" class="btn btn-sm smbtn btn-round" name="upload3" title="Upload your image."/>
+                            <label for="eventname">'; 
+                               if($row['signatory3'] > 0){
+                                echo 'File uploaded: ' . $row['signatory3'];
+
+                               }else{
+                                echo 'No file uploaded';
+                               }
+
+                            echo '</label>
+                             </div>
+                        
+                          <div class="m-3">
+                            <h6 for="logo1"><i class="fas fa-upload"></i> ' .$row['logo1'].' - LOGO 1</h6>
+                            <label><i>Leftmost logo (Middle logo, if only one logo is uploaded)</i></label>
+                            <input type="file" class="form-control text-center" id="logo1" name="logo1" accept="image/*" >
+                            <label for="eventname">'; 
+                               if($row['logo1'] > 0){
+                                echo 'File uploaded: ' . $row['logo1'];
+
+                               }else{
+                                echo 'No file uploaded';
+                               }
+
+                            echo '</label>
+
+                            
                           </div>
+                          
+                          <div class="m-3">
+                            <h6 for="logo2"><i class="fas fa-upload"></i> ' .$row['logo2'].' - LOGO 2</h6>
+                            <input type="file" class="form-control text-center" id="logo2" name="logo2" accept="image/*" >
+                            <label for="eventname">'; 
+                               if($row['logo2'] > 0){
+                                echo 'File uploaded: ' . $row['logo2'];
+
+                               }else{
+                                echo 'No file uploaded';
+                               }
+
+                            echo '</label>
+
+                            
+                          </div>
+                          
+                          <div class="m-3">
+                            <h6 for="logo3"><i class="fas fa-upload"></i> ' .$row['logo3'].' - LOGO 3</h6>
+                            <label><i>Rightmost logo</i></label>
+                            <input type="file" class="form-control text-center" id="logo3" name="logo3" accept="image/*" >
+                            <label for="eventname">'; 
+                               if($row['logo3'] > 0){
+                                echo 'File uploaded: ' . $row['logo1'];
+
+                               }else{
+                                echo 'No file uploaded';
+                               }
+
+                            echo '</label>
+
+                            
+                          </div>
+                          <input type="submit" value="UPLOAD" class="btn btn-sm smbtn btn-round" name="upload1" title="Upload your image."/>
                         </form>
                         ';
                         //end of echo

@@ -81,8 +81,17 @@ $funObj = new dbFunction($db);
                   //echo $eventid;
                   $row = $funObj->certName($eventid);
                   echo "<p><b>Seminar: </b>".$row['eventname'];
-
-                  if(isset($_POST['addparticipant'])){
+                  
+                  $expdate = $row['expdate'];
+                  $datenow = date("Y-m-d");
+                  $defauldate = '0000-00-00';
+                  
+                 // echo "<p><b>Seminar: </b>".$datenow;
+                 
+                
+                // $now = date("Y-m-d");
+                if( $defauldate == $expdate){
+                     if(isset($_POST['addparticipant'])){
 
                     $eventid = $_POST['eventid'];
                     $name = $_POST['name']; 
@@ -98,18 +107,36 @@ $funObj = new dbFunction($db);
                             </div>';
                     }else{
                       $email = $_POST['email1'];
-                      $added = $funObj->addParticipant($name, $email, $eventid);
+                      //$checkparticipants = $funObj->checkParticipants($eventid, $email);
                       $retrieveId = $funObj->retrieveId($eventid, $email);
-                      $count =  $retrieveId->rowCount();
-                      $partrow = $retrieveId->fetch(PDO::FETCH_ASSOC);
-                      extract($partrow);
-                       echo '<div class="alert  alert-success alert-dismissible fade show" role="alert">
-                              Success! Here is your Certificate Code: <b>UB-'.$eventid. $partrow['pid'] .'</b> Verify and Download your Certificate <a style="color:white" name="pdf_report_generate" href="verify.php?verify='.$eventid. $partrow['pid'] .'"><b>here.</b></a>
-                              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
+                        $count =  $retrieveId->rowCount();
+                     
+
+                      if($count > 0){
+                        
+                        $partrow = $retrieveId->fetch(PDO::FETCH_ASSOC);
+                         echo "<div class='alert alert-warning alert-dismissible fade show' role='alert'>
+                              Oops! You have already registered for this seminar. Your certificate code is: <b>UB-".$eventid. $partrow['pid'] ."</b>
+                              <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                                <span aria-hidden='true'>&times;</span>
                               </button>
-                            </div>';
-                    }                       
+                            </div>";
+                          
+                      }else{
+                        $added = $funObj->addParticipant($name, $email, $eventid);
+                        $retrieveId = $funObj->retrieveId($eventid, $email);
+                        $count =  $retrieveId->rowCount();
+                        $partrow = $retrieveId->fetch(PDO::FETCH_ASSOC);
+                        
+                         echo '<div class="alert  alert-success alert-dismissible fade show" role="alert">
+                                Success! Here is your Certificate Code: <b>UB-'.$eventid. $partrow['pid'] .'</b> Verify and Download your Certificate <a style="color:white" name="pdf_report_generate" href="verify.php?verify='.$eventid. $partrow['pid'] .'"><b>here.</b></a>
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                              </div>';
+                      }
+                      
+                    }                      
 
                   }  
 
@@ -121,22 +148,118 @@ $funObj = new dbFunction($db);
 
                 <div class="form-group">
                   <label for="formGroupExampleInput">NAME</label>
-                  <input type="text" name="name" class="form-control" id="formGroupExampleInput" placeholder="Juan dela Cruz">
+                  <input type="text" name="name" class="form-control" id="formGroupExampleInput" placeholder="Juan dela Cruz" required>
                 </div>
 
                 <div class="form-group">
                   <label for="formGroupExampleInput2">EMAIL</label>
-                  <input type="email" name="email1" class="form-control" id="formGroupExampleInput2" placeholder="jdl@gmail.com">
+                  <input type="email" name="email1" class="form-control" id="formGroupExampleInput2" placeholder="jdl@gmail.com" required>
                 </div>
 
 
                 
                 <div class="form-group">
                   <label for="formGroupExampleInput2">CONFIRM EMAIL</label>
-                  <input type="email" name="email2" class="form-control" id="formGroupExampleInput2" placeholder="jdl@gmail.com">
+                  <input type="email" name="email2" class="form-control" id="formGroupExampleInput2" placeholder="jdl@gmail.com" required>
                 </div>
               
               <input type="submit" class="btn btn-primary" value="Submit" name="addparticipant">';
+                    
+                }
+                else if ($datenow > $expdate) {
+                      echo '<div class="alert alert-warning alert-dismissible fade show" role="alert">
+                              Oops! The link you are trying to access is already expired!
+                              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            
+                            <p class="text-center">
+                            <h6> Why is your link expired?</h6>
+                            <i>
+                            - The seminar you have attended has a cut off for registration. Ask your organizer about this.
+                            </i>
+                            <p>';
+                        
+                 }else{
+                     
+                      if(isset($_POST['addparticipant'])){
+
+                    $eventid = $_POST['eventid'];
+                    $name = $_POST['name']; 
+                    $email1 = $_POST['email1'];
+                    $email2 = $_POST['email2'];
+
+                    if ($email1 !== $email2){
+                      echo '<div class="alert alert-warning alert-dismissible fade show" role="alert">
+                              Oops! Email do not match!
+                              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>';
+                    }else{
+                      $email = $_POST['email1'];
+                      //$checkparticipants = $funObj->checkParticipants($eventid, $email);
+                      $retrieveId = $funObj->retrieveId($eventid, $email);
+                        $count =  $retrieveId->rowCount();
+                     
+
+                      if($count > 0){
+                        
+                        $partrow = $retrieveId->fetch(PDO::FETCH_ASSOC);
+                         echo "<div class='alert alert-warning alert-dismissible fade show' role='alert'>
+                              Oops! You have already registered for this seminar. Your certificate code is: <b>UB-".$eventid. $partrow['pid'] ."</b>
+                              <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                                <span aria-hidden='true'>&times;</span>
+                              </button>
+                            </div>";
+                          
+                      }else{
+                        $added = $funObj->addParticipant($name, $email, $eventid);
+                        $retrieveId = $funObj->retrieveId($eventid, $email);
+                        $count =  $retrieveId->rowCount();
+                        $partrow = $retrieveId->fetch(PDO::FETCH_ASSOC);
+                        
+                         echo '<div class="alert  alert-success alert-dismissible fade show" role="alert">
+                                Success! Here is your Certificate Code: <b>UB-'.$eventid. $partrow['pid'] .'</b> Verify and Download your Certificate <a style="color:white" name="pdf_report_generate" href="verify.php?verify='.$eventid. $partrow['pid'] .'"><b>here.</b></a>
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                              </div>';
+                      }
+                      
+                    }                      
+
+                  }  
+
+                  echo '</p>
+
+              <form id="addParticipants" action="participantsform.php?certid='.$eventid.'" method="post">
+
+                <input type="hidden" id="eventid" name="eventid" value="'.$eventid.'">
+
+                <div class="form-group">
+                  <label for="formGroupExampleInput">NAME</label>
+                  <input type="text" name="name" class="form-control" id="formGroupExampleInput" placeholder="Juan dela Cruz" required>
+                </div>
+
+                <div class="form-group">
+                  <label for="formGroupExampleInput2">EMAIL</label>
+                  <input type="email" name="email1" class="form-control" id="formGroupExampleInput2" placeholder="jdl@gmail.com" required>
+                </div>
+
+
+                
+                <div class="form-group">
+                  <label for="formGroupExampleInput2">CONFIRM EMAIL</label>
+                  <input type="email" name="email2" class="form-control" id="formGroupExampleInput2" placeholder="jdl@gmail.com" required>
+                </div>
+              
+              <input type="submit" class="btn btn-primary" value="Submit" name="addparticipant">';
+                 }
+                  
+
+                 
 
 
 

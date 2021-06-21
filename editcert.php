@@ -15,7 +15,7 @@ Coded by www.creative-tim.com
 -->
 
 <?php
-session_start();  
+
 
 include ('db/dbcon.php');
 include_once('db/dbFunction.php'); 
@@ -76,7 +76,7 @@ $row2 = $funObj->details($sql2);
 
 <body class="bgbody">
   <div class="wrapper ">
-    <div class="sidebar" data-color="white">
+    <div class="sidebar" data-color="black">
       <div class="logo">
         <a href="/" class="simple-text logo-normal">
           
@@ -160,6 +160,7 @@ $row2 = $funObj->details($sql2);
               <!-- events container -->
               <div class="card text-center">
                 <div class="card-header">
+                    <a type="button" class="btn btn-sm btn-primary" href="/ojt/viewcerts.php"><i class="fas fa-arrow-circle-left"></i> GO BACK</a> 
                   <!--
                   <input type="button" class="btn btn-sm float-left smbtn" value="MY CERTIFICATES" name="answer" onclick="showCerts()"/>
                   <input type="button" href="#" class="btn btn-sm float-left smbtn" value="CREATE" name="answer" onclick="showDiv()"/>
@@ -192,6 +193,10 @@ $row2 = $funObj->details($sql2);
                           $department = $_POST['department'];
                           $title = $_POST['title'];
                           $description = $_POST['description'];
+                          $description = $_POST['description'];
+                          $recognition = $_POST['recognition'];
+                          $presentationline = $_POST['presentationline'];
+
                           //$st = range(4,20);
                           //eventdate conditions:
                           
@@ -229,9 +234,12 @@ $row2 = $funObj->details($sql2);
                             $organizer1 = $_POST['organizer1']. ' - ' .$_POST['position1'];  
                             $organizer2 = $_POST['organizer2']. ' - ' .$_POST['position2'];  
                             $organizer3 = $_POST['organizer3']. ' - ' .$_POST['position3'];  
+                            $logo1 = ' ';
+                            $expdate = ' ';
 
 
-                            $updatecert = $funObj->updateCert($eventname, $eventdate, $venue, $organizer1, $organizer2, $organizer3, $department, $title, $description, $certid); 
+
+                            $updatecert = $funObj->updateCert($eventname, $eventdate, $venue, $organizer1, $organizer2, $organizer3, $department, $title, $description, $recognition, $presentationline, $logo1, $expdate ,$certid); 
 
                             if(!$updatecert){
                               //echo "sno";
@@ -241,7 +249,7 @@ $row2 = $funObj->details($sql2);
                               //echo "<script> succesful </script>";
                               
                               echo '<div class="alert alert-success alert-dismissible fade show" role="alert">
-                                Nice!<strong> '.$eventname.'</strong> has been updated. Click <A style="color: white;" HREF="javascript:history.go(0)"><b>here</b></A> to refresh page.
+                                Nice!<strong> '.$eventname.'</strong> has been updated. Click <A style="color: white;" HREF="javascript:history.go(0)"><b>here</b></A> to refresh page, and click <a style="color: white;" href="uploadimgs.php?certid='.$certid.'"><b>here</b></a> to upload images.
                                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                   <span aria-hidden="true">&times;</span>
                                 </button>
@@ -261,14 +269,47 @@ $row2 = $funObj->details($sql2);
 
                       <div class="col-md-8">
                          
-                        <div class="form-group">
+                        <div class="form-group mb-3">
                           <h6><?php echo $row2['eventname']; ?> DETAILS</h6>
 
-                          <label for="eventname">EVENT NAME</label>
-                          <input type="text" class="form-control text-center" id="eventname" name="eventname" placeholder="" value="<?php echo $row2['eventname']; ?>" required>
+                          <h6 for="department">➀ DEPARTMENT</h6>
+                          <input type="text" class="form-control text-center" id="department" name="department" placeholder="" value="<?php echo $row2['department']; ?>" required>
+                          <label>ex. <i>(School of Information Technology)</i></label>
                         </div>
-                        <div class="form-group">
-                          <label for="formGroupExampleInput2">DATE</label>
+
+                        <div class="form-group mb-3">
+                          <h6 for="title">➁ TITLE</h6>
+                          <input type="text" class="form-control text-center" value="<?php echo $row2['title'] ?>" id="title" name="title" placeholder="" required>
+                          <label>ex. <i>(Certificate of Attendance/Participation)</i></label>
+                        </div>
+                        
+                        <div class="form-group mb-3">
+                          <h6 for="presentationline">➂ PRESENTATION LINE</h6>
+                         <input type="text" class="form-control text-center" id="presentationline" name="presentationline" value="<?php echo $row2['presentationline'] ?>">
+                         <label>ex. <i>(is awarded to)</i></label>
+                        </div>
+
+                        <div class="form-group mb-3">
+                          <h6 for="recognition">➃ RECOGNITION</h6>
+                          <input type="text" class="form-control text-center" id="recognition" name="recognition"  value="<?php echo $row2['recognition'] ?>" required>
+                          <label>ex. <i>(for actively participating in...)</i></label>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <h6 for="eventname">➄ EVENT NAME</h6>
+                            <input type="text" class="form-control text-center" id="eventname" value="<?php echo $row2['eventname']; ?>" name="eventname" required>
+                              
+                          </div>
+
+                        <div class="form-group mb-3">
+                          <h6 for="recognition">➅ DESCRIPTION</h6>
+                          <textarea class="form-control" id="recognition" name="description" rows="3"><?php
+                         $value = $row2['description']; echo htmlspecialchars($value); ?></textarea>
+                         <label>Short message or description about the certificate.</label>
+                        </div>
+
+                        <div class="form-group mb-3">
+                          <label for="formGroupExampleInput2">➆ DATE</label>
                           <div class="md-form">
                             <!--
                             <input type="date" id="eventdate" name="eventdate" class="form-control text-center">
@@ -339,128 +380,129 @@ $row2 = $funObj->details($sql2);
                            // echo $day2;
                             
                             //echo $mnd[1];
+                            //echo $day1;
                         echo "<select name='dayfrom'>
-                                <option value='1'"; if($day1 == '1'){
+                                <option value='1"; if($day1 == 1){
                                     echo "selected";
                                   }
                                   echo ">1</option>
-                                <option value='2'"; if($day1 == '2'){
+                                <option value='2'"; if($day1 == 2){
                                     echo "selected";
                                   }
                                   echo ">2</option>
-                                <option value='3'"; if($day1 == '3'){
+                                <option value='3'"; if($day1 == 3){
                                     echo "selected";
                                   }
                                   echo ">3</option>
-                                <option value='4'"; if($day1 == '4'){
+                                <option value='4'"; if($day1 == 4){
                                     echo "selected";
                                   }
                                   echo ">4</option>
-                                <option value='5'"; if($day1 == '5'){
+                                <option value='5'"; if($day1 == 5){
                                     echo "selected";
                                   }
                                   echo ">5</option>
-                                <option value='6'"; if($day1 == '6'){
+                                <option value='6'"; if($day1 == 6){
                                     echo "selected";
                                   }
                                   echo ">6</option>
-                                <option value='7'"; if($day1 == '7'){
+                                <option value='7'"; if($day1 == 7){
                                     echo "selected";
                                   }
                                   echo ">7</option>
-                                <option value='8'"; if($day1 == '8'){
+                                <option value='8'"; if($day1 == 8){
                                     echo "selected";
                                   }
                                   echo ">8</option>
-                                <option value='9'"; if($day1 == '9'){
+                                <option value='9'"; if($day1 == 9){
                                     echo "selected";
                                   }
                                   echo ">9</option>
-                                <option value='10'"; if($day1 == '10'){
+                                <option value='10'"; if($day1 == 10){
                                     echo "selected";
                                   }
                                   echo ">10</option>
-                                <option value='11'"; if($day1 == '11'){
+                                <option value='11'"; if($day1 == 11){
                                     echo "selected";
                                   }
                                   echo ">11</option>
-                                <option value='12'"; if($day1 == '12'){
+                                <option value='12'"; if($day1 == 12){
                                     echo "selected";
                                   }
                                   echo ">12</option>
-                                <option value='13'"; if($day1 == '13'){
+                                <option value='13'"; if($day1 == 13){
                                     echo "selected";
                                   }
                                   echo ">13</option>
-                                <option value='14'"; if($day1 == '14'){
+                                <option value='14'"; if($day1 == 14){
                                     echo "selected";
                                   }
                                   echo ">14</option>
-                                <option value='15'"; if($day1 == '15'){
+                                <option value='15'"; if($day1 == 15){
                                     echo "selected";
                                   }
                                   echo ">15</option>
-                                <option value='16'"; if($day1 == '16'){
+                                <option value='16'"; if($day1 == 16){
                                     echo "selected";
                                   }
                                   echo ">16</option>
-                                <option value='17'"; if($day1 == '17'){
+                                <option value='17'"; if($day1 == 17){
                                     echo "selected";
                                   }
                                   echo ">17</option>
-                                <option value='18'"; if($day1 == '18'){
+                                <option value='18'"; if($day1 == 18){
                                     echo "selected";
                                   }
                                   echo ">18</option>
-                                <option value='19'"; if($day1 == '19'){
+                                <option value='19'"; if($day1 == 19){
                                     echo "selected";
                                   }
                                   echo ">19</option>
-                                <option value='20'"; if($day1 == '20'){
+                                <option value='20'"; if($day1 == 20){
                                     echo "selected";
                                   }
                                   echo ">20</option>
-                                <option value='21'"; if($day1 == '21'){
+                                <option value='21'"; if($day1 == 21){
                                     echo "selected";
                                   }
                                   echo ">21</option>
-                                <option value='22'"; if($day1 == '22'){
+                                <option value='22'"; if($day1 == 22){
                                     echo "selected";
                                   }
                                   echo ">22</option>
-                                <option value='23'"; if($day1 == '23'){
+                                <option value='23'"; if($day1 == 23){
                                     echo "selected";
                                   }
                                   echo ">23</option>
-                                <option value='24'"; if($day1 == '24'){
+                                <option value='24'"; if($day1 == 24){
                                     echo "selected";
                                   }
                                   echo ">24</option>
-                                <option value='25'"; if($day1 == '25'){
+                                <option value='25'"; if($day1 == 25){
                                     echo "selected";
                                   }
                                   echo ">25</option>
-                                <option value='26'"; if($day1 == '26'){
+                                <option value='26'"; if($day1 == 26){
                                     echo "selected";
                                   }
                                   echo ">26</option>
-                                <option value='27'"; if($day1 == '27'){
+                                <option value='27'"; if($day1 == 27){
                                     echo "selected";
                                   }
                                   echo ">27</option>
-                                <option value='28'"; if($day1 == '28'){
+                                <option value='28'"; if($day1 == 28){
                                     echo "selected";
                                   }
                                   echo ">28</option>
-                                <option value='29'"; if($day1 == '29'){
+                                <option value='29'"; if($day1 == 29){
                                     echo "selected";
                                   }
                                   echo ">29</option>
-                                <option value='30'"; if($day1 == '30'){
+                                <option value='30'"; if($day1 == 30){
                                     echo "selected";
                                   }
                                   echo ">30</option>
-                                <option value='31'"; if($day1 == '31'){
+                                <option value='31'"; if($day1 == 31){
                                     echo "selected";
                                   }
                                   echo ">31</option>
@@ -685,49 +727,16 @@ $row2 = $funObj->details($sql2);
                             
                           </div>
 
-                          <label for="venue">VENUE</label>
+                          <h6 for="venue">➇ VENUE</h6>
                           <input type="text" class="form-control text-center" id="venue" name="venue" placeholder="" value="<?php echo $row2['venue'] ?>" required>
                           <br>
 
-                           <div class="form-group">
-                          <label for="department" >DEPARTMENT</label>
-                          <br>
-                          <select name="department" required>
-                            <option value="School of Business Administration and Accountancy" 
-                            <?php if($row2['department']=="School of Business Administration and Accountancy") echo 'selected';?>>School of Business Administration and Accountancy</option>
-                            <option value="School of Criminal Justice and Public Safety"
-                            <?php if($row2['department']=="School of Criminal Justice and Public Safety") echo 'selected';?>>School of Criminal Justice and Public Safety</option>
-                            <option value="School of Engineering and Architecture"
-                            <?php if($row2['department']=="School of Engineering and Architecture") echo 'selected';?>>School of Engineering and Architecture</option>
-                            <option value="School of Information Technology"
-                            <?php if($row2['department']=="School of Information Technology") echo 'selected';?>>School of Information Technology</option>
-                            <option value="School of International Hospitality and Tourism Management"
-                            <?php if($row2['department']=="School of International Hospitality and Tourism Management") echo 'selected';?>>School of International Hospitality and Tourism Management</option>
-                            <option value="School of Law"
-                            <?php if($row2['department']=="School of Law") echo 'selected';?>>School of Law</option>
-                            <option value="School of Nursing" <?php if($row2['department']=="School of Nursing") echo 'selected';?>>School of Nursing</option>
-                            <option value="School of Natural Sciences"
-                            <?php if($row2['department']=="School of Natural Sciences") echo 'selected';?>>School of Natural Sciences</option>
-                            <option value="School of Teacher Education and Liberal Arts"<?php if($row2['department']=="School of Teacher Education and Liberal Arts") echo 'selected';?>>School of Teacher Education and Liberal Arts</option>
-                          </select>
-                        </div>
-                        <div class="form-group">
-                          <label for="title">TITLE</label>
-                          <input type="text" class="form-control text-center" value="<?php echo $row2['title'] ?>" id="title" name="title" placeholder="" required>
-                          <p>*Certificate of Attendance/Participation</p>
-                        </div>
                         
-                        <div class="form-group">
-                          <label for="description">DESCRIPTION</label>
-                         <textarea class="form-control" id="description" name="description" rows="3"><?php
-                         $value = $row2['description']; echo htmlspecialchars($value); ?></textarea>
-                        </div>
 
-
-                          <label for="hosts">HOSTS/ORGANIZERS</label>
+                          <h6 for="hosts">➈ CERTIFICATE SIGNATORIES</h6>
                           <div class="row">
                             <div class="col-6">
-                              <label>NAME</label>
+                              <label>SIGNATORY NAME</label>
                               <?php
                                 $organizername1 = array_pad(explode(" - ", $row2['organizer1']), 2, null);
                                 $organizername2 = array_pad(explode(" - ", $row2['organizer2']), 2, null);
@@ -740,19 +749,19 @@ $row2 = $funObj->details($sql2);
                               <input type="text" class="form-control mb-2 text-center" id="organizer1" name="organizer1" value="'. $organizername1[0] .'" required>
                             </div>
                             <div class="col-6">
-                              <label>POSITION</label>
+                              <label>SIGNATORY TITLE</label>
                               <input type="text" class="form-control mb-2 text-center" id="position1" name="position1" value="'.$organizername1[1].'" required>
 
                             </div>
                           </div>
                           <div class = "row">
                             <div class="col-6">
-                              <label>POSITION</label>
+                              <label>SIGNATORY NAME</label>
                               <input type="text" class="form-control mb-2 text-center" id="organizer2" name="organizer2" value="'.$organizername2[0].'">
 
                             </div>
                             <div class="col-6">
-                              <label>TITLE</label>
+                              <label>SIGNATORY TITLE</label>
                               <input type="text" class="form-control mb-2 text-center" id="position2" name="position2" value="'.$organizername2[1].'">
 
                             </div>
@@ -760,12 +769,12 @@ $row2 = $funObj->details($sql2);
 
                           <div class = "row">
                             <div class="col-6">
-                              <label>NAME</label>
+                              <label>SIGNATORY NAME</label>
                               <input type="text" class="form-control mb-2 text-center" id="organizer2" name="organizer3" value="'.$organizername3[0].'">
 
                             </div>
                             <div class="col-6">
-                              <label>POSITION</label>
+                              <label>SIGNATORY TITLE</label>
                               <input type="text" class="form-control mb-2 text-center" id="position2" name="position3" value="'.$organizername3[1].'">
 
                             </div>

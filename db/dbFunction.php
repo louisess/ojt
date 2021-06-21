@@ -94,6 +94,14 @@
             return $stmt;
 
         }
+        
+        function checkParticipants($email, $eventid){
+            $sql = "SELECT * FROM certicates WHERE email = '".$email."' AND $eventid = '". $eventid ."' ";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute();
+            return $stmt;
+
+        }
 
         function editAcct($fname, $lname, $email, $id){  
         //$password = md5($password);  
@@ -106,7 +114,7 @@
         }
 
         function viewCerts($id){
-            $sql = "SELECT * FROM certificates WHERE orgid = '".$id."'";
+            $sql = "SELECT * FROM certificates WHERE orgid = '".$id."' ORDER BY certid DESC";
             $stmt = $this->conn->prepare($sql);
             $stmt->execute();
 
@@ -162,22 +170,48 @@
             $row = $stmt->fetch(PDO::FETCH_ASSOC);
             return $row;    
 
-            
-
         }
 
-        function createCert($eventname, $eventdate, $orgid, $venue, $organizer1, $organizer2, $organizer3, $department, $title, $description){
-            //$sql = "SELECT * FROM certificates WHERE orgid = '$id'";
-            $sql = "INSERT INTO certificates (eventname, eventdate, orgid, venue, organizer1, organizer2, organizer3, department, title, description) values('$eventname','$eventdate','$orgid', '$venue','$organizer1','$organizer2','$organizer3','$department','$title','$description')";
+        function createCert($eventname, $eventdate, $orgid, $venue, $organizer1, $organizer2, $organizer3, $signatory1, $signatory2, $signatory3, $department, $title, $description, $recognition, $presentationline, $logo1, $logo2, $logo3, $expdate){
+           
+            $sql = "INSERT INTO certificates(eventname, eventdate, orgid, venue, organizer1, organizer2, organizer3, signatory1, signatory2, signatory3, department, title, description, recognition, presentationline, logo1, logo2, logo3, expdate) values('$eventname','$eventdate', '$orgid', '$venue','$organizer1','$organizer2','$organizer3','$signatory1','$signatory2','$signatory3','$department','$title','$description', '$recognition', '$presentationline',  '$logo1', '$logo2', '$logo3', '$expdate')";
+
+            $stmt = $this->conn->prepare($sql);
+            
+            $stmt->execute();
+                        
+            return true;
+        }
+
+        function updateCert($eventname, $eventdate, $venue, $organizer1, $organizer2, $organizer3, $department, $title, $description, $recognition, $presentationline, $logo1, $logo2, $logo3, $expdate ,$certid){
+            $sql = "UPDATE certificates SET eventname='$eventname', eventdate='$eventdate', venue='$venue', organizer1='$organizer1', organizer2='$organizer2' , organizer3='$organizer3', department='$department', title='$title',  description='$description', recognition='$recognition', presentationline='$presentationline', logo1='$logo1', logo2='$logo2', logo3='$logo3',expdate='$expdate'  WHERE certid='$certid'";
 
             $stmt = $this->conn->prepare($sql);
             $stmt->execute();
                         
             return true;
         }
+        
+         function setExpLink($expdate, $certid){
+            $sql = "UPDATE certificates SET expdate='$expdate' WHERE certid='$certid'";
 
-        function updateCert($eventname, $eventdate, $venue, $organizer1, $organizer2, $organizer3, $department, $title, $description, $certid){
-            $sql = "UPDATE certificates SET eventname='$eventname', eventdate='$eventdate', venue='$venue', organizer1='$organizer1', organizer2='$organizer2' , organizer3='$organizer3', department='$department', title='$title',  description='$description'  WHERE certid='$certid'";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute();
+                        
+            return true;
+        }
+        
+        function clrDate($expdate, $certid){
+            $sql = "UPDATE certificates SET expdate='$expdate' WHERE certid='$certid'";
+
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute();
+                        
+            return true;
+        }
+        
+        function deleteCert($certid){
+            $sql = "DELETE FROM certificates WHERE certid='$certid'";
 
             $stmt = $this->conn->prepare($sql);
             $stmt->execute();
@@ -233,7 +267,46 @@
                         
             return true;
         }
+        
+        function upload4($logo1, $certid){  
+           //$sql = "INSERT INTO organizers(fname, lname, email, password) values('$fname','$lname','$email','$password')";
+           // $sql = "INSERT INTO certificates(logo1, signatory1) VALUES ('$logo1','$signatory1') WHERE certid = '$certid'";
+            $sql = "UPDATE certificates SET logo1='$logo1' WHERE certid='$certid'";
 
-           //$stmt->execute();
+            $stmt = $this->conn->prepare($sql);
+
+
+            $stmt->execute();
+                        
+            return true;
+        }
+        
+        
+        function upload5($logo2, $certid){  
+           //$sql = "INSERT INTO organizers(fname, lname, email, password) values('$fname','$lname','$email','$password')";
+           // $sql = "INSERT INTO certificates(logo1, signatory1) VALUES ('$logo1','$signatory1') WHERE certid = '$certid'";
+            $sql = "UPDATE certificates SET logo2='$logo2' WHERE certid='$certid'";
+
+            $stmt = $this->conn->prepare($sql);
+
+
+            $stmt->execute();
+                        
+            return true;
+        }
+        
+         function upload6($logo3, $certid){  
+           
+            $sql = "UPDATE certificates SET logo3='$logo3' WHERE certid='$certid'";
+
+            $stmt = $this->conn->prepare($sql);
+
+
+            $stmt->execute();
+                        
+            return true;
+        }
+        
     }  
+    
 ?>   

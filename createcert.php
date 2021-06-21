@@ -15,7 +15,6 @@ Coded by www.creative-tim.com
 -->
 
 <?php
-session_start();  
 
 include ('db/dbcon.php');
 include_once('db/dbFunction.php'); 
@@ -70,7 +69,7 @@ $row = $funObj->details($sql);
 
 <body class="bgbody">
   <div class="wrapper ">
-    <div class="sidebar" data-color="white">
+    <div class="sidebar" data-color="black">
       <div class="logo">
         <a href="/" class="simple-text logo-normal">
           
@@ -154,6 +153,7 @@ $row = $funObj->details($sql);
               <!-- events container -->
               <div class="card text-center">
                 <div class="card-header">
+                    <a type="button" class="btn btn-sm btn-primary" href="/ojt/certs.php"><i class="fas fa-arrow-circle-left"></i> GO BACK</a> 
                   <!--
                   <input type="button" class="btn btn-sm float-left smbtn" value="MY CERTIFICATES" name="answer" onclick="showCerts()"/>
                   <input type="button" href="#" class="btn btn-sm float-left smbtn" value="CREATE" name="answer" onclick="showDiv()"/>
@@ -161,17 +161,22 @@ $row = $funObj->details($sql);
                 </div>
                 <div class="card-body">
                   <div id="createform"  style="display:block;" class="answer_list" >
+                      
                     <h5> CREATE CERTIFICATE </h5>
                     <p>
-                      <i class="fas fa-asterisk"></i> Choose from certificate templates and create a certificate to be generated.
+                      <i class="fas fa-asterisk"></i> Add details about your event/seminar and create a certificate to be generated.
                     </p>
+                    <div class="alert alert-secondary" role="alert" style="color:black;">
+                     <small>Note: When entering your data in the boxes, substitute the character (') with (`).</small>
+                    </div>
                     <hr>
-                    <form id="uploadForm" action="createcert.php" method="post"></form>
-                    <form class="formrow" name="savecert" method="post" action="createcert.php">
+                    <!--<form id="uploadForm" action="createcert.php" method="post"></form>-->
+                    <form class="formrow" name="createcert" method="POST" action="createcert.php">
                     <div class="row m-2">
                       <!---create cert form function--->
                         <?php
                         if(isset($_POST['createcert'])){
+                         
                           $orgid = $_SESSION['user'];  
                           $eventname = $_POST['eventname']; 
                           $dayfrom = $_POST['dayfrom']; 
@@ -181,6 +186,13 @@ $row = $funObj->details($sql);
                           $department = $_POST['department'];
                           $title = $_POST['title'];
                           $description = $_POST['description'];
+                          $recognition = $_POST['recognition'];
+                          $presentationline = $_POST['presentationline'];
+                          //$description = $_POST['description'];
+                          $singleqt = "'";
+                          
+
+                          
                           //$st = range(4,20);
                           //eventdate conditions:
                           if($dayfrom > $dayto){
@@ -192,48 +204,62 @@ $row = $funObj->details($sql);
                             </div>';
                           }else{
                             if($dayfrom == $dayto){
-                            if($dayfrom == 1 || $dayfrom == 21 || $dayfrom == 31){
-                              $eventdate = $_POST['dayfrom'].'st of '.$month.', '.$year;
-                            }else if($dayfrom == 2 || $dayfrom == 22){
-                              $eventdate = $_POST['dayfrom'].'nd of '.$month.', '.$year;
-                            }else if($dayfrom == 3 || $dayfrom == 23){
-                              $eventdate = $_POST['dayfrom'].'rd of '.$month.', '.$year;
+                                $eventdate = $month. ' ' .$_POST['dayfrom']. ', '.$year;
                             }else{
-                              $eventdate = $_POST['dayfrom'].'th of '.$month.', '.$year;
-                            }
-                          }else{
-                            if($dayto == 1 || $dayto == 21 || $dayto == 31){
-                              $eventdate = $_POST['dayfrom']. ' to ' .$_POST['dayto'].'st of '.$month.', '.$year;
-                            }else if($dayto == 2 || $dayto == 22){
-                              $eventdate = $_POST['dayfrom']. ' to ' .$_POST['dayto'].'nd of '.$month.', '.$year;
-                            }else if($dayto == 3 || $dayto == 23){
-                              $eventdate = $_POST['dayfrom']. ' to ' .$_POST['dayto'].'rd of '.$month.', '.$year;
-                            }else{
-                              $eventdate = $_POST['dayfrom']. ' to ' .$_POST['dayto'].'th of '.$month.', '.$year;
-                            }
-                          } 
+                                $eventdate = $month. ' ' .$_POST['dayfrom']. ' to '.$_POST['dayto'] .', '.$year;
+                            } 
                             
                           
 
                           $venue = $_POST['venue'];  
                           $organizer1 = $_POST['organizer1'] . ' - ' . $_POST['position1'];  
                           $organizer2 = $_POST['organizer2'] . ' - ' . $_POST['position2']; 
-                          $organizer3 = $_POST['organizer3'] . ' - ' . $_POST['position3'];  
+                          $organizer3 = $_POST['organizer3'] . ' - ' . $_POST['position3'];
+                          $signatory1 = ' ';
+                          $signatory2 = ' ';
+                          $signatory3 = ' ';
+                          $logo1 = ' ';
+                          $logo2 = ' ';
+                          $logo3 = ' ';
+                          $expdate = '0000-00-00';
+                        
+                            
+                            
+                        if (htmlentities(strpos($eventname, "'")) == TRUE || htmlentities(strpos($title, "'")) == TRUE || htmlentities(strpos($description, "'")) == TRUE || htmlentities(strpos($venue, "'")) == TRUE || htmlentities(strpos($department, "'")) == TRUE || htmlentities(strpos($recognition, "'")) == TRUE || htmlentities(strpos($presentationline, "'")) == TRUE){
+                            echo '<div class="alert alert-warning alert-dismissible fade show" role="alert">
+                              Oops. Please replace your single quote with "`".
+                              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>';
+                        }else{
+                          if(strlen($description) > 255){
+                                echo '<div class="alert alert-warning alert-dismissible fade show" role="alert">
+                              Oops! Your description is too long.
+                              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>';
+                        }else{
+                            $savecert = $funObj->createCert($eventname, $eventdate, $orgid, $venue, $organizer1, $organizer2, $organizer3, $signatory1, $signatory2, $signatory3, $department, $title, $description, $recognition, $presentationline, $logo1, $logo2, $logo3, $expdate); 
 
 
-                          $savecert = $funObj->createCert($eventname, $eventdate, $orgid, $venue, $organizer1, $organizer2, $organizer3, $department, $title, $description); 
-
+                            
+                                                    
                           if(!$savecert){
                             //echo "sno";
                             echo "<script> unsuccesful </script>";
 
                           }else{
+                              
+                              
                             //echo "<script> succesful </script>";
+                            
                             $id = $orgid;
                             $cert = $funObj->viewCertsForUpload($id, $eventdate, $venue, $eventname);
                             $count =  $cert->rowCount();
                             $certrow = $cert->fetch(PDO::FETCH_ASSOC);
-                            extract($certrow);
+                            extract((array)$certrow);
 
                             echo '<div class="alert  alert-success alert-dismissible fade show" role="alert">
                               Nice!<strong> '.$eventname.'</strong> has been added to your events.Upload your logos and signatories <a style="color: white;" href="uploadimgs.php?certid='.$certrow['certid'].'"><b>here</b></a>.
@@ -241,8 +267,18 @@ $row = $funObj->details($sql);
                                 <span aria-hidden="true">&times;</span>
                               </button>
                             </div>';
+                            
+                            
                           }
+                                
+                            }
+                                                        
 
+                        } 
+                          
+                        
+
+                          
                           }
                           
 
@@ -256,13 +292,50 @@ $row = $funObj->details($sql);
                       <div class="col-md-8">
                          
                         <div class="form-group">
-                          <h6>EVENT DETAILS</h6>
+                          <h5>EVENT DETAILS</h5>
 
-                          <label for="eventname">EVENT NAME</label>
-                          <input type="text" class="form-control text-center" id="eventname" name="eventname" placeholder="" required>
-                        </div>
-                        <div class="form-group">
-                          <label for="formGroupExampleInput2">DATE</label>
+                          <div class="form-group mb-3">
+                            <h6 for="department">➀ DEPARTMENT</h6>
+                            
+                            <input type="text" class="form-control text-center" id="department" name="department" required>
+                            <label>ex. <i>(School of Information Technology)</i></label>
+                          </div>
+
+
+                          <div class="form-group mb-3">
+                            <h6 for="title">➁ TITLE</h6>
+                            <input type="text" class="form-control text-center" id="title" name="title" placeholder="" required>
+                            <label>ex. <i>(Certificate of Attendance/Participation)</i></label>
+                          </div>
+
+                          <div class="form-group mb-3">
+                            <h6 for="presentationline">➂ PRESENTATION LINE</h6>
+                            <input type="text" class="form-control text-center" id="presentationline" name="presentationline" placeholder="" required>
+                            <label>ex. <i>(is awarded to)</i></label>
+                          </div>
+
+                          <div class="form-group mb-3">
+                            <h6 for="recognition">➃ RECOGNITION</h6>
+                            <input type="text" class="form-control text-center" id="recognition" name="recognition" placeholder="" required>
+                            <label>ex. <i>(for actively participating in...)</i></label>
+                          </div>
+
+                          <div class="form-group mb-3">
+                            <h6 for="eventname">➄ EVENT NAME</h6>
+                            <input type="text" class="form-control text-center" id="eventname" name="eventname" required>
+                              
+                          </div>
+
+                          <div class="form-group mb-3">
+                            <h6 for="department">➆ DESCRIPTION</h6>
+                           <textarea class="form-control" id="description" name="description" rows="3"></textarea>
+                           <label>Short message or description about the certificate.</label>
+                          </div>
+
+                          
+                          
+                        <div class="form-group mb-3">
+                          <h6 for="formGroupExampleInput2">➇ DATE</h6>
                           <div class="md-form">
                             <!--
                             <input type="date" id="eventdate" name="eventdate" class="form-control text-center">
@@ -314,50 +387,30 @@ $row = $funObj->details($sql);
                                   echo "</select>";
                                 ?>
                                 <p>
-                                  *Date in the certificates will come out as <i>"1st of January, 2021"</i>
+                                  Date in the certificates will come out as <i>"1st of January, 2021"</i>
                                 </p>
  
                             
                           </div>
                         </div>
-                        <div class="form-group">
-                          <label for="venue">VENUE</label>
+
+                        <div class="form-group mb-3">
+                          <h6 for="venue">➈ VENUE</h6>
                           <input type="text" class="form-control text-center" id="venue" name="venue" placeholder="" required>
                         </div>
-                        <div class="form-group">
-                          <label for="department">DEPARTMENT</label>
-                          <br>
-                          <select name="department" required>
-                                <option value="SCHOOL OF BUSINESS ADMINISTRATION AND ACCOUNTANCY">School of Business Administration and Accountancy</option>
-                                <option value="SCHOOL OF CRIMINAL JUSTICE AND PUBLIC SAFETY">School of Criminal Justice and Public Safety</option>
-                                <option value="SCHOOL OF ENGINEERING AND ARCHITECTURE">School of Engineering and Architecture</option>
-                                <option value="SCHOOL OF INFORMATION TECHNOLOGY">School of Information Technology</option>
-                                <option value="SCHOOL OF INTERNATIONAL HOSPITALITY AND TOURISM MANAGEMENT">School of International Hospitality and Tourism Management</option>
-                                <option value="SCHOOL OF LAW">School of Law</option>
-                                <option value="SCHOOL OF NURSING">School of Nursing</option>
-                                <option value="SCHOOL OF NATURAL SCIENCES">School of Natural Sciences</option>
-                                <option value="SCHOOL OF TEACHER EDUCATION AND LIBERAL ARTS">School of Teacher Education and Liberal Arts</option>
-                              </select>
-                        </div>
-                        <div class="form-group">
-                          <label for="title">TITLE</label>
-                          <input type="text" class="form-control text-center" id="title" name="title" placeholder="" required>
-                          <p>*Certificate of Attendance/Participation</p>
-                        </div>
                         
-                        <div class="form-group">
-                          <label for="description">DESCRIPTION</label>
-                         <textarea class="form-control" id="description" name="description" rows="3"></textarea>
-                        </div>
-                        <div class="form-group">
-                          <label for="hosts">HOSTS/ORGANIZERS</label>
+                        
+                        
+                        
+                        <div class="form-group mb-3">
+                          <h6 for="hosts">➉ CERTIFICATE SIGNATORIES</h6>
                           <div class="row">
                             <div class="col-6">
-                              <label>NAME</label>
+                              <label>SIGNATORY NAME</label>
                               <input type="text" class="form-control mb-2 text-center" id="organizer1" name="organizer1" value="<?php echo $row['fname'].' '.$row['lname']; ?>" required>
                             </div>
                             <div class="col-6">
-                              <label>POSITION</label>
+                              <label>SIGNATORY TITLE</label>
 
                               <input type="text" class="form-control mb-2 text-center" id="position1" name="position1" placeholder="" required>
                             </div>                            
@@ -366,11 +419,11 @@ $row = $funObj->details($sql);
 
                           <div class="row">
                             <div class="col-6">
-                              <label>NAME</label>
+                              <label>SIGNATORY NAME</label>
                               <input type="text" class="form-control text-center" id="organizer2" name="organizer2" placeholder="">
                             </div>
                             <div class="col-6">
-                              <label>POSITION</label>
+                              <label>SIGNATORY TITLE</label>
 
                               <input type="text" class="form-control mb-2 text-center" id="position2" name="position2" placeholder="">
                             </div>                            
@@ -379,11 +432,11 @@ $row = $funObj->details($sql);
 
                           <div class="row">
                             <div class="col-6">
-                              <label>NAME</label>
+                              <label>SIGNATORY NAME</label>
                               <input type="text" class="form-control text-center" id="organizer3" name="organizer3" placeholder="">
                             </div>
                             <div class="col-6">
-                              <label>POSITION</label>
+                              <label>SIGNATORY TITLE</label>
 
                               <input type="text" class="form-control mb-2 text-center" id="position3" name="position3" placeholder="">
                             </div>                            
@@ -431,7 +484,10 @@ $row = $funObj->details($sql);
                                         
                     </div>
                     <!--- end of row --->
-                    <input type="submit" value="SAVE CERTIFICATE" class="btn btn-sm smbtn btn-round" name="createcert" title="Save you certificate details."/>
+                    <div class="form-group">
+                      <input type="submit" value="SAVE CERTIFICATE" class="btn btn-sm smbtn btn-round" name="createcert" title="Save you certificate details."/>
+
+                    </div>
                     </form>
                     <hr>
                         

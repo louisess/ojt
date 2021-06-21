@@ -1,4 +1,4 @@
-    <div class="sidebar" data-color="white">
+    <div class="sidebar" data-color="black">
       <div class="logo">
         <a href="/" class="simple-text logo-normal">
           

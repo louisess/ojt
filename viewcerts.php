@@ -15,7 +15,6 @@ Coded by www.creative-tim.com
 -->
 
 <?php
-session_start();  
 
 include ('db/dbcon.php');
 include_once('db/dbFunction.php'); 
@@ -37,6 +36,8 @@ $funObj = new dbFunction($db);
 $sql = "SELECT * FROM organizers WHERE id = '".$_SESSION['user']."'";
 $row = $funObj->details($sql);
 
+
+            
 ?>
 
 
@@ -70,9 +71,9 @@ $row = $funObj->details($sql);
 
 <body class="bgbody">
   <div class="wrapper ">
-    <div class="sidebar" data-color="white">
+    <div class="sidebar" data-color="black">
       <div class="logo">
-        <a href="/" class="simple-text logo-normal">
+        <a href="certs.php" class="simple-text logo-normal">
           
           <div>
             <img src="../ojt/assets/img/logo.png">
@@ -154,6 +155,7 @@ $row = $funObj->details($sql);
               <!-- events container -->
               <div class="card text-center">
                 <div class="card-header">
+                    <a type="button" class="btn btn-sm btn-primary" href="/ojt/certs.php"><i class="fas fa-arrow-circle-left"></i> GO BACK</a> 
                   <!--
                   <input type="button" class="btn btn-sm float-left smbtn" value="MY CERTIFICATES" name="answer" onclick="showCerts()"/>
                   <input type="button" href="#" class="btn btn-sm float-left smbtn" value="CREATE" name="answer" onclick="showDiv()"/>
@@ -165,18 +167,74 @@ $row = $funObj->details($sql);
                   <p>
                     <i class="fas fa-asterisk"></i> A list of your saved certificates for events.
                   </p>
-
-                  <hr>
+                  <?php
+                  
 
                    
-                        <?php
+                        
+                        if(isset($_POST['deletecert'])){
+                            $certid = $_POST['certid'];
+                            $certname = $_POST['eventname'];
+                            $deleteCert = $funObj->deleteCert($certid);
+                            
+                            if($deleteCert){
+                                echo '<div class="alert alert-danger alert-dismissible fade show" role="alert"> Deleted seminar: '. $certname .'
+                                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                  </button>
+                                </div>';
+                            }else{
+                                echo "error";
+                            }
+                            }
+                            if (isset($_POST["setexpdate"])){
+                                $certid = $_POST['certid'];
+                                $expdate = ($_POST['expdate']);
+                                $certname = ($_POST['eventname']);
+                                //$expdate = date("m-d-Y", strtotime($date1));;
+                                
+                                $setExpDate = $funObj->setExpLink($expdate,$certid);
+                                if($setExpDate){
+                                    echo '<div class="alert alert-success alert-dismissible fade show" role="alert"> Set link expiry: '. $expdate .' for '. $certname .'
+                                      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                      </button>
+                                    </div>';
+                                }else{
+                                    echo "error";
+                                }
+                                
+                            }
+                            
+                            if (isset($_POST["cleardt"])){
+                                $certid = $_POST['certid'];
+                                $expdate = '0000-00-00';
+                                $certname = ($_POST['eventname']);
+                                //$expdate = date("m-d-Y", strtotime($date1));;
+                                
+                                $setExpDate = $funObj->clrDate($expdate,$certid);
+                                if($setExpDate){
+                                    echo '<div class="alert alert-success alert-dismissible fade show" role="alert"> Set link expiry: '. $expdate .' for '. $certname .'
+                                      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                      </button>
+                                    </div>';
+                                }else{
+                                    echo "error";
+                                }
+                                
+                            }
+                                    
                             $id =  $_SESSION['user'];
                             //$sql2 = "SELECT * FROM certificates WHERE orgid = '".$_SESSION['user']."'";
                             $cert = $funObj->viewCerts($id);
                             //$stmt=$client->viewClients();
 
                             $count =  $cert->rowCount();
-
+                            
+                            
+                            
+                            echo '<hr>';
                             if(!$cert){
                               echo "<label> There are no certificates here... </label>";
                             }else{
@@ -205,7 +263,7 @@ $row = $funObj->details($sql);
                               <button type="submit" id="pdf_report_generate" name="pdf_report_generate" class="btn btn-primary" href="generatepdftry.php?certid='.$certrow['certid'].'"><i class="fa fa-pdf"" aria-hidden="true"></i>
                               Preview Certificate</button>
                               </form>
-                            
+                           
                           </td>
                         </tr>
                         <div id="collapse'.$certrow['certid'].'" class="accordion-body collapse in">
@@ -258,14 +316,19 @@ $row = $funObj->details($sql);
                                   <tr>
                                     <th scope="row">SIGNATORY IMAGES</th>';
                                     
-                                    if ($certrow['signatory1'] != null && $certrow['signatory2'] == null && $certrow['signatory3'] == null){
+                                    if ($certrow['signatory1'] == ' ' && $certrow['signatory2'] == ' ' && $certrow['signatory3'] == ' '){
+
+                                      echo '<td>No image uploaded. Upload <a href="uploadimgs.php?certid='.$certrow['certid'].'">here</a>.
+                                      </td>';
+
+                                    }else if($certrow['signatory1'] != null && $certrow['signatory2'] == ' ' && $certrow['signatory3'] == ' '){
                                       echo '
                                       <td><img width="200px" height="80px" src="uploads/'.$certrow['signatory1'].'"/> <br>                                  
                                       Re-upload <a href="uploadimgs.php?certid='.$certrow['certid'].'">here</a>.
                                       </td>
 
                                       ';
-                                    }else if($certrow['signatory1'] != null && $certrow['signatory2'] != null && $certrow['signatory3'] == null){
+                                    }else if($certrow['signatory1'] != null && $certrow['signatory2'] != null && $certrow['signatory3'] == ' '){
                                       echo '<td><img width="200px" height="80px" src="uploads/'.$certrow['signatory1'].'"/> <br>                                  
                                       
                                       <br>
@@ -289,11 +352,6 @@ $row = $funObj->details($sql);
                                       </td>
                                       
                                       ';
-                                    }else if($certrow['signatory1'] == null && $certrow['signatory2'] == null && $certrow['signatory3'] == null){
-
-                                      echo '<td>No image uploaded. Upload <a href="uploadimgs.php?certid='.$certrow['certid'].'">here</a>.
-                                      </td>';
-
                                     }
                                     
                                   echo '</tr>
@@ -301,12 +359,48 @@ $row = $funObj->details($sql);
                                   <tr>
                                     <th scope="row">REGISTRATION LINK</th>
                                     <td>
-                                    <input type="text" id="participants" name="participants" value="localhost/ojt/participantsform.php?certid='.$certrow['certid'].'" readonly>
+                                    <input type="text" id="participants" name="participants" value="https://certicreate.000webhostapp.com/ojt/participantsform.php?certid='.$certrow['certid'].'" readonly>
                                     <label>Double click to highlight.</label>
-                                    <br>
+                                    <hr>
+                                    ';
+                                        $nodt = '0000-00-00';
+                                        $dispdate = date( "m-d-Y" , strtotime( $certrow['expdate'] ));
+                                        if ($certrow['expdate'] == $nodt){
+                                            echo "<p><i> No date set </i></p>";
+                                        }else{
+                                           echo "<p>
+                                            Date set for expiry: ".$dispdate."</p>";
+                                        }
+                                    
+                                    
+                                    echo '<form action="viewcerts.php" method="POST">
+                                      <label for="expdate">Set link expiry:</label>
+                                      <br>
+                                      <input type="hidden" id="'.$certrow['certid'].'" value="'.$certrow['certid'].'" name="certid">
+                                      <input type="hidden" id="'.$certrow['eventname'].'" value="'.$certrow['eventname'].'" name="eventname">
+                                      <input type="date" id="expdate" name="expdate">
+                                      <input type="submit" class="btn btn-sm" value="Set" name="setexpdate">';
+                                      if ($certrow['expdate'] !== $nodt){
+                                          echo '<input type="submit" class="btn btn-sm ml-1" value="Clear Date" name="cleardt"></form>';
+                                      }else{
+                                          echo '</form>';
+                                      }
+                                    echo '
+                                    
+                                    
                                     <a href="viewparticipants.php?certid='.$certrow['certid'].'" id="certid"  name="viewparticipants" class="btn btn-primary btn-sm"><i class="fa fa-pdf"" aria-hidden="true"></i> 
                                       <i class="fas fa-edit"></i> View Registered Participants </a>
                                     </td>
+                                  </tr>
+                                  
+                                   <tr>
+                                    <td >
+                                    <form name="deleterow" method="POST" action="viewcerts.php">
+                                        <input type="hidden" id="certid" name="certid" value="'.$certrow['certid'].'" readonly>
+                                        <input type="hidden" id="eventname" name="eventname" value="'.$certrow['eventname'].'" readonly>
+                                        <input type="submit" id="certid" value="Delete event"  name="deletecert" class="btn btn-danger btn-sm" style="background-color: #d9534f !important; "  >
+                                        </td>
+                                    </form>
                                   </tr>
                                   
                                 </tbody>
@@ -321,8 +415,9 @@ $row = $funObj->details($sql);
                         echo '</div>
                          </tbody>
                     </table>
-                    </div>';
-                            }
+                    </div>';                                    
+                        
+                        }
                           ?>
 
 

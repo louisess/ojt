@@ -1,6 +1,5 @@
 <?php 
-session_start();  
-
+    ob_start();
     include ('db/dbcon.php');
     include_once('db/dbFunction.php');  
 
@@ -106,6 +105,7 @@ session_start();
                                 </p>  
                             </form>  
                         </div>  
+                        <p>VERIFY VALIDITY OF CERTIFICATE <a href="certcheck.php" target="_blank"><b>HERE.</b></a></p>
 		    </div>
 		    <div class="col">
 		      <div id="register" class="animate form">  
