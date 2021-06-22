@@ -16,8 +16,8 @@ Coded by www.creative-tim.com
 <?php
 //include ('db/dbcon.php');
 $servername = "localhost";
-$username = "id16930867_admin";
-$password = "LbYiw!I{E\GQq6wr";
+$username = "root";
+$password = "";
 $dbname = "id16930867_certdbase";
 
 // Create connection

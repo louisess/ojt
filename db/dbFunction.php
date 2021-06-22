@@ -122,6 +122,16 @@
 
 
         }
+        
+        function viewCertDetails($certid){
+            $sql = "SELECT * FROM certificates WHERE orgid = '".$certid."' ORDER BY certid DESC";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute();
+
+            return $stmt;
+
+
+        }
 
 
         function viewParticipants($eventid){
@@ -184,7 +194,7 @@
         }
 
         function updateCert($eventname, $eventdate, $venue, $organizer1, $organizer2, $organizer3, $department, $title, $description, $recognition, $presentationline, $logo1, $logo2, $logo3, $expdate ,$certid){
-            $sql = "UPDATE certificates SET eventname='$eventname', eventdate='$eventdate', venue='$venue', organizer1='$organizer1', organizer2='$organizer2' , organizer3='$organizer3', department='$department', title='$title',  description='$description', recognition='$recognition', presentationline='$presentationline', logo1='$logo1', logo2='$logo2', logo3='$logo3',expdate='$expdate'  WHERE certid='$certid'";
+            $sql = "UPDATE certificates SET eventname='$eventname', eventdate='$eventdate', venue='$venue', organizer1='$organizer1', organizer2='$organizer2' , organizer3='$organizer3', department='$department', title='$title',  description='$description', recognition='$recognition', presentationline='$presentationline', logo1='$logo1', logo2='$logo2', logo3='$logo3', expdate='$expdate'  WHERE certid='$certid'";
 
             $stmt = $this->conn->prepare($sql);
             $stmt->execute();
@@ -203,6 +213,60 @@
         
         function clrDate($expdate, $certid){
             $sql = "UPDATE certificates SET expdate='$expdate' WHERE certid='$certid'";
+
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute();
+                        
+            return true;
+        }
+        
+        function delImg1($imgname, $certid){
+            $sql = "UPDATE certificates SET logo1 = ' ' WHERE certid='$certid' AND logo1='$imgname'";
+
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute();
+                        
+            return true;
+        }
+         
+        function delImg2($imgname, $certid){
+            $sql = "UPDATE certificates SET logo2 = ' ' WHERE certid='$certid' AND logo2='$imgname'";
+
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute();
+                        
+            return true;
+        }
+        
+        function delImg3($imgname, $certid){
+            $sql = "UPDATE certificates SET logo3 = ' ' WHERE certid='$certid' AND logo3='$imgname'";
+
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute();
+                        
+            return true;
+        }
+        
+        function delSign1($imgname, $certid){
+            $sql = "UPDATE certificates SET signatory1 = ' ' WHERE certid='$certid' AND signatory1='$imgname'";
+
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute();
+                        
+            return true;
+        }
+        
+        function delSign2($imgname, $certid){
+            $sql = "UPDATE certificates SET signatory2 = ' ' WHERE certid='$certid' AND signatory2='$imgname'";
+
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute();
+                        
+            return true;
+        }
+        
+        function delSign3($imgname, $certid){
+            $sql = "UPDATE certificates SET signatory3 = ' ' WHERE certid='$certid' AND signatory3='$imgname'";
 
             $stmt = $this->conn->prepare($sql);
             $stmt->execute();

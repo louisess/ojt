@@ -81,21 +81,21 @@ $row2 = $funObj->details($sql2);
         <a href="/" class="simple-text logo-normal">
           
           <div>
-            <img src="../ojt/assets/img/logo.png">
+            <img src="assets/img/logo.png">
           </div>
         </a>
       </div>
       <div class="sidebar-wrapper">
         <ul class="nav">
           <li class="active">
-            <a href="../ojt/certs.php">
+            <a href="certs.php">
               <i class="fas fa-certificate"></i>
               <p>Certificates</p>
             </a>
           </li>
 
           <li>
-            <a href="../ojt/account.php">
+            <a href="account.php">
               <i class="far fa-user-circle"></i>
               <p>Account</p>
 
@@ -151,7 +151,7 @@ $row2 = $funObj->details($sql2);
       <div class="content">
         <div class="row">
           <div class="col-md-12">
-            <h3 class="description"><a href="../ojt/certs.php" title="Click to go back to account overview.">Certificates</a> / Edit certificates</h3>
+            <h3 class="description"><a href="certs.php" title="Click to go back to account overview.">Certificates</a> / Edit certificates</h3>
           </div>
 
           <div class="row">
@@ -160,7 +160,7 @@ $row2 = $funObj->details($sql2);
               <!-- events container -->
               <div class="card text-center">
                 <div class="card-header">
-                    <a type="button" class="btn btn-sm btn-primary" href="/ojt/viewcerts.php"><i class="fas fa-arrow-circle-left"></i> GO BACK</a> 
+                    <a type="button" class="btn btn-sm btn-primary" href="viewcerts.php"><i class="fas fa-arrow-circle-left"></i> GO BACK</a> 
                   <!--
                   <input type="button" class="btn btn-sm float-left smbtn" value="MY CERTIFICATES" name="answer" onclick="showCerts()"/>
                   <input type="button" href="#" class="btn btn-sm float-left smbtn" value="CREATE" name="answer" onclick="showDiv()"/>
@@ -179,7 +179,7 @@ $row2 = $funObj->details($sql2);
                     <form class="formrow" name="savecert" method="post" action="editcert.php?certid='.$cid.'">
                     <div class="row m-2">
                       <!---create cert form function--->';
-                        
+ 
                          
                         if(isset($_POST['updatecert'])){
                           $orgid = $_SESSION['user'];  
@@ -209,37 +209,24 @@ $row2 = $funObj->details($sql2);
                             </div>';
                           }else{
                             if($dayfrom == $dayto){
-                              if($dayfrom == 1 || $dayfrom == 21 || $dayfrom == 31){
-                                $eventdate = $_POST['dayfrom'].'st of '.$month.', '.$year;
-                              }else if($dayfrom == 2 || $dayfrom == 22){
-                                $eventdate = $_POST['dayfrom'].'nd of '.$month.', '.$year;
-                              }else if($dayfrom == 3 || $dayfrom == 23){
-                                $eventdate = $_POST['dayfrom'].'rd of '.$month.', '.$year;
-                              }else{
-                                $eventdate = $_POST['dayfrom'].'th of '.$month.', '.$year;
-                              }
+                              $eventdate = $month. ' ' .$dayfrom.', ' .$year;
                             }else{
-                              if($dayto == 1 || $dayto == 21 || $dayto == 31){
-                                $eventdate = $_POST['dayfrom']. ' to ' .$_POST['dayto'].'st of '.$month.', '.$year;
-                              }else if($dayto == 2 || $dayto == 22){
-                                $eventdate = $_POST['dayfrom']. ' to ' .$_POST['dayto'].'nd of '.$month.', '.$year;
-                              }else if($dayto == 3 || $dayto == 23){
-                                $eventdate = $_POST['dayfrom']. ' to ' .$_POST['dayto'].'rd of '.$month.', '.$year;
-                              }else{
-                                $eventdate = $_POST['dayfrom']. ' to ' .$_POST['dayto'].'th of '.$month.', '.$year;
-                              }
+                               $eventdate = $month. ' ' .$dayfrom. ' to '. $dayto .', ' .$year;
                             } 
 
                             $venue = $_POST['venue'];  
                             $organizer1 = $_POST['organizer1']. ' - ' .$_POST['position1'];  
                             $organizer2 = $_POST['organizer2']. ' - ' .$_POST['position2'];  
                             $organizer3 = $_POST['organizer3']. ' - ' .$_POST['position3'];  
+
                             $logo1 = ' ';
-                            $expdate = ' ';
+                            $logo2 = ' ';
+                            $logo3 = ' ';
+                            $expdate = '0000-00-00';
 
 
 
-                            $updatecert = $funObj->updateCert($eventname, $eventdate, $venue, $organizer1, $organizer2, $organizer3, $department, $title, $description, $recognition, $presentationline, $logo1, $expdate ,$certid); 
+                            $updatecert = $funObj->updateCert($eventname, $eventdate, $venue, $organizer1, $organizer2, $organizer3, $department, $title, $description, $recognition, $presentationline, $logo1, $logo2, $logo3, $expdate, $certid); 
 
                             if(!$updatecert){
                               //echo "sno";
@@ -317,72 +304,39 @@ $row2 = $funObj->details($sql2);
                             <label for="date" class="mr-2">Day</label> 
                             From:
                             <?php
-                            $dbday1 = array_pad(explode("to", $row2['eventdate']), 2, null);
-                            //echo $dbday1[0];
-                              $day1tmp1 = array_pad(explode("rd", $dbday1[0]), 2, null);
-                              $day1tmp2 = array_pad(explode("st", $dbday1[0]), 2, null);
-                              $day1tmp3 = array_pad(explode("th", $dbday1[0]), 2, null);
-                              $day1tmp4 = array_pad(explode("nd", $dbday1[0]), 2, null);
-
-                              $dbday2 = array_pad(explode("of", $dbday1[1]), 2, null);
-                              //$dbday2exp = array_pad(explode(",", $dbday1[0]), 2, null);
-                              $day2tmp1 = array_pad(explode("th", $dbday2[0]), 2, null);
-                              $day2tmp2 = array_pad(explode("st", $dbday2[0]), 2, null);
-                              $day2tmp3 = array_pad(explode("nd", $dbday2[0]), 2, null);
-                              $day2tmp4 = array_pad(explode("rd", $dbday2[0]), 2, null);
-
-                              
-                            if($dbday1[1] == null){
-                              if(is_numeric($day1tmp1[0])){
-                                $day1 = $day1tmp1[0];
-                                $day2 = $day1;
-                              }else if(is_numeric($day1tmp2[0])){
-                                $day1 = $day1tmp2[0];
-                                $day2 = $day1;
-                              }else if(is_numeric($day1tmp3[0])){
-                                $day1 = $day1tmp3[0];
-                                $day2 = $day1;
-                              }else{
-                                $day1 = $day1tmp4[0];
-                                $day2 = $day1;
-
-                              }
-                              $mnd = array_pad(explode(",", $dbday1[0]), 2, null);
-                              $month = array_pad(explode("of ", $mnd[0]), 2, null);
-                              $dbmnth = $month[1];
-                              $dbyr = $mnd[1];
-                              //echo $dbmnth;
-                            }else{
-                              //if date is within a range
-                              
-                              if(is_numeric($day2tmp1[0])){
-                                $day1 = $day1tmp1[0];
-                                $day2 = $day2tmp1[0];
-                              }else if(is_numeric($day2tmp2[0])){
-                                $day1 = $day1tmp2[0];
-                                $day2 = $day2tmp2[0];
-                              }else if(is_numeric($day2tmp3[0])){
-                                $day1 = $day1tmp3[0];
-                                $day2 = $day2tmp3[0];
-                              }else{
-                                $day1 = $day1tmp4[0];
-                                $day2 = $day2tmp4[0];
-
-                              }
-
-                              $mnd = array_pad(explode(",", $dbday1[1]), 2, null);
-                              $mndtmp = array_pad(explode("of ", $mnd[0]), 2, null);
-                              $dbmnth = $mndtmp[1];
-                              $dbyr = $mnd[1];
-                              //echo $dbmnth;
-                            }
-                              
-                           // echo $day2;
+                           // $dbday1 = array_pad(explode("to", $row2['eventdate']), 2, null);
                             
-                            //echo $mnd[1];
-                            //echo $day1;
+                            $dategiventmp = array_pad(explode("to", $row2['eventdate']), 2, null);
+                            //echo $dategiventmp[0];
+                            
+                            if ($dategiventmp[1] == null){
+                                $monthtmp = array_pad(explode(" ", $dategiventmp[0]), 2, null);
+                                $dbmnth =  $monthtmp[0];
+                                //echo $dbmnth;
+                                $monthtmp2 = array_pad(explode(",", $monthtmp[1]), 2, null);
+                                $day1 = $monthtmp2[0];
+                                
+                                $day2 = $day1;
+                                //echo $day2;
+                                
+                                 
+                            }else{
+                                $monthtmp = array_pad(explode(" ", $dategiventmp[0]), 2, null);
+                                $dbmnth =  $monthtmp[0];
+                                $day1 = $monthtmp[1];
+                                $dbday2 = array_pad(explode(",", $dategiventmp[1]), 2, null);
+                                $day2 =  $dbday2[0];
+                                
+                              //  echo $day2;
+                                
+                            }
+                            
+                         
+                         
+                      
                         echo "<select name='dayfrom'>
-                                <option value='1"; if($day1 == 1){
+
+                                  <option value='1'"; if($day1 == 1){
                                     echo "selected";
                                   }
                                   echo ">1</option>

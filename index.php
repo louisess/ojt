@@ -1,5 +1,4 @@
 <?php 
-    ob_start();
     include ('db/dbcon.php');
     include_once('db/dbFunction.php');  
 
@@ -13,17 +12,14 @@
    
         $auth = $funObj->check_login($email, $password);
        
-        if(!$auth){
-            echo "<script>alert('Email/ Password Not Match')</script>";
-            echo '<script>console.log("failed wtf")</script>';
-            //header('location:index.php');
+        if($auth){
+            $_SESSION['user'] = $auth;
+            echo "<script>window.location.href='certs.php';</script>";
             
         }
         else{
-            $_SESSION['user'] = $auth;
-            //$_SESSION['user'] = true;
-            
-            header('location:certs.php');
+            //$_SESSION['user'] = $auth;
+            echo '<script>console.log("Login failed. Check your email and password.")</script>';
         }
     }  
 

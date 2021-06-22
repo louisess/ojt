@@ -74,21 +74,21 @@ $row = $funObj->details($sql);
         <a href="certs.php" class="simple-text logo-normal">
           
           <div>
-            <img src="../ojt/assets/img/logo.png">
+            <img src="assets/img/logo.png">
           </div>
         </a>
       </div>
       <div class="sidebar-wrapper">
         <ul class="nav">
           <li class="active">
-            <a href="../ojt/certs.php">
+            <a href="certs.php">
               <i class="fas fa-certificate"></i>
               <p>Certificates</p>
             </a>
           </li>
 
           <li>
-            <a href="../ojt/account.php">
+            <a href="account.php">
               <i class="far fa-user-circle"></i>
               <p>Account</p>
 
@@ -144,7 +144,7 @@ $row = $funObj->details($sql);
       <div class="content">
         <div class="row">
           <div class="col-md-12">
-            <h3 class="description"><a href="../ojt/certs.php" title="Click to go back to account overview.">Certificates</a> / Create certificates</h3>
+            <h3 class="description"><a href="certs.php" title="Click to go back to account overview.">Certificates</a> / Create certificates</h3>
           </div>
 
           <div class="row">
@@ -157,7 +157,7 @@ $row = $funObj->details($sql);
 
                         $certid = $_GET['certid'];
                         echo '
-                     <a type="button" class="btn btn-sm btn-primary" href="/ojt/editcert.php?certid='.$certid.'"><i class="fas fa-arrow-circle-left"></i> GO BACK</a> 
+                     <a type="button" class="btn btn-sm btn-primary" href="editcert.php?certid='.$certid.'"><i class="fas fa-arrow-circle-left"></i> GO BACK</a> 
                   <!--
                   <input type="button" class="btn btn-sm float-left smbtn" value="MY CERTIFICATES" name="answer" onclick="showCerts()"/>
                   <input type="button" href="#" class="btn btn-sm float-left smbtn" value="CREATE" name="answer" onclick="showDiv()"/>
@@ -185,6 +185,13 @@ $row = $funObj->details($sql);
                           if(isset($_FILES['signatory1'])){
                               $signatory1 = $_FILES["signatory1"]["name"];
                               $signatorytmp = $_FILES["signatory1"]["tmp_name"];
+                              $success1 = '';
+                              $success2 = '';
+                              $success3 = '';
+                              $success4 = '';
+                              $success5 = '';
+                              $success6 = '';
+                             
 
                               if (move_uploaded_file($signatorytmp,$target_dir.$signatory1)) {
                                 $success1 = true; 
@@ -260,7 +267,7 @@ $row = $funObj->details($sql);
                               }
 
                               if(isset($success4) && ($success4!==false) || ($success1) && ($success1!==false) || ($success2) && ($success2!==false) || ($success3) && ($success3!==false) || ($success4) && ($success4!==false) || ($success5) && ($success5!==false) || ($success6) && ($success6!==false)){
-                              echo '<div class="alert  alert-success alert-dismissible fade show" role="alert">Image uploaded. View certificate <b><a href="/ojt/viewcerts.php">here</a></b>.
+                              echo '<div class="alert  alert-success alert-dismissible fade show" role="alert">Image uploaded. View certificate <b><a href="viewcerts.php">here</a></b>.
                                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                   <span aria-hidden="true">&times;</span>
                                 </button>
@@ -276,6 +283,139 @@ $row = $funObj->details($sql);
 
 
 
+                        }
+                        
+                        if(isset($_POST['dltimg1'])){
+                            //$certid = $row['certid'];
+                            $imgname = $row['logo1'];
+                            
+                            //echo $certid;
+                            //echo $imagecol;
+                            
+                             $dltImg1 = $funObj->delImg1($imgname, $certid);
+                             if(!$dltImg1){
+                                 echo "nope";
+                             }else{
+                                  echo '<div class="alert  alert-success alert-dismissible fade show" role="alert">Image deleted. Please refresh.
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                              </div>';
+                             }
+                        }
+                        
+                        if(isset($_POST['dltimg2'])){
+                            //$certid = $row['certid'];
+                            $imgname = $row['logo2'];
+                            
+                            //echo $certid;
+                            //echo $imagecol;
+                            
+                             $dltImg2 = $funObj->delImg2($imgname, $certid);
+                             if(!$dltImg2){
+                                 echo "nope";
+                             }else{
+                                  echo '<div class="alert  alert-success alert-dismissible fade show" role="alert">Image deleted. Please refresh.
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                              </div>';
+                             }
+                        }
+                        
+                        if(isset($_POST['dltimg3'])){
+                            //$certid = $row['certid'];
+                            $imgname = $row['logo3'];
+                            
+                            //echo $certid;
+                            //echo $imagecol;
+                            
+                             $dltImg3 = $funObj->delImg3($imgname, $certid);
+                             if(!$dltImg3){
+                                 echo "nope";
+                             }else{
+                                  echo '<div class="alert  alert-success alert-dismissible fade show" role="alert">Image deleted. Please refresh.
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                              </div>';
+                             }
+                        }
+                        
+                        if(isset($_POST['dltsign1'])){
+                            //$certid = $row['certid'];
+                            $imgname = $row['signatory1'];
+                            
+                            //echo $certid;
+                            //echo $imagecol;
+                            
+                             $dltSign1 = $funObj->delSign1($imgname, $certid);
+                             if(!$dltSign1){
+                                 echo "nope";
+                             }else{
+                                  echo '<div class="alert  alert-success alert-dismissible fade show" role="alert">Image deleted. Please refresh.
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                              </div>';
+                             }
+                        }
+                        
+                        if(isset($_POST['dltsign2'])){
+                            //$certid = $row['certid'];
+                            $imgname = $row['signatory2'];
+                            
+                            //echo $certid;
+                            //echo $imagecol;
+                            
+                             $delSign1 = $funObj->delSign2($imgname, $certid);
+                             if(!$delSign1){
+                                 echo "nope";
+                             }else{
+                                  echo '<div class="alert  alert-success alert-dismissible fade show" role="alert">Image deleted. Please refresh.
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                              </div>';
+                             }
+                        }
+                        
+                        if(isset($_POST['dltsign3'])){
+                            //$certid = $row['certid'];
+                            $imgname = $row['signatory3'];
+                            
+                            //echo $certid;
+                            //echo $imagecol;
+                            
+                             $dltImg3 = $funObj->delSign3($imgname, $certid);
+                             if(!$dltImg3){
+                                 echo "nope";
+                             }else{
+                                  echo '<div class="alert  alert-success alert-dismissible fade show" role="alert">Image deleted. Please refresh.
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                              </div>';
+                             }
+                        }
+                        
+                        if(isset($_POST['dltimg1'])){
+                            //$certid = $row['certid'];
+                            $imgname = $row['logo2'];
+                            
+                            //echo $certid;
+                            //echo $imagecol;
+                            
+                             $dltImg1 = $funObj->delImg1($imgname, $certid);
+                             if(!$dltImg1){
+                                 echo "nope";
+                             }else{
+                                  echo '<div class="alert  alert-success alert-dismissible fade show" role="alert">Image deleted. Please refresh.
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                              </div>';
+                             }
                         }
 
                         
@@ -302,9 +442,9 @@ $row = $funObj->details($sql);
                             <h6 for="eventname"><i class="fas fa-upload"></i> ' .$row['organizer1'].' - SIGNATURE</h6>
                             <input type="file" class="form-control text-center" id="signatory1" name="signatory1" accept="image/*" >
                             <label for="eventname">'; 
-                               if($row['signatory1'] > 0){
+                               if($row['signatory1'] !== ' '){
                                 echo 'File uploaded: ' . $row['signatory1'];
-
+                                echo '<input type="submit" value="DELETE" class="btn btn-sm" name="dltsign1" title="Delete signatory1"/>';
                                }else{
                                 echo 'No file uploaded';
                                }
@@ -319,9 +459,9 @@ $row = $funObj->details($sql);
                             <input type="file" class="form-control text-center" id="signatory2" name="signatory2" accept="image/*" >
                             <label for="eventname">';
 
-                               if($row['signatory2'] > 0){
+                               if($row['signatory2'] !== ' '){
                                 echo 'File uploaded: ' . $row['signatory2'];
-
+                                echo '<input type="submit" value="DELETE" class="btn btn-sm" name="dltsign2" title="Delete signatory2"/>';
                                }else{
                                 echo 'No file uploaded';
                                }
@@ -334,8 +474,9 @@ $row = $funObj->details($sql);
                             <h6 for="eventname"><i class="fas fa-upload"></i> ' .$row['organizer3'].' - SIGNATURE</h6>
                             <input type="file" class="form-control text-center" id="signatory3" name="signatory3" accept="image/*" >
                             <label for="eventname">'; 
-                               if($row['signatory3'] > 0){
+                               if($row['signatory3'] !== ' '){
                                 echo 'File uploaded: ' . $row['signatory3'];
+                                echo '<input type="submit" value="DELETE" class="btn btn-sm" name="dltsign3" title="Delete signatory3"/>';
 
                                }else{
                                 echo 'No file uploaded';
@@ -346,11 +487,12 @@ $row = $funObj->details($sql);
                         
                           <div class="m-3">
                             <h6 for="logo1"><i class="fas fa-upload"></i> ' .$row['logo1'].' - LOGO 1</h6>
-                            <label><i>Leftmost logo (Middle logo, if only one logo is uploaded)</i></label>
+                            <label><i>Leftmost logo</i></label>
                             <input type="file" class="form-control text-center" id="logo1" name="logo1" accept="image/*" >
                             <label for="eventname">'; 
-                               if($row['logo1'] > 0){
+                               if($row['logo1'] !== ' '){
                                 echo 'File uploaded: ' . $row['logo1'];
+                                echo '<input type="submit" value="DELETE" class="btn btn-sm" name="dltimg1" title="Delete logo1"/>';
 
                                }else{
                                 echo 'No file uploaded';
@@ -364,9 +506,11 @@ $row = $funObj->details($sql);
                           <div class="m-3">
                             <h6 for="logo2"><i class="fas fa-upload"></i> ' .$row['logo2'].' - LOGO 2</h6>
                             <input type="file" class="form-control text-center" id="logo2" name="logo2" accept="image/*" >
+                            <label><i>Middle logo</i></label>
                             <label for="eventname">'; 
-                               if($row['logo2'] > 0){
+                               if($row['logo2'] !== ' '){
                                 echo 'File uploaded: ' . $row['logo2'];
+                                echo '<input type="submit" class="btn btn-sm" value="DELETE" name="dltimg2" title="Delete logo2"/>';
 
                                }else{
                                 echo 'No file uploaded';
@@ -382,8 +526,9 @@ $row = $funObj->details($sql);
                             <label><i>Rightmost logo</i></label>
                             <input type="file" class="form-control text-center" id="logo3" name="logo3" accept="image/*" >
                             <label for="eventname">'; 
-                               if($row['logo3'] > 0){
-                                echo 'File uploaded: ' . $row['logo1'];
+                               if($row['logo3'] !== ' '){
+                                echo 'File uploaded: ' . $row['logo3'];
+                                echo '<input type="submit" value="DELETE" class="btn btn-sm" name="dltimg3" title="Delete logo3"/>';
 
                                }else{
                                 echo 'No file uploaded';

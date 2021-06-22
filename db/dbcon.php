@@ -1,10 +1,11 @@
 <?php
+session_start();
 class Database{
 
     private $host = "localhost";
     private $db = "id16930867_certdbase";
-    private $username = "id16930867_admin";
-    private $password = "LbYiw!I{E\GQq6wr";
+    private $username = "root";
+    private $password = "";
     public $conn;
 
     

@@ -76,21 +76,21 @@ $row = $funObj->details($sql);
         <a href="certs.php" class="simple-text logo-normal">
           
           <div>
-            <img src="../ojt/assets/img/logo.png">
+            <img src="assets/img/logo.png">
           </div>
         </a>
       </div>
       <div class="sidebar-wrapper">
         <ul class="nav">
           <li class="active">
-            <a href="../ojt/certs.php">
+            <a href="certs.php">
               <i class="fas fa-certificate"></i>
               <p>Certificates</p>
             </a>
           </li>
 
           <li>
-            <a href="../ojt/account.php">
+            <a href="account.php">
               <i class="far fa-user-circle"></i>
               <p>Account</p>
 
@@ -146,7 +146,7 @@ $row = $funObj->details($sql);
       <div class="content">
         <div class="row">
           <div class="col-md-12">
-            <h3 class="description"><a href="../ojt/certs.php" title="Click to go back to account overview.">Certificates</a> / Your certificates</h3>
+            <h3 class="description"><a href="certs.php" title="Click to go back to account overview.">Certificates</a> / Your certificates</h3>
           </div>
 
           <div class="row">
@@ -155,7 +155,7 @@ $row = $funObj->details($sql);
               <!-- events container -->
               <div class="card text-center">
                 <div class="card-header">
-                    <a type="button" class="btn btn-sm btn-primary" href="/ojt/certs.php"><i class="fas fa-arrow-circle-left"></i> GO BACK</a> 
+                    <a type="button" class="btn btn-sm btn-primary" href="certs.php"><i class="fas fa-arrow-circle-left"></i> GO BACK</a> 
                   <!--
                   <input type="button" class="btn btn-sm float-left smbtn" value="MY CERTIFICATES" name="answer" onclick="showCerts()"/>
                   <input type="button" href="#" class="btn btn-sm float-left smbtn" value="CREATE" name="answer" onclick="showDiv()"/>
@@ -317,49 +317,97 @@ $row = $funObj->details($sql);
                                     <th scope="row">SIGNATORY IMAGES</th>';
                                     
                                     if ($certrow['signatory1'] == ' ' && $certrow['signatory2'] == ' ' && $certrow['signatory3'] == ' '){
-
-                                      echo '<td>No image uploaded. Upload <a href="uploadimgs.php?certid='.$certrow['certid'].'">here</a>.
+                                    
+                                     echo '<td>No signatory uploaded. Upload <a href="uploadimgs.php?certid='.$certrow['certid'].'">here</a>.
                                       </td>';
 
                                     }else if($certrow['signatory1'] != null && $certrow['signatory2'] == ' ' && $certrow['signatory3'] == ' '){
                                       echo '
                                       <td><img width="200px" height="80px" src="uploads/'.$certrow['signatory1'].'"/> <br>                                  
-                                      Re-upload <a href="uploadimgs.php?certid='.$certrow['certid'].'">here</a>.
+                                      Re-upload signatory images and logo <a href="uploadimgs.php?certid='.$certrow['certid'].'">here</a>
                                       </td>
 
                                       ';
                                     }else if($certrow['signatory1'] != null && $certrow['signatory2'] != null && $certrow['signatory3'] == ' '){
                                       echo '<td><img width="200px" height="80px" src="uploads/'.$certrow['signatory1'].'"/> <br>                                  
-                                      
+                                        Re-upload signatory images and logo <a href="uploadimgs.php?certid='.$certrow['certid'].'">here</a>
+                                      </td>
                                       <br>
                                       <img width="200px" height="80px" src="uploads/'.$certrow['signatory2'].'"/>
                                       <br>                                  
-                                      Re-upload <a href="uploadimgs.php?certid='.$certrow['certid'].'">here</a>
+                                     
                                       </td>';
                                     }else if($certrow['signatory1'] != null && $certrow['signatory2'] != null && $certrow['signatory3'] != null){
                                       echo '<td><img width="200px" height="80px" src="uploads/'.$certrow['signatory1'].'"/> <br>                                  
-                                      
-                                      
+                                     
+                                      </td>
                                       <br>
                                       <img width="200px" height="80px" src="uploads/'.$certrow['signatory2'].'"/>                                      
                                                                        
                                       <br>
                                       <img width="200px" height="80px" src="uploads/'.$certrow['signatory3'].'"/>
-                                      <br>                                  
-                                      Re-upload <a href="uploadimgs.php?certid='.$certrow['certid'].'">here</a>
                                       
-                                                                       
+                                        Re-upload signatory images and logo <a href="uploadimgs.php?certid='.$certrow['certid'].'">here</a>
                                       </td>
                                       
                                       ';
                                     }
                                     
                                   echo '</tr>
+                                  
+                                    <tr>
+                                    <th scope="row">LOGOS</th>';
+                                    
+                                    if($certrow['logo1'] == ' ' && $certrow['logo2'] == ' ' && $certrow['logo3'] == ' '){
+                                      echo '<td>No logo uploaded. Upload <a href="uploadimgs.php?certid='.$certrow['certid'].'">here</a>.
+                                      </td>';
+                                        
+                                    }else if($certrow['logo1'] != null && $certrow['logo2'] == ' ' && $certrow['logo3'] == ' '){
+                                      echo '<td><img width="200px" height="80px" src="uploads/'.$certrow['logo1'].'"/> <br>                                  
+                                         Re-upload signatory images and logo <a href="uploadimgs.php?certid='.$certrow['certid'].'">here</a>
+                                      </td>
 
+                                      ';
+                                    }else if($certrow['logo1'] == ' ' && $certrow['logo2'] != null && $certrow['logo3'] == ' '){
+                                         echo '<td><img width="200px" height="80px" src="uploads/'.$certrow['logo2'].'"/> <br>                                  
+                                      Re-upload signatory images and logo <a href="uploadimgs.php?certid='.$certrow['certid'].'">here</a>
+                                      </td>';
+                                    }else if($certrow['logo1'] != null && $certrow['logo2'] != null && $certrow['logo3'] == ' '){
+                                      echo '<td><img width="200px" height="80px" src="uploads/'.$certrow['logo1'].'"/> <br>                                  
+                                      Re-upload signatory images and logo <a href="uploadimgs.php?certid='.$certrow['certid'].'">here</a>
+                                      </td>
+                                      <br>
+                                      <img width="200px" height="80px" src="uploads/'.$certrow['logo2'].'"/>
+                                      <br>                                  
+                                     
+                                      </td>';
+                                    }else if($certrow['logo1'] == ' ' && $certrow['logo2'] == ' ' && $certrow['logo3'] != null){
+                                         echo '<td><img width="200px" height="80px" src="uploads/'.$certrow['logo3'].'"/> <br>                                  
+                                      Re-upload signatory images and logo <a href="uploadimgs.php?certid='.$certrow['certid'].'">here</a>
+                                      </td>';
+                                    }else if($certrow['logo1'] != null && $certrow['logo2'] != null && $certrow['logo3'] != null){
+                                      echo '<td><img width="200px" height="80px" src="uploads/'.$certrow['logo1'].'"/>                                  
+                                      <br>
+                                      <img width="200px" height="80px" src="uploads/'.$certrow['logo2'].'"/>                                      
+                                                                       
+                                      <br>
+                                      <img width="200px" height="80px" src="uploads/'.$certrow['logo3'].'"/>
+                                      <br>                                  
+                                      Re-upload signatory images and logo <a href="uploadimgs.php?certid='.$certrow['certid'].'">here</a>
+                                                                       
+                                      </td>
+                                      
+                                      
+                                      ';
+                                    }
+                                   
+                                    
+                                  echo '</tr>
+                                  
                                   <tr>
                                     <th scope="row">REGISTRATION LINK</th>
                                     <td>
-                                    <input type="text" id="participants" name="participants" value="https://certicreate.000webhostapp.com/ojt/participantsform.php?certid='.$certrow['certid'].'" readonly>
+                                    <input type="text" id="participants" name="participants" value="localhost.000webhostapp.com/participantsform.php?certid='.$certrow['certid'].'" readonly>
                                     <label>Double click to highlight.</label>
                                     <hr>
                                     ';
@@ -402,6 +450,8 @@ $row = $funObj->details($sql);
                                         </td>
                                     </form>
                                   </tr>
+                                  
+
                                   
                                 </tbody>
                               </table>

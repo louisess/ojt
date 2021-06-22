@@ -2,8 +2,8 @@
 require_once('pdf/TCPDF-main/tcpdf.php');
 
 $servername = "localhost";
-$username = "id16930867_admin";
-$password = "LbYiw!I{E\GQq6wr";
+$username = "root";
+$password = "";
 $dbname = "id16930867_certdbase";
 
 // Create connection
@@ -81,43 +81,45 @@ if (isset($_GET['pdf_report_generate'])){
 		    $recog = $row['recognition'];
 		    $presline = $row['presentationline'];
 		    $logo1 = $row['logo1'];
+		    $logo2 = $row['logo2'];
+		    $logo3 = $row['logo3'];
 		    //$pid = $row['pid'];
+		    date_default_timezone_set("Asia/Dhaka");
+			$today = date("F j, Y");
 		   
 
-			// Add a page
-			// This method has several options, check the source code documentation for more information.
 			$pdf->Ln(-15);
             $pdf->SetLineStyle(array('width' => 0.5, 'cap' => 'butt', 'join' => 'miter', 'dash' => 0, 'color' => array(255, 0, 0)));
             $pdf->SetFillColor(255,255,255);
             $pdf->SetTextColor(0,0,0);
             $text="";
-
             $pdf->Cell(0, 177, $text, 1, 1, 'C', 1, 0);
-            
-// 			$imageFile = K_PATH_IMAGES.'LOGO_UB.png';
-// 			$pdf->Image($imageFile, 110, 17, 70, '', 'PNG', '', 'M', false, 300, '', false, false, 0, false, false, false);
+            $pdf->Ln(-173);
             $signpath = 'uploads/';
-            $logocert = $signpath.$logo1;
-            $imageFile = K_PATH_IMAGES.'LOGO_UB.png';
+            
+            $logocert1 = $signpath.$logo1;
+            $logocert2 = $signpath.$logo2;
+            $logocert3 = $signpath.$logo3;
+            //$imageFile = K_PATH_IMAGES.'LOGO_UB.png';
             $emptyrow = ' ';
-            if($logo1 == $emptyrow){
-                $pdf->Image($imageFile, 110, 17, 70, '', 'PNG', '', 'M', false, 300, '', false, false, 0, false, false, false);
-               
-                
-            }else if($logo1 !== $emptyrow){
-                $pdf->Ln(-170);
-                 $html = '<p style="text-align:center">
-							<table>
-						  <thead>
-						  </thead>
+            
+            $html = '<p style="text-align:center">
+						<table align="center" style="width:100%">
 						  <tbody>
 						    <tr>
 						      <td>
-						        <img width="200px" height="50px" src="'. $imageFile .'">
+						      <!--logo 1-->
+						      <img align="center" width="210px" height="55px" src="'. $logocert1 .'">
 						      </td>
+						      
 						      <td>
-						      <img width="200px" height="50px" src="'. $logocert .'">
-
+						      <!--logo 2-->
+						      <img align="left" width="210px" height="55px" src="'. $logocert2 .'">
+	                           </td>
+	                           
+						      <td>
+						      <!--logo 3-->
+						      <img align="center" width="210px" height="55px" src="'. $logocert3 .'">
 						      </td>
 
 						    </tr>
@@ -128,49 +130,45 @@ if (isset($_GET['pdf_report_generate'])){
 
 				';
 				$pdf->writeHTML($html, true, false, true, false, '');
-            }
-			$pdf->Ln(10);
-			$pdf->SetFont('helvetica','','15');
+           
+            
+            $pdf->Ln(-3);
+			$pdf->SetFont('helvetica','','12');
 			$html = '<p style="text-align:center">'. $department .'</p>';
 			$pdf->writeHTML($html, true, false, true, false, '');
-			$pdf->Ln(-5);
-
+			
+			$pdf->Ln(3);
+			$pdf->SetFont('helvetica','','10');
+			$pdf->Cell(265,4, 'This', 0, 1, 'C');
+			
+			$pdf->Ln(-10);
 			$pdf->SetFont('helvetica','','20');
 			$html = '<span color="red"><p style="text-align:center">'. $title .'</p></span>';
 			$pdf->writeHTML($html, true, false, true, false, '');
+			
 			$pdf->Ln(-10);
 			$pdf->SetFont('helvetica','','10');
 			$pdf->Cell(265,4, $presline, 0, 1, 'C');
+			
 			$pdf->Ln(5);
 			$pdf->SetFont('times','','30');
 			$html = '<p style="text-align:center">Juan Dela Cruz</p>';
-
 			$pdf->writeHTML($html, true, false, true, false, '');
+			
 			$pdf->Ln(5);
 			$pdf->SetFont('helvetica','','10');
 			$html = '<p style="text-align:center">'. $recog .'</p>';
 			$pdf->writeHTML($html, true, false, true, false, '');
+			
 			$pdf->Ln(5);
 			$pdf->SetFont('helvetica', 'IB','18');
 			$pdf->Cell(270,5, '"'. $eventname . '"' ,0,1,'C');
+			
 			$pdf->Ln(5);
 			$pdf->SetFont('helvetica','','12');
-			$html = '<p style="text-align:center">Held this '.$eventdate.'<br>  '. $desc .'</p>';
+			$html = '<p style="text-align:center">Held on '.$eventdate.'<br>  '. $desc .'</p>';
 			$pdf->writeHTML($html, true, false, true, false, '');
-			$pdf->Ln(4);
-			$pdf->SetFont('helvetica', 'I', 12);
-			//Page Number
-			date_default_timezone_set("Asia/Dhaka");
-			$today = date("F j, Y");
-			$html = '<p style="text-align:center">Given '. $today .'</p>';
 			
-// 			$givendate = array_pad(explode("to", $eventdate), 2, null);
-// 			if($givendate[1] == null){
-// 				$html = '<p style="text-align:center"> Given this '.$today.' held '.$givendate[0]. '</p>';
-// 			}else{
-// 				$html = '<p style="text-align:center"> Given this '.$today.' held ' .$givendate[1]. '</p>';
-// 			}
-			$pdf->writeHTML($html, true, false, true, false, '');
 			$pdf->Ln(8);
 			$pdf->SetFont('helvetica', '',10);
 			$orgname1 = array_pad(explode(" - ", $organizer1), 2, null);
@@ -194,9 +192,9 @@ if (isset($_GET['pdf_report_generate'])){
 						      <td>
 						      <img width="50px" height="30px" src="'. $sign1 .'">
 						      <br>
-						      '.$orgname1[0].'
+						      <b>'.$orgname1[0].'</b>
 						      <br>
-						      <b>'.$orgname1[1].'</b></td>
+						      '.$orgname1[1].'</td>
 						      <td>
 						      
 						      </td>
@@ -224,9 +222,9 @@ if (isset($_GET['pdf_report_generate'])){
 						      <td>
 						      <img width="50px" height="30px" src="'. $sign1 .'">
 						      <br>
-						      '.$orgname1[0].'
+						      <b>'.$orgname1[0].'</b>
 						      <br>
-						      <b>'.$orgname1[1].'</b>
+						      '.$orgname1[1].'
 						      </td>
 						      <td>
 
@@ -234,9 +232,9 @@ if (isset($_GET['pdf_report_generate'])){
 						      <td>
 						      <img width="50px" height="30px" src="'. $sign2 .'">
 						      <br>
-						      '.$orgname2[0].'
+						      <b>'.$orgname2[0].'</b>
 						      <br>
-						      <b>'.$orgname2[1].'</b>
+						      '.$orgname2[1].'
 						      </td>
 
 						    </tr>
@@ -255,20 +253,20 @@ if (isset($_GET['pdf_report_generate'])){
 						  <tbody>
 						    <tr>
 						      <td>   
-						      '.$orgname1[0].'
+						      <b>'.$orgname1[0].'</b>
 						      <br>
-						      <b>'.$orgname1[1].'</b>
+						      '.$orgname1[1].'
 						      </td>
 						      
 						      <td>
-						      '.$orgname2[0].'
+						      <b>'.$orgname2[0].'</b>
 						      <br>
-						      <b>'.$orgname2[1].'</b>
+						      '.$orgname2[1].'
 						      </td>
 						      <td>
-						      '.$orgname3[0].'
+						      <b>'.$orgname3[0].'</b>
 						      <br>
-						      <b>'.$orgname3[1].'</b>
+						      '.$orgname3[1].'
 						      </td>
 
 						    </tr>
@@ -280,17 +278,37 @@ if (isset($_GET['pdf_report_generate'])){
 				$pdf->writeHTML($html, true, false, true, false, '');
 			}
 			
-			$pdf->Ln(-2);
-			$pdf->SetFont('helvetica', 'I',8);
-			$html = '<p style="text-align:center">Certificate Code: UB - 1234
+			$pdf->Ln(8);
+			$pdf->SetFont('helvetica', 'I',7);
+			
+			$dategiventmp = array_pad(explode("to", $eventdate), 2, null);
+			$formonth = array_pad(explode(" ", $eventdate), 2, null);
+		    $month = $formonth[0];
+			if($dategiventmp[1] == null){
+			    $dategiven = $dategiventmp[0];
+			}else{
+			    
+			    
+			     $firstpart = $dategiventmp[1];
+			    $dategiven1 = array_pad(explode(" ", $firstpart), 2, null);
+			    //$month = $dategiven1[0];
+			    $fordate = $dategiventmp[1];
+			    $dategiven = $month.$fordate;
+			    
+			    
+			}
+			$html = '<p style="text-align:left">    Verify at <a href="certcheck.php">certicreateojt.000webhostapp.com/certcheck.php</a><br>
+			    Certificate Code: UB - 1234 <br>
+			    Date Given: '.$dategiven.'
 			</p>';
 			$pdf->writeHTML($html, true, false, true, false, '');
+	
+			$pdf->Output('Certificate.pdf', 'I');   
+            }
+
+
+
 			
-
-			$pdf->Output('Certificate.pdf', 'I');
-
-
-			}
 //============================================================+
 // END OF FILE
 //============================================================+
