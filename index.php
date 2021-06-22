@@ -18,8 +18,7 @@
             
         }
         else{
-            //$_SESSION['user'] = $auth;
-            echo '<script>console.log("Login failed. Check your email and password.")</script>';
+            echo '<script>("Login failed. Check your email and password.")</script>';
         }
     }  
 
